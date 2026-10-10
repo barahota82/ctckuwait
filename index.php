@@ -21,7 +21,7 @@ function ph(mixed $v):string{return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-
 function pt(array $content,string $field):string{global $lang,$brand;return str_replace(['{{company}}','{{YEAR}}'],[$brand,date('Y')],(string)($content[$lang][$field]??$content['en'][$field]??$content['ar'][$field]??''));}
 function pv(array $content,string $field):string{global $lang,$brand;$value=$content[$lang][$field]??'';if($value==='')$value=($content['ar'][$field]??'')?:($content['en'][$field]??'');return str_replace(['{{company}}','{{YEAR}}'],[$brand,date('Y')],(string)$value);}
 function setting_text(string $key):string{global $cfg,$lang,$brand;$v=$cfg[$key]??[];return str_replace(['{{company}}','{{YEAR}}'],[$brand,date('Y')],(string)($v[$lang]??$v['ar']??$v['en']??''));}
-function page_url(string $slug,string $language):string{global $draft;return ($draft?'public-preview.php?':'index.php?').http_build_query(['page'=>$slug,'lang'=>$language]);}
+function page_url(string $slug,string $language):string{global $draft;return ($draft?'hr/public-preview.php?':'index.php?').http_build_query(['page'=>$slug,'lang'=>$language]);}
 function single_button_html(array $content):string{$url=public_resolve_link(pv($content,'button_url'));$label=pv(public_content_for_display($content),'button_label');if(!$url||!$label)return '';return '<a class="public-button btn btn--primary" href="'.ph($url).'">'.ph($label).'</a>';}
 
 function button_html(array $content):string{$out=single_button_html($content);$secondary=[];foreach($content as $language=>$fields)$secondary[$language]=['button_label'=>$fields['secondary_button_label']??'','button_url'=>$fields['secondary_button_url']??''];return $out.single_button_html($secondary);}
