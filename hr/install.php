@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   }
   $error=$e instanceof PDOException?database_install_error($e):($e instanceof RuntimeException?$e->getMessage():'تعذر إكمال التثبيت.');
   if($e instanceof PDOException && isset($config)){
-   $error.=' [الإعداد الفعلي TrustServerCertificate=' . (!empty($config['trust_server_certificate'])?'yes':'no') . '; Encrypt=yes]';
+   $error.=' [الإعداد الفعلي TrustServerCertificate=' . (!empty($config['trust_server_certificate'])?'1':'0') . '; Encrypt=1]';
    $native=(int)($e->errorInfo[1]??0);
    if($native===-2146893019)$error.=' [الشهادة: جهة الإصدار غير موثوقة]';
    if($native===-2146893022)$error.=' [الشهادة: اسم الخادم لا يطابق الاسم في الشهادة]';
