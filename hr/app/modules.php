@@ -44,7 +44,7 @@ function original_leave_balance(int $uid,array $cfg,?string $reference=null): ar
  $profile=decode($u['profile_json']);$entitlement=$profile['leave_entitlement']??$cfg['annual_leave_days'];
  return ['year_from'=>$from,'year_to'=>$to,'entitlement'=>$entitlement,'used'=>$used,'pending'=>$pending,'remaining'=>$entitlement===null?null:max(0,(float)$entitlement-$used)];
 }
-function leave_balance(int $uid,array $cfg,?string $reference=null):array {
+function leave_balance_days(int $uid,array $cfg,?string $reference=null):array {
  $reference??=local_time()->format('Y-m-d');$base=original_leave_balance($uid,$cfg,$reference);$u=query('SELECT * FROM ep_users WHERE id=?',[$uid])->fetch();$profile=decode($u['profile_json']);
  $h=query("SELECT TOP (1) * FROM ep_history WHERE kind='leave_balance' AND employee_code=? AND period_key<=? ORDER BY period_key DESC",[$u['username'],$reference])->fetch();
  if(!$h)return $base+['cash_days'=>null,'opening_as_of'=>null,'accrued'=>0];
@@ -126,4 +126,12 @@ function attendance_report(int $uid,string $from,string $to): array {
   $out[]=$day;
  }
  return $out;
+}
+
+function leave_balance(int $uid,array $cfg,?string $reference=null):array {
+ $reference??=local_time()->format('Y-m-d');$balance=leave_balance_days($uid,$cfg,$reference);
+ require_once __DIR__.'/salary.php';$user=query('SELECT * FROM ep_users WHERE id=?',[$uid])->fetch();
+ $row=query("SELECT TOP (1) period_key,body_json FROM ep_history WHERE kind='salary_history' AND employee_code=? AND period_key<=? ORDER BY period_key DESC",[$user['username'],$reference])->fetch();
+ $salary=$row?(float)decode($row['body_json'])['salary']:null;$divisor=(float)($cfg['salary_divisor']??30);
+ return $balance+['valuation_date'=>$reference,'valuation_salary'=>$salary,'salary_effective_from'=>$row['period_key']??null,'cash_value'=>$salary!==null&&$balance['cash_days']!==null&&$divisor>0?round($balance['cash_days']*$salary/$divisor,3):null];
 }

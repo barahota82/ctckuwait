@@ -427,5 +427,87 @@
         "required": true
       }
     ]
+  },
+  {
+    "name": "تاريخ الرواتب",
+    "kind": "salary_history",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "effective_from",
+        "label": "تاريخ سريان الراتب",
+        "required": true
+      },
+      {
+        "key": "salary",
+        "label": "الراتب الأساسي",
+        "required": true
+      },
+      {
+        "key": "note",
+        "label": "سبب التغيير",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "تاريخ بيانات البنك",
+    "kind": "bank_terms",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "effective_from",
+        "label": "تاريخ سريان بيانات البنك",
+        "required": true
+      },
+      {
+        "key": "residence_company_code",
+        "label": "كود شركة الإقامة",
+        "required": true
+      },
+      {
+        "key": "amount",
+        "label": "مبلغ التحويل المعتمد",
+        "required": true
+      },
+      {
+        "key": "name",
+        "label": "الاسم بالعربية",
+        "required": false
+      },
+      {
+        "key": "name_en",
+        "label": "الاسم بالإنجليزية",
+        "required": false
+      },
+      {
+        "key": "bank_name",
+        "label": "اسم البنك",
+        "required": false
+      },
+      {
+        "key": "bank_account",
+        "label": "رقم الحساب",
+        "required": false
+      },
+      {
+        "key": "iban",
+        "label": "IBAN",
+        "required": false
+      },
+      {
+        "key": "civil_id",
+        "label": "رقم البطاقة المدنية",
+        "required": false
+      }
+    ]
   }
 ]
