@@ -1,0 +1,52 @@
+{
+  "en": {
+    "thanksTitle": "Message received",
+    "thanksLead": "Thank you—your message was sent. We will reply as soon as we can.",
+    "thanksBack": "Back to home",
+    "ratingThanksTitle": "Your review was received",
+    "ratingThanksLead": "Thank you for sharing your experience. Your review has been saved for administrative review before any publication.",
+    "offer_details": "Offer details",
+    "offer_terms": "Offer terms",
+    "offers_back": "Back to offers"
+  },
+  "ar": {
+    "thanksTitle": "تم استلام الرسالة",
+    "thanksLead": "شكراً لك—تم إرسال رسالتك بنجاح. سنتواصل معك في أقرب وقت.",
+    "thanksBack": "العودة للرئيسية",
+    "ratingThanksTitle": "تم استلام تقييمك",
+    "ratingThanksLead": "شكراً لمشاركة تجربتك. تم حفظ تقييمك وستراجعه الإدارة قبل أي نشر.",
+    "offer_details": "تفاصيل العرض",
+    "offer_terms": "شروط العرض",
+    "offers_back": "العودة للعروض"
+  },
+  "fil": {
+    "thanksTitle": "Natanggap ang mensahe",
+    "thanksLead": "Salamat—naipadala ang iyong mensahe. Tutugon kami sa lalong madaling panahon.",
+    "thanksBack": "Bumalik sa home",
+    "ratingThanksTitle": "Natanggap ang iyong pagsusuri",
+    "ratingThanksLead": "Salamat sa pagbabahagi ng iyong karanasan. Susuriin muna ng administrasyon ang iyong pagsusuri bago ito ilathala.",
+    "offer_details": "Mga detalye ng alok",
+    "offer_terms": "Mga kondisyon ng alok",
+    "offers_back": "Bumalik sa mga alok"
+  },
+  "hi": {
+    "thanksTitle": "संदेश प्राप्त हुआ",
+    "thanksLead": "धन्यवाद—आपका संदेश भेज दिया गया। हम जल्द ही जवाब देंगे।",
+    "thanksBack": "होम पर वापस",
+    "ratingThanksTitle": "आपकी समीक्षा प्राप्त हुई",
+    "ratingThanksLead": "अपना अनुभव साझा करने के लिए धन्यवाद। आपकी समीक्षा सहेज ली गई है और प्रकाशन से पहले प्रशासन इसकी जाँच करेगा।",
+    "offer_details": "ऑफ़र का विवरण",
+    "offer_terms": "ऑफ़र की शर्तें",
+    "offers_back": "ऑफ़र पर वापस जाएँ"
+  },
+  "ur": {
+    "thanksTitle": "پیغام موصول ہوا",
+    "thanksLead": "شکریہ—آپ کا پیغام بھیج دیا گیا۔ ہم جلد جواب دیں گے۔",
+    "thanksBack": "ہوم پر واپس",
+    "ratingThanksTitle": "آپ کی رائے موصول ہو گئی",
+    "ratingThanksLead": "اپنا تجربہ بتانے کا شکریہ۔ آپ کی رائے محفوظ کر لی گئی ہے اور اشاعت سے پہلے انتظامیہ اس کا جائزہ لے گی۔",
+    "offer_details": "پیشکش کی تفصیلات",
+    "offer_terms": "پیشکش کی شرائط",
+    "offers_back": "پیشکشوں پر واپس جائیں"
+  }
+}

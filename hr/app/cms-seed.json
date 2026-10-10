@@ -1,0 +1,1724 @@
+{
+  "settings": {
+    "company_name": "كليك تكنولوجي",
+    "company_name_en": "Click Technology",
+    "public_phone": "22610074",
+    "public_email": "ctc@ctckuwait.com",
+    "public_hours": {
+      "en": "",
+      "ar": "",
+      "fil": "",
+      "hi": "",
+      "ur": ""
+    },
+    "public_slogan": {
+      "en": "You Can Depend On Us",
+      "ar": "يمكنك الاعتماد علينا",
+      "fil": "Maaari kang umasa sa amin",
+      "hi": "आप हम पर भरोसा कर सकते हैं",
+      "ur": "آپ ہم پر بھروسہ کر سکتے ہیں"
+    },
+    "public_site_title": {
+      "en": "",
+      "ar": "",
+      "fil": "",
+      "hi": "",
+      "ur": ""
+    },
+    "public_address": {
+      "en": "",
+      "ar": "",
+      "fil": "",
+      "hi": "",
+      "ur": ""
+    },
+    "public_contact_enabled": true,
+    "public_default_language": "ar",
+    "public_portal_label": {
+      "ar": "دخول الموظفين",
+      "en": "Staff login",
+      "fil": "Staff login",
+      "hi": "कर्मचारी लॉगिन",
+      "ur": "ملازمین کا لاگ ان"
+    }
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "content": {
+        "en": {
+          "title": "Home",
+          "nav_label": "Home",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "ar": {
+          "title": "الرئيسية",
+          "nav_label": "الرئيسية",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "fil": {
+          "title": "Home",
+          "nav_label": "Home",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "होम",
+          "nav_label": "होम",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "ہوم",
+          "nav_label": "ہوم",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "order": 0,
+      "visible": 1,
+      "sections": [
+        {
+          "layout": "hero",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Distribution excellence for the mobile market",
+              "body": "A trusted partner for handsets and nationwide retail presence—built on integrity, speed, and scale.",
+              "button_label": "Explore offers",
+              "button_url": "index.php?page=offers",
+              "eyebrow": "Kuwait · Since 2017",
+              "secondary_button_label": "Contact us",
+              "secondary_button_url": "index.php?page=contact"
+            },
+            "ar": {
+              "title": "تميّز في التوزيع لسوق الهواتف",
+              "body": "شريك موثوق للأجهزة وللحضور التجاري على مستوى الكويت—بناءً على النزاهة والسرعة والقوة.",
+              "button_label": "استكشف العروض",
+              "button_url": "index.php?page=offers",
+              "eyebrow": "الكويت · منذ 2017",
+              "secondary_button_label": "تواصل معنا",
+              "secondary_button_url": "index.php?page=contact"
+            },
+            "fil": {
+              "title": "Distribusyon na mahusay para sa mobile market",
+              "body": "Mapagkakatiwalaang kasosyo para sa handsets at nationwide retail—batay sa integridad, bilis, at sukat.",
+              "button_label": "Tingnan ang mga alok",
+              "button_url": "index.php?page=offers",
+              "eyebrow": "Kuwait · Mula 2017",
+              "secondary_button_label": "Makipag-ugnayan",
+              "secondary_button_url": "index.php?page=contact"
+            },
+            "hi": {
+              "title": "मोबाइल बाज़ार के लिए उत्कृष्ट वितरण",
+              "body": "हैंडसेट और देश भर में खुदरा उपस्थिति के लिए विश्वसनीय साझेदार—ईमानदारी, गति और पैमाने पर आधारित।",
+              "button_label": "ऑफ़र देखें",
+              "button_url": "index.php?page=offers",
+              "eyebrow": "कुवैत · 2017 से",
+              "secondary_button_label": "संपर्क करें",
+              "secondary_button_url": "index.php?page=contact"
+            },
+            "ur": {
+              "title": "موبائل مارکیٹ کے لیے بہترین تقسیم",
+              "body": "ہینڈسیٹس اور قومی سطح پر ریٹیل موجودگی کے لیے قابلِ اعتماد شراکت دار—دیانتداری، رفتار اور پیمانے پر مبنی۔",
+              "button_label": "آفرز دیکھیں",
+              "button_url": "index.php?page=offers",
+              "eyebrow": "کویت · 2017 سے",
+              "secondary_button_label": "رابطہ کریں",
+              "secondary_button_url": "index.php?page=contact"
+            }
+          },
+          "cards": [
+            {
+              "type": "text",
+              "order": 1,
+              "visible": true,
+              "content": {
+                "en": {
+                  "title": "2017",
+                  "subtitle": "Founded"
+                },
+                "ar": {
+                  "title": "2017",
+                  "subtitle": "التأسيس"
+                },
+                "fil": {
+                  "title": "2017",
+                  "subtitle": "Itinatag"
+                },
+                "hi": {
+                  "title": "2017",
+                  "subtitle": "स्थापना"
+                },
+                "ur": {
+                  "title": "2017",
+                  "subtitle": "قیام"
+                }
+              },
+              "template_key": "home:0:1"
+            },
+            {
+              "type": "text",
+              "order": 2,
+              "visible": true,
+              "content": {
+                "en": {
+                  "title": "Kuwait",
+                  "subtitle": "Coverage"
+                },
+                "ar": {
+                  "title": "الكويت",
+                  "subtitle": "التغطية"
+                },
+                "fil": {
+                  "title": "Kuwait",
+                  "subtitle": "Sakop"
+                },
+                "hi": {
+                  "title": "कुवैत",
+                  "subtitle": "कवरेज"
+                },
+                "ur": {
+                  "title": "کویت",
+                  "subtitle": "کوریج"
+                }
+              },
+              "template_key": "home:0:2"
+            },
+            {
+              "type": "text",
+              "order": 3,
+              "visible": true,
+              "content": {
+                "en": {
+                  "title": "Network",
+                  "subtitle": "Retail reach"
+                },
+                "ar": {
+                  "title": "شبكة",
+                  "subtitle": "انتشار تجزئة"
+                },
+                "fil": {
+                  "title": "Network",
+                  "subtitle": "Retail reach"
+                },
+                "hi": {
+                  "title": "नेटवर्क",
+                  "subtitle": "खुदरा पहुँच"
+                },
+                "ur": {
+                  "title": "نیٹ ورک",
+                  "subtitle": "ریٹیل رسائی"
+                }
+              },
+              "template_key": "home:0:3"
+            }
+          ],
+          "order": 0,
+          "template_key": "home:0"
+        },
+        {
+          "layout": "text",
+          "theme": "ivory",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Who we are",
+              "body": "{{company}} is a leading mobile handset company in Kuwait, founded in 2017. We combine strong distribution, disciplined operations, and a professional team to serve partners and customers with reliability you can feel.",
+              "button_label": "About",
+              "button_url": "index.php?page=about&lang=en",
+              "eyebrow": "Corporate profile"
+            },
+            "ar": {
+              "title": "من نحن",
+              "body": "كليك تكنولوجي شركة رائدة في توزيع الهواتف بالكويت تأسست عام 2017. نجمع بين التوزيع القوي والتشغيل المنضبط وفريق محترف لخدمة الشركاء والعملاء بثقة ملموسة.",
+              "button_label": "من نحن",
+              "button_url": "index.php?page=about&lang=ar",
+              "eyebrow": "بروفايل الشركة"
+            },
+            "fil": {
+              "title": "Sino kami",
+              "body": "Ang {{company}} ay nangunguna sa mobile handset sa Kuwait, itinatag noong 2017. Pinagsasama namin ang malakas na distribusyon, disiplinadong operasyon, at propesyonal na koponan.",
+              "button_label": "Tungkol",
+              "button_url": "index.php?page=about&lang=fil",
+              "eyebrow": "Korporasyon"
+            },
+            "hi": {
+              "title": "हम कौन हैं",
+              "body": "{{company}} कुवैत में अग्रणी मोबाइल हैंडसेट कंपनी है, 2017 में स्थापित। हम मजबूत वितरण, अनुशासित संचालन और पेशेवर टीम को जोड़ते हैं।",
+              "button_label": "हमारे बारे में",
+              "button_url": "index.php?page=about&lang=hi",
+              "eyebrow": "कॉर्पोरेट प्रोफ़ाइल"
+            },
+            "ur": {
+              "title": "ہم کون ہیں",
+              "body": "کلک ٹیکنالوجی کویت میں موبائل ہینڈسیٹ کی معروف کمپنی ہے، 2017 میں قائم۔ ہم مضبوط تقسیم، مضبوط آپریشنز اور پیشہ ورانہ ٹیم کو یکجا کرتے ہیں۔",
+              "button_label": "ہمارے بارے میں",
+              "button_url": "index.php?page=about&lang=ur",
+              "eyebrow": "کارپوریٹ پروفائل"
+            }
+          },
+          "cards": [],
+          "order": 10,
+          "template_key": "home:10"
+        },
+        {
+          "layout": "grid",
+          "theme": "navy",
+          "columns": 4,
+          "content": {
+            "en": {
+              "title": "Why choose us"
+            },
+            "ar": {
+              "title": "لماذا نحن"
+            },
+            "fil": {
+              "title": "Bakit kami"
+            },
+            "hi": {
+              "title": "हमें क्यों चुनें"
+            },
+            "ur": {
+              "title": "ہم کیوں"
+            }
+          },
+          "cards": [
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Trusted network",
+                  "body": "Consistent supply and partner relationships across Kuwait."
+                },
+                "ar": {
+                  "title": "شبكة موثوقة",
+                  "body": "إمداد ثابت وعلاقات شراكة عبر الكويت."
+                },
+                "fil": {
+                  "title": "Pinagkakatiwalaang network",
+                  "body": "Matatag na supply at relasyon sa buong Kuwait."
+                },
+                "hi": {
+                  "title": "विश्वसनीय नेटवर्क",
+                  "body": "कुवैत भर में स्थिर आपूर्ति और साझेदारी।"
+                },
+                "ur": {
+                  "title": "قابلِ اعتماد نیٹ ورک",
+                  "body": "پورے کویت میں مستحکم فراہمی اور شراکت۔"
+                }
+              },
+              "order": 1,
+              "template_key": "home:20:1"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Distribution strength",
+                  "body": "Scalable logistics aligned with market demand."
+                },
+                "ar": {
+                  "title": "قوة توزيع",
+                  "body": "لوجستيات قابلة للتوسع بما يتوافق مع الطلب."
+                },
+                "fil": {
+                  "title": "Lakas ng distribusyon",
+                  "body": "Logistik na umaayon sa demand."
+                },
+                "hi": {
+                  "title": "वितरण शक्ति",
+                  "body": "मांग के अनुरूप लॉजिस्टिक्स।"
+                },
+                "ur": {
+                  "title": "تقسیم کی طاقت",
+                  "body": "طلب کے مطابق لاجسٹکس۔"
+                }
+              },
+              "order": 2,
+              "template_key": "home:20:2"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Professional team",
+                  "body": "Experienced people focused on service and clarity."
+                },
+                "ar": {
+                  "title": "فريق محترف",
+                  "body": "خبراء يركزون على الخدمة والوضوح."
+                },
+                "fil": {
+                  "title": "Propesyonal na koponan",
+                  "body": "May karanasan at malinaw na serbisyo."
+                },
+                "hi": {
+                  "title": "पेशेवर टीम",
+                  "body": "अनुभवी लोग—सेवा और स्पष्टता पर केंद्रित।"
+                },
+                "ur": {
+                  "title": "پیشہ ور ٹیم",
+                  "body": "تجربہ کار افراد—سروس اور وضاحت پر مرکوز۔"
+                }
+              },
+              "order": 3,
+              "template_key": "home:20:3"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Market leadership",
+                  "body": "A recognized name in mobile distribution."
+                },
+                "ar": {
+                  "title": "ريادة سوقية",
+                  "body": "اسم معروف في التوزيع."
+                },
+                "fil": {
+                  "title": "Pamumuno sa merkado",
+                  "body": "Kilalang pangalan sa distribusyon."
+                },
+                "hi": {
+                  "title": "बाज़ार नेतृत्व",
+                  "body": "वितरण में पहचाना नाम।"
+                },
+                "ur": {
+                  "title": "مارکیٹ لیڈرشپ",
+                  "body": "تقسیم میں پہچانا جانے والا نام۔"
+                }
+              },
+              "order": 4,
+              "template_key": "home:20:4"
+            }
+          ],
+          "order": 20,
+          "template_key": "home:20"
+        },
+        {
+          "layout": "grid",
+          "theme": "light",
+          "columns": 4,
+          "content": {
+            "en": {
+              "title": "How installment works",
+              "body": "Simple steps from selection to approval and delivery.",
+              "button_label": "How It Works",
+              "button_url": "index.php?page=how-it-works"
+            },
+            "ar": {
+              "title": "كيف يعمل التقسيط",
+              "body": "خطوات بسيطة من الاختيار إلى الموافقة والتسليم.",
+              "button_label": "كيفية الطلب",
+              "button_url": "index.php?page=how-it-works"
+            },
+            "fil": {
+              "title": "Paano ang installment",
+              "body": "Mga simpleng hakbang mula sa pagpili hanggang sa delivery.",
+              "button_label": "Paano Gumagana",
+              "button_url": "index.php?page=how-it-works"
+            },
+            "hi": {
+              "title": "किस्त कैसे काम करती है",
+              "body": "चयन से अनुमोदन और डिलीवरी तक सरल चरण।",
+              "button_label": "यह कैसे काम करता है",
+              "button_url": "index.php?page=how-it-works"
+            },
+            "ur": {
+              "title": "قسط کیسے کام کرتی ہے",
+              "body": "انتخاب سے منظوری اور ترسیل تک آسان مراحل۔",
+              "button_label": "یہ کیسے کام کرتا ہے",
+              "button_url": "index.php?page=how-it-works"
+            }
+          },
+          "cards": [
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Choose"
+                },
+                "ar": {
+                  "title": "اختيار"
+                },
+                "fil": {
+                  "title": "Pumili"
+                },
+                "hi": {
+                  "title": "चुनें"
+                },
+                "ur": {
+                  "title": "منتخب"
+                }
+              },
+              "order": 1,
+              "template_key": "home:30:1"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Request"
+                },
+                "ar": {
+                  "title": "طلب"
+                },
+                "fil": {
+                  "title": "Mag-request"
+                },
+                "hi": {
+                  "title": "अनुरोध"
+                },
+                "ur": {
+                  "title": "درخواست"
+                }
+              },
+              "order": 2,
+              "template_key": "home:30:2"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Approve"
+                },
+                "ar": {
+                  "title": "موافقة"
+                },
+                "fil": {
+                  "title": "Apruba"
+                },
+                "hi": {
+                  "title": "स्वीकृति"
+                },
+                "ur": {
+                  "title": "منظوری"
+                }
+              },
+              "order": 3,
+              "template_key": "home:30:3"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Receive"
+                },
+                "ar": {
+                  "title": "استلام"
+                },
+                "fil": {
+                  "title": "Tanggapin"
+                },
+                "hi": {
+                  "title": "प्राप्ति"
+                },
+                "ur": {
+                  "title": "وصولی"
+                }
+              },
+              "order": 4,
+              "template_key": "home:30:4"
+            }
+          ],
+          "order": 30,
+          "template_key": "home:30"
+        },
+        {
+          "layout": "text",
+          "theme": "ivory",
+          "columns": 3,
+          "order": 60,
+          "cards": [],
+          "content": {
+            "en": {
+              "title": "Ready to move forward?",
+              "body": "Speak with our team or browse current offers.",
+              "button_label": "View offers",
+              "button_url": "index.php?page=offers",
+              "secondary_button_label": "Get in touch",
+              "secondary_button_url": "index.php?page=contact",
+              "body_without_offers": "Speak with our team."
+            },
+            "ar": {
+              "title": "جاهز للخطوة التالية؟",
+              "body": "تحدث مع فريقنا أو تصفّح أحدث العروض.",
+              "button_label": "عرض العروض",
+              "button_url": "index.php?page=offers",
+              "secondary_button_label": "تواصل الآن",
+              "secondary_button_url": "index.php?page=contact",
+              "body_without_offers": "تحدث مع فريقنا."
+            },
+            "fil": {
+              "title": "Handa ka na ba?",
+              "body": "Makipag-usap sa team o tingnan ang mga alok.",
+              "button_label": "Tingnan ang alok",
+              "button_url": "index.php?page=offers",
+              "secondary_button_label": "Kumontak",
+              "secondary_button_url": "index.php?page=contact",
+              "body_without_offers": "Makipag-usap sa aming team."
+            },
+            "hi": {
+              "title": "आगे बढ़ने के लिए तैयार?",
+              "body": "हमारी टीम से बात करें या नवीनतम ऑफ़र देखें।",
+              "button_label": "ऑफ़र देखें",
+              "button_url": "index.php?page=offers",
+              "secondary_button_label": "संपर्क करें",
+              "secondary_button_url": "index.php?page=contact",
+              "body_without_offers": "हमारी टीम से बात करें।"
+            },
+            "ur": {
+              "title": "آگے بڑھنے کے لیے تیار؟",
+              "body": "ہماری ٹیم سے بات کریں یا تازہ ترین آفرز دیکھیں۔",
+              "button_label": "آفرز دیکھیں",
+              "button_url": "index.php?page=offers",
+              "secondary_button_label": "رابطہ",
+              "secondary_button_url": "index.php?page=contact",
+              "body_without_offers": "ہماری ٹیم سے بات کریں۔"
+            }
+          },
+          "template_key": "home:60"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "about",
+      "content": {
+        "en": {
+          "title": "About {{company}}",
+          "nav_label": "About",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "ar": {
+          "title": "عن {{company}}",
+          "nav_label": "من نحن",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "fil": {
+          "title": "Tungkol sa {{company}}",
+          "nav_label": "Tungkol",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "{{company}} के बारे में",
+          "nav_label": "हमारे बारे में",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "{{company}} کے بارے میں",
+          "nav_label": "ہمارے بارے میں",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "order": 10,
+      "visible": 1,
+      "sections": [
+        {
+          "layout": "hero",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "About {{company}}",
+              "body": "From 2017 to today—building trust in Kuwait’s mobile sector."
+            },
+            "ar": {
+              "title": "عن كليك تكنولوجي",
+              "body": "من 2017 إلى اليوم—بناء الثقة في قطاع الهواتف بالكويت."
+            },
+            "fil": {
+              "title": "Tungkol sa {{company}}",
+              "body": "Mula 2017 hanggang ngayon—pagbuo ng tiwala sa mobile sector ng Kuwait."
+            },
+            "hi": {
+              "title": "{{company}} के बारे में",
+              "body": "2017 से आज तक—कुवैत के मोबाइल क्षेत्र में विश्वास निर्माण।"
+            },
+            "ur": {
+              "title": "کلک ٹیکنالوجی کے بارے میں",
+              "body": "2017 سے آج تک—کویت کے موبائل شعبے میں اعتماد کی تعمیر۔"
+            }
+          },
+          "cards": [],
+          "order": 0,
+          "template_key": "about:0"
+        },
+        {
+          "layout": "text",
+          "theme": "ivory",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Built for the market",
+              "body": "We grew by staying close to partners and customers: clear communication, dependable fulfillment, and a culture that values integrity and adaptation. Our vision is simple—be the partner you can depend on.",
+              "mission_title": "What drives us",
+              "mission_body": "Deliver reliable distribution and service excellence while expanding our footprint responsibly across Kuwait.",
+              "vision_title": "Where we’re headed",
+              "vision_body": "To remain a reference in mobile distribution—known for trust, performance, and people.",
+              "mission_eyebrow": "Mission",
+              "vision_eyebrow": "Vision",
+              "eyebrow": "Our story"
+            },
+            "ar": {
+              "title": "مبني للسوق",
+              "body": "نمونا بقربنا من الشركاء والعملاء: تواصل واضح، تنفيذ موثوق، وثقافة تحترم النزاهة والتكيّف. رؤيتنا بسيطة—أن نكون الشريك الذي تعتمد عليه.",
+              "mission_title": "ما يحركنا",
+              "mission_body": "تقديم توزيع موثوق وتميّز في الخدمة مع توسيع حضورنا بمسؤولية في الكويت.",
+              "vision_title": "إلى أين نمضي",
+              "vision_body": "أن نبقى مرجعاً في التوزيع—معروفين بالثقة والأداء والأشخاص.",
+              "mission_eyebrow": "المهمة",
+              "vision_eyebrow": "الرؤية",
+              "eyebrow": "قصتنا"
+            },
+            "fil": {
+              "title": "Itinayo para sa merkado",
+              "body": "Lumago kami sa pamamagitan ng malinaw na komunikasyon at maaasahang fulfillment. Ang aming bisyon ay simple—maging partner na maaasahan mo.",
+              "mission_title": "Ano ang nagpapakilos sa amin",
+              "mission_body": "Maghatid ng maaasahang distribusyon at mahusay na serbisyo habang lumalawak nang responsable sa Kuwait.",
+              "vision_title": "Patungo sa kinabukasan",
+              "vision_body": "Manatiling sanggunian sa mobile distribution—kilala sa tiwala at performance.",
+              "mission_eyebrow": "Misyon",
+              "vision_eyebrow": "Bisyon",
+              "eyebrow": "Kwento"
+            },
+            "hi": {
+              "title": "बाज़ार के लिए निर्मित",
+              "body": "हम स्पष्ट संचार, विश्वसनीय पूर्ति और अखंडता की संस्कृति के साथ बढ़े। हमारी दृष्टि सरल है—वह साझेदार बनें जिस पर आप भरोसा कर सकें।",
+              "mission_title": "हमें क्या प्रेरित करता है",
+              "mission_body": "विश्वसनीय वितरण और सेवा उत्कृष्टता प्रदान करना, जिम्मेदारी से विस्तार।",
+              "vision_title": "हम कहाँ जा रहे हैं",
+              "vision_body": "मोबाइल वितरण में संदर्भ बने रहना—विश्वास, प्रदर्शन और लोगों के लिए जाना जाना।",
+              "mission_eyebrow": "मिशन",
+              "vision_eyebrow": "दृष्टि",
+              "eyebrow": "कहानी"
+            },
+            "ur": {
+              "title": "مارکیٹ کے لیے بنایا گیا",
+              "body": "ہم واضح مواصلات، قابلِ اعتماد تکمیل اور دیانت کی ثقافت کے ساتھ بڑھے۔ ہماری وژن سادہ ہے—وہ شراکت دار بنیں جس پر آپ بھروسہ کر سکیں۔",
+              "mission_title": "ہمیں کیا حرکت دیتا ہے",
+              "mission_body": "قابلِ اعتماد تقسیم اور سروس میں عمدگی، ذمہ داری سے توسیع۔",
+              "vision_title": "ہم کہاں جا رہے ہیں",
+              "vision_body": "موبائل تقسیم میں مرجع بنے رہنا—اعتماد، کارکردگی اور لوگوں کے لیے جانا جانا۔",
+              "mission_eyebrow": "مشن",
+              "vision_eyebrow": "وژن",
+              "eyebrow": "کہانی"
+            }
+          },
+          "cards": [],
+          "order": 10,
+          "template_key": "about:10"
+        },
+        {
+          "layout": "grid",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "How we operate",
+              "eyebrow": "Values"
+            },
+            "ar": {
+              "title": "كيف نعمل",
+              "eyebrow": "القيم"
+            },
+            "fil": {
+              "title": "Paano kami gumagalaw",
+              "eyebrow": "Mga Halaga"
+            },
+            "hi": {
+              "title": "हम कैसे काम करते हैं",
+              "eyebrow": "मूल्य"
+            },
+            "ur": {
+              "title": "ہم کیسے کام کرتے ہیں",
+              "eyebrow": "اقدار"
+            }
+          },
+          "cards": [
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Integrity",
+                  "body": "We do what we say—transparently and consistently."
+                },
+                "ar": {
+                  "title": "النزاهة",
+                  "body": "نفي بوعودنا—بشفافية وثبات."
+                },
+                "fil": {
+                  "title": "Integridad",
+                  "body": "Tinutupad namin ang aming sinasabi."
+                },
+                "hi": {
+                  "title": "ईमानदारी",
+                  "body": "हम वही करते हैं जो कहते हैं—पारदर्शी और निरंतर।"
+                },
+                "ur": {
+                  "title": "دیانتداری",
+                  "body": "ہم وہی کرتے ہیں جو کہتے ہیں—شفاف اور مستقل۔"
+                }
+              },
+              "order": 1,
+              "template_key": "about:40:1"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Excellence",
+                  "body": "Quality in process, product handling, and partner care."
+                },
+                "ar": {
+                  "title": "التميّز",
+                  "body": "جودة في العملية والتعامل مع المنتج والشركاء."
+                },
+                "fil": {
+                  "title": "Kahusayan",
+                  "body": "Kalidad sa proseso at pangangalaga sa kasosyo."
+                },
+                "hi": {
+                  "title": "उत्कृष्टता",
+                  "body": "प्रक्रिया, हैंडलिंग और साझेदार देखभाल में गुणवत्ता।"
+                },
+                "ur": {
+                  "title": "عمدگی",
+                  "body": "عمل، ہینڈلنگ اور شراکت دار کی دیکھ بھال میں معیار۔"
+                }
+              },
+              "order": 2,
+              "template_key": "about:40:2"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Adaptation",
+                  "body": "We evolve with the market—fast and responsibly."
+                },
+                "ar": {
+                  "title": "التكيّف",
+                  "body": "نتطور مع السوق—بسرعة ومسؤولية."
+                },
+                "fil": {
+                  "title": "Adaptasyon",
+                  "body": "Umuunlad kasama ng merkado—mabilis at responsable."
+                },
+                "hi": {
+                  "title": "अनुकूलन",
+                  "body": "हम बाज़ार के साथ विकसित होते हैं—तेज़ और जिम्मेदार।"
+                },
+                "ur": {
+                  "title": "موافقت",
+                  "body": "ہم مارکیٹ کے ساتھ بڑھتے ہیں—تیز اور ذمہ دار۔"
+                }
+              },
+              "order": 3,
+              "template_key": "about:40:3"
+            }
+          ],
+          "order": 40,
+          "template_key": "about:40"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "leadership",
+      "order": 25,
+      "visible": 0,
+      "content": {
+        "ar": {
+          "title": "فريق القيادة",
+          "nav_label": "فريق القيادة",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "en": {
+          "title": "Leadership",
+          "nav_label": "Leadership",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "fil": {
+          "title": "Pamunuan",
+          "nav_label": "Pamunuan",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "नेतृत्व",
+          "nav_label": "नेतृत्व",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "قیادت",
+          "nav_label": "قیادت",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "sections": [
+        {
+          "layout": "grid",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Our leadership",
+              "body": "The people steering {{company}} forward.",
+              "eyebrow": "Leadership"
+            },
+            "ar": {
+              "title": "فريق القيادة",
+              "body": "الفريق القيادي الذي يقود كليك تكنولوجي نحو الأمام.",
+              "eyebrow": "القيادة"
+            },
+            "fil": {
+              "title": "Aming liderato",
+              "body": "Ang mga lider na gumagabay sa {{company}} pasulong.",
+              "eyebrow": "Liderato"
+            },
+            "hi": {
+              "title": "हमारा नेतृत्व",
+              "body": "वे लोग जो {{company}} को आगे बढ़ा रहे हैं।",
+              "eyebrow": "नेतृत्व"
+            },
+            "ur": {
+              "title": "ہماری قیادت",
+              "body": "وہ افراد جو {{company}} کو آگے بڑھا رہے ہیں۔",
+              "eyebrow": "قیادت"
+            }
+          },
+          "cards": [
+            {
+              "type": "person",
+              "content": {
+                "en": {
+                  "title": "Nasser Al Ajmi",
+                  "subtitle": "Chairman and Co-Founder"
+                },
+                "ar": {
+                  "title": "Nasser Al Ajmi",
+                  "subtitle": "رئيس مجلس الإدارة والشريك المؤسس"
+                },
+                "fil": {
+                  "title": "Nasser Al Ajmi",
+                  "subtitle": "Chairman at Co-Founder"
+                },
+                "hi": {
+                  "title": "Nasser Al Ajmi",
+                  "subtitle": "अध्यक्ष एवं सह-संस्थापक"
+                },
+                "ur": {
+                  "title": "Nasser Al Ajmi",
+                  "subtitle": "چیئرمین اور شریک بانی"
+                }
+              },
+              "order": 1,
+              "template_key": "leadership:10:1"
+            },
+            {
+              "type": "person",
+              "content": {
+                "en": {
+                  "title": "Ibrahim Naji",
+                  "subtitle": "General Manager and Co-Founder"
+                },
+                "ar": {
+                  "title": "Ibrahim Naji",
+                  "subtitle": "المدير العام والشريك المؤسس"
+                },
+                "fil": {
+                  "title": "Ibrahim Naji",
+                  "subtitle": "General Manager at Co-Founder"
+                },
+                "hi": {
+                  "title": "Ibrahim Naji",
+                  "subtitle": "महाप्रबंधक एवं सह-संस्थापक"
+                },
+                "ur": {
+                  "title": "Ibrahim Naji",
+                  "subtitle": "جنرل منیجر اور شریک بانی"
+                }
+              },
+              "order": 2,
+              "template_key": "leadership:10:2"
+            },
+            {
+              "type": "person",
+              "content": {
+                "en": {
+                  "title": "Saad Al Meshwet",
+                  "subtitle": "Partner and Director"
+                },
+                "ar": {
+                  "title": "Saad Al Meshwet",
+                  "subtitle": "شريك ومدير"
+                },
+                "fil": {
+                  "title": "Saad Al Meshwet",
+                  "subtitle": "Partner at Director"
+                },
+                "hi": {
+                  "title": "Saad Al Meshwet",
+                  "subtitle": "भागीदार एवं निदेशक"
+                },
+                "ur": {
+                  "title": "Saad Al Meshwet",
+                  "subtitle": "شریک اور ڈائریکٹر"
+                }
+              },
+              "order": 3,
+              "template_key": "leadership:10:3"
+            },
+            {
+              "type": "person",
+              "content": {
+                "en": {
+                  "title": "Talal Al Otaibi",
+                  "subtitle": "Partner and Director"
+                },
+                "ar": {
+                  "title": "Talal Al Otaibi",
+                  "subtitle": "شريك ومدير"
+                },
+                "fil": {
+                  "title": "Talal Al Otaibi",
+                  "subtitle": "Partner at Director"
+                },
+                "hi": {
+                  "title": "Talal Al Otaibi",
+                  "subtitle": "भागीदार एवं निदेशक"
+                },
+                "ur": {
+                  "title": "Talal Al Otaibi",
+                  "subtitle": "شریک اور ڈائریکٹر"
+                }
+              },
+              "order": 4,
+              "template_key": "leadership:10:4"
+            },
+            {
+              "type": "person",
+              "content": {
+                "en": {
+                  "title": "Ahmed Naji",
+                  "subtitle": "Partner and Director"
+                },
+                "ar": {
+                  "title": "Ahmed Naji",
+                  "subtitle": "شريك ومدير"
+                },
+                "fil": {
+                  "title": "Ahmed Naji",
+                  "subtitle": "Partner at Director"
+                },
+                "hi": {
+                  "title": "Ahmed Naji",
+                  "subtitle": "भागीदार एवं निदेशक"
+                },
+                "ur": {
+                  "title": "Ahmed Naji",
+                  "subtitle": "شریک اور ڈائریکٹر"
+                }
+              },
+              "order": 5,
+              "template_key": "leadership:10:5"
+            }
+          ],
+          "order": 10,
+          "template_key": "leadership:10"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "how-it-works",
+      "content": {
+        "en": {
+          "title": "How it works",
+          "nav_label": "How to order",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "ar": {
+          "title": "كيف يعمل",
+          "nav_label": "كيفية الطلب",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "fil": {
+          "title": "Paano ito gumagana",
+          "nav_label": "Paano umorder",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "यह कैसे काम करता है",
+          "nav_label": "ऑर्डर कैसे करें",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "یہ کیسے کام کرتا ہے",
+          "nav_label": "آرڈر کیسے کریں",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "order": 20,
+      "visible": 1,
+      "sections": [
+        {
+          "layout": "hero",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "How it works",
+              "body": "A clear path from interest to delivery—designed to reduce friction."
+            },
+            "ar": {
+              "title": "كيف يعمل",
+              "body": "مسار واضح من الاهتمام إلى التسليم—لتقليل التعقيد."
+            },
+            "fil": {
+              "title": "Paano ito gumagana",
+              "body": "Malinaw na landas mula interes hanggang delivery."
+            },
+            "hi": {
+              "title": "यह कैसे काम करता है",
+              "body": "रुचि से डिलीवरी तक स्पष्ट मार्ग—घर्षण कम करने के लिए।"
+            },
+            "ur": {
+              "title": "یہ کیسے کام کرتا ہے",
+              "body": "دلچسپی سے ترسیل تک واضح راستہ—رگڑ کم کرنے کے لیے۔"
+            }
+          },
+          "cards": [],
+          "order": 0,
+          "template_key": "how-it-works:0"
+        },
+        {
+          "layout": "grid",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "How it works",
+              "note_title": "Important",
+              "note_body": "Final terms depend on product and policy at the time of request. Our team will explain everything clearly before you proceed.",
+              "note_button_label": "View offers",
+              "note_button_url": "index.php?page=offers"
+            },
+            "ar": {
+              "title": "كيف يعمل",
+              "note_title": "تنبيه مهم",
+              "note_body": "الشروط النهائية تعتمد على المنتج والسياسة وقت الطلب. سنوضح كل شيء قبل المتابعة.",
+              "note_button_label": "عرض العروض",
+              "note_button_url": "index.php?page=offers"
+            },
+            "fil": {
+              "title": "Paano ito gumagana",
+              "note_title": "Mahalaga",
+              "note_body": "Ang huling tuntunin ay depende sa produkto at patakaran. Ipapaliwanag namin nang malinaw bago magpatuloy.",
+              "note_button_label": "Tingnan ang alok",
+              "note_button_url": "index.php?page=offers"
+            },
+            "hi": {
+              "title": "यह कैसे काम करता है",
+              "note_title": "महत्वपूर्ण",
+              "note_body": "अंतिम शर्तें उत्पालन और नीति पर निर्भर करती हैं। आगे बढ़ने से पहले हम सब कुछ स्पष्ट करेंगे।",
+              "note_button_label": "ऑफ़र देखें",
+              "note_button_url": "index.php?page=offers"
+            },
+            "ur": {
+              "title": "یہ کیسے کام کرتا ہے",
+              "note_title": "اہم",
+              "note_body": "حتمی شرائط پروڈکٹ اور پالیسی پر منحصر ہیں۔ آگے بڑھنے سے پہلے ہم سب کچھ واضح کریں گے۔",
+              "note_button_label": "آفرز دیکھیں",
+              "note_button_url": "index.php?page=offers"
+            }
+          },
+          "cards": [
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Choose your product",
+                  "body": "Pick the handset or plan that fits your needs."
+                },
+                "ar": {
+                  "title": "اختر منتجك",
+                  "body": "اختر الجهاز أو الباقة المناسبة."
+                },
+                "fil": {
+                  "title": "Pumili ng produkto",
+                  "body": "Piliin ang handset o plano na akma sa iyo."
+                },
+                "hi": {
+                  "title": "अपना उत्पाद चुनें",
+                  "body": "अपनी ज़रूरत के अनुसार हैंडसेट या प्लान चुनें।"
+                },
+                "ur": {
+                  "title": "اپنی پروڈکٹ منتخب کریں",
+                  "body": "وہ ہینڈسیٹ یا پلان منتخب کریں جو آپ کی ضرورت پر پورا اترے۔"
+                }
+              },
+              "order": 1,
+              "template_key": "how-it-works:10:1"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Submit your request",
+                  "body": "Share details securely for review."
+                },
+                "ar": {
+                  "title": "قدّم طلبك",
+                  "body": "شارك التفاصيل بشكل آمن للمراجعة."
+                },
+                "fil": {
+                  "title": "Isumite ang kahilingan",
+                  "body": "Ibahagi ang detalye nang ligtas para sa review."
+                },
+                "hi": {
+                  "title": "अनुरोध जमा करें",
+                  "body": "समीक्षा के लिए विवरण सुरक्षित रूप से साझा करें।"
+                },
+                "ur": {
+                  "title": "درخواست جمع کرائیں",
+                  "body": "جائزے کے لیے تفصیلات محفوظ طریقے سے شیئر کریں۔"
+                }
+              },
+              "order": 2,
+              "template_key": "how-it-works:10:2"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Review & approval",
+                  "body": "We validate eligibility and confirm next steps quickly."
+                },
+                "ar": {
+                  "title": "مراجعة وموافقة",
+                  "body": "نتحقق من الأهلية ونوضح الخطوات بسرعة."
+                },
+                "fil": {
+                  "title": "Review at apruba",
+                  "body": "Sinusuri namin ang eligibility at susunod na hakbang."
+                },
+                "hi": {
+                  "title": "समीक्षा और अनुमोदन",
+                  "body": "हम पात्रता और अगले चरणों को जल्दी स्पष्ट करते हैं।"
+                },
+                "ur": {
+                  "title": "جائزہ اور منظوری",
+                  "body": "ہم اہلیت اور اگلے مراحل کو جلدی واضح کرتے ہیں۔"
+                }
+              },
+              "order": 3,
+              "template_key": "how-it-works:10:3"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Delivery & start",
+                  "body": "Receive your device and begin your installment schedule."
+                },
+                "ar": {
+                  "title": "التسليم والبدء",
+                  "body": "استلم جهازك وابدأ جدول الأقساط."
+                },
+                "fil": {
+                  "title": "Delivery at simula",
+                  "body": "Tanggapin ang device at simulan ang installment."
+                },
+                "hi": {
+                  "title": "डिलीवरी और शुरुआत",
+                  "body": "डिवाइस प्राप्त करें और किस्त शेड्यूल शुरू करें।"
+                },
+                "ur": {
+                  "title": "ترسیل اور آغاز",
+                  "body": "ڈیوائس وصول کریں اور قسط کا شیڈول شروع کریں۔"
+                }
+              },
+              "order": 4,
+              "template_key": "how-it-works:10:4"
+            },
+            {
+              "type": "service",
+              "content": {
+                "en": {
+                  "title": "Ongoing support",
+                  "body": "Our team stays available for questions and service."
+                },
+                "ar": {
+                  "title": "دعم مستمر",
+                  "body": "فريقنا متاح للأسئلة والمتابعة."
+                },
+                "fil": {
+                  "title": "Patuloy na suporta",
+                  "body": "Available ang team para sa tanong at serbisyo."
+                },
+                "hi": {
+                  "title": "निरंतर सहायता",
+                  "body": "हमारी टीम प्रश्नों और सेवा के लिए उपलब्ध है।"
+                },
+                "ur": {
+                  "title": "مسلسل معاونت",
+                  "body": "ہماری ٹیم سوالات اور سروس کے لیے دستیاب ہے۔"
+                }
+              },
+              "order": 5,
+              "template_key": "how-it-works:10:5"
+            }
+          ],
+          "order": 10,
+          "template_key": "how-it-works:10"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "offers",
+      "content": {
+        "en": {
+          "title": "Current offers",
+          "nav_label": "Offers",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "ar": {
+          "title": "العروض الحالية",
+          "nav_label": "العروض",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "fil": {
+          "title": "Kasalukuyang alok",
+          "nav_label": "Mga Alok",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "वर्तमान ऑफ़र",
+          "nav_label": "ऑफ़र",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "موجودہ آفرز",
+          "nav_label": "آفرز",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "order": 30,
+      "visible": 1,
+      "sections": [
+        {
+          "layout": "grid",
+          "theme": "ivory",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Current offers",
+              "body": "Highlights from our latest campaigns.",
+              "note": ""
+            },
+            "ar": {
+              "title": "العروض الحالية",
+              "body": "أبرز حملاتنا.",
+              "note": ""
+            },
+            "fil": {
+              "title": "Kasalukuyang alok",
+              "body": "Mga highlight mula sa aming pinakabagong kampanya.",
+              "note": ""
+            },
+            "hi": {
+              "title": "वर्तमान ऑफ़र",
+              "body": "हमारे नवीनतम अभियानों की मुख्य बातें।",
+              "note": ""
+            },
+            "ur": {
+              "title": "موجودہ آفرز",
+              "body": "ہماری تازہ مہمات کی جھلکیاں۔",
+              "note": ""
+            }
+          },
+          "cards": [
+            {
+              "type": "offer",
+              "order": 10,
+              "visible": 0,
+              "content": {
+                "ar": {
+                  "title": "باقات فلاغشيب",
+                  "subtitle": "أجهزة مميزة · مزايا لفترة محدودة",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "en": {
+                  "title": "Flagship bundles",
+                  "subtitle": "Premium devices · Limited-time perks",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "fil": {
+                  "title": "Flagship bundles",
+                  "subtitle": "Premium devices · Limited perks",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "hi": {
+                  "title": "फ्लैगशिप बंडल",
+                  "subtitle": "प्रीमियम डिवाइस · सीमित समय लाभ",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "ur": {
+                  "title": "فلیگ شپ بنڈلز",
+                  "subtitle": "پریمیم ڈیوائسز · محدود وقت فوائد",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                }
+              },
+              "template_key": "offers:0:10"
+            },
+            {
+              "type": "offer",
+              "order": 20,
+              "visible": 0,
+              "content": {
+                "ar": {
+                  "title": "قيمة يومية",
+                  "subtitle": "خطط شهرية قوية · تشكيلة واسعة",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "en": {
+                  "title": "Everyday value",
+                  "subtitle": "Strong monthly plans · Wide selection",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "fil": {
+                  "title": "Araw-araw na halaga",
+                  "subtitle": "Malakas na buwanang plano · Malawak na pagpipilian",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "hi": {
+                  "title": "रोज़मर्रा का मूल्य",
+                  "subtitle": "मजबूत मासिक योजनाएँ · विस्तृत चयन",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "ur": {
+                  "title": "روزمرہ قدر",
+                  "subtitle": "مضبوط ماہانہ منصوبے · وسیع انتخاب",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                }
+              },
+              "template_key": "offers:0:20"
+            },
+            {
+              "type": "offer",
+              "order": 30,
+              "visible": 0,
+              "content": {
+                "ar": {
+                  "title": "برامج شركاء",
+                  "subtitle": "دعم تجزئة · تخصيص مرن",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "en": {
+                  "title": "Partner programs",
+                  "subtitle": "Retail support · Tailored allocations",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "fil": {
+                  "title": "Partner programs",
+                  "subtitle": "Retail support · Tailored allocations",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "hi": {
+                  "title": "साझेदार कार्यक्रम",
+                  "subtitle": "खुदरा सहायता · अनुरूप आवंटन",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                },
+                "ur": {
+                  "title": "شراکت پروگرام",
+                  "subtitle": "ریٹیل سپورٹ · حسبِ ضرورت تقسیم",
+                  "body": "",
+                  "button_label": "",
+                  "button_url": ""
+                }
+              },
+              "template_key": "offers:0:30"
+            }
+          ],
+          "order": 0,
+          "template_key": "offers:0"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "contact",
+      "content": {
+        "en": {
+          "title": "Contact us",
+          "nav_label": "Contact",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "ar": {
+          "title": "تواصل معنا",
+          "nav_label": "تواصل",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "fil": {
+          "title": "Makipag-ugnayan",
+          "nav_label": "Kontak",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "संपर्क करें",
+          "nav_label": "संपर्क",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "رابطہ کریں",
+          "nav_label": "رابطہ",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "order": 40,
+      "visible": 1,
+      "sections": [
+        {
+          "layout": "hero",
+          "theme": "navy",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Contact us",
+              "body": "We respond quickly—choose the channel that suits you."
+            },
+            "ar": {
+              "title": "تواصل معنا",
+              "body": "نرد بسرعة—اختر القناة المناسبة."
+            },
+            "fil": {
+              "title": "Makipag-ugnayan",
+              "body": "Mabilis kaming tumutugon—pumili ng channel."
+            },
+            "hi": {
+              "title": "संपर्क करें",
+              "body": "हम जल्दी जवाब देते हैं—अपनी सुविधानुसार चैनल चुनें।"
+            },
+            "ur": {
+              "title": "رابطہ کریں",
+              "body": "ہم جلد جواب دیتے ہیں—اپنی سہولت کے مطابق چینل منتخب کریں۔"
+            }
+          },
+          "cards": [],
+          "order": 0,
+          "template_key": "contact:0"
+        },
+        {
+          "layout": "contact",
+          "theme": "ivory",
+          "columns": 3,
+          "content": {
+            "en": {
+              "title": "Send a message"
+            },
+            "ar": {
+              "title": "أرسل رسالة"
+            },
+            "fil": {
+              "title": "Magpadala ng mensahe"
+            },
+            "hi": {
+              "title": "संदेश भेजें"
+            },
+            "ur": {
+              "title": "پیغام بھیجیں"
+            }
+          },
+          "cards": [],
+          "order": 10,
+          "template_key": "contact:10"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "ratings",
+      "order": 70,
+      "visible": true,
+      "content": {
+        "ar": {
+          "title": "قيّم تجربتك مع الشركة",
+          "nav_label": "قيّم تجربتك مع الشركة",
+          "description": "{{company}} في الكويت. تعرّف على الشركة وخدماتها وعروضها وطرق التواصل معها."
+        },
+        "en": {
+          "title": "Rate your experience",
+          "nav_label": "Rate your experience",
+          "description": "Discover {{company}} in Kuwait, explore company information and offers, and contact our team."
+        },
+        "fil": {
+          "title": "I-rate ang iyong karanasan",
+          "nav_label": "I-rate ang iyong karanasan",
+          "description": "Kilalanin ang {{company}} sa Kuwait, tingnan ang mga alok at makipag-ugnayan sa aming pangkat."
+        },
+        "hi": {
+          "title": "अपने अनुभव को रेट करें",
+          "nav_label": "अपने अनुभव को रेट करें",
+          "description": "कुवैत में {{company}} के बारे में जानें, ऑफ़र देखें और हमारी टीम से संपर्क करें।"
+        },
+        "ur": {
+          "title": "اپنے تجربے کی درجہ بندی کریں",
+          "nav_label": "اپنے تجربے کی درجہ بندی کریں",
+          "description": "کویت میں {{company}} کے بارے میں جانیں، آفرز دیکھیں اور ہماری ٹیم سے رابطہ کریں۔"
+        }
+      },
+      "sections": [
+        {
+          "layout": "hero",
+          "theme": "navy",
+          "columns": 3,
+          "order": 0,
+          "cards": [],
+          "content": {
+            "ar": {
+              "title": "قيّم تجربتك مع الشركة",
+              "body": "شاركنا رأيك في تجربتك معنا."
+            },
+            "en": {
+              "title": "Rate your experience",
+              "body": "Tell us about your experience with our company."
+            },
+            "fil": {
+              "title": "I-rate ang iyong karanasan",
+              "body": "Ibahagi ang iyong karanasan sa aming kumpanya."
+            },
+            "hi": {
+              "title": "अपने अनुभव को रेट करें",
+              "body": "हमारी कंपनी के साथ अपना अनुभव साझा करें।"
+            },
+            "ur": {
+              "title": "اپنے تجربے کی درجہ بندی کریں",
+              "body": "ہماری کمپنی کے ساتھ اپنا تجربہ بتائیں۔"
+            }
+          },
+          "template_key": "ratings:0"
+        },
+        {
+          "layout": "contact",
+          "theme": "ivory",
+          "columns": 3,
+          "order": 10,
+          "cards": [],
+          "content": {
+            "ar": {
+              "title": "قيّم تجربتك مع الشركة"
+            },
+            "en": {
+              "title": "Rate your experience"
+            },
+            "fil": {
+              "title": "I-rate ang iyong karanasan"
+            },
+            "hi": {
+              "title": "अपने अनुभव को रेट करें"
+            },
+            "ur": {
+              "title": "اپنے تجربے کی درجہ بندی کریں"
+            }
+          },
+          "template_key": "ratings:10"
+        }
+      ],
+      "in_nav": 1
+    },
+    {
+      "slug": "privacy",
+      "order": 99,
+      "visible": 1,
+      "in_nav": 0,
+      "content": {
+        "ar": {
+          "title": "الخصوصية",
+          "nav_label": "الخصوصية",
+          "description": "كيفية استخدام بيانات الزوار والموظفين"
+        },
+        "en": {
+          "title": "Privacy",
+          "nav_label": "Privacy",
+          "description": "How visitor and employee information is used"
+        },
+        "fil": {
+          "title": "Pagkapribado",
+          "nav_label": "Pagkapribado",
+          "description": "Paggamit ng impormasyon ng mga bisita at empleyado"
+        },
+        "hi": {
+          "title": "गोपनीयता",
+          "nav_label": "गोपनीयता",
+          "description": "आगंतुकों और कर्मचारियों की जानकारी का उपयोग"
+        },
+        "ur": {
+          "title": "رازداری",
+          "nav_label": "رازداری",
+          "description": "زائرین اور ملازمین کی معلومات کا استعمال"
+        }
+      },
+      "sections": [
+        {
+          "layout": "text",
+          "theme": "ivory",
+          "columns": 1,
+          "order": 0,
+          "content": {
+            "ar": {
+              "title": "استخدام البيانات",
+              "body": "تستخدم {{company}} الاسم ووسائل التواصل والرسالة لمتابعة استفسارك وتوجيهه إلى القسم المختص. يُحفظ التقييم لمراجعته داخليًا؛ ولا يُنشر الاسم والتقييم والتعليق إلا إذا وافقت على النشر واعتمدته الإدارة. لا يُعرض بريدك الإلكتروني في التقييم المنشور.\n\nيستخدم الموقع جلسات لحماية النماذج وحفظ تفضيل اللغة. لا تتضمن هذه النسخة أدوات إعلانات أو تحليلات تسويقية. خطوط العرض تُحمّل من Google، وروابط الخرائط تستخدم خدمات Google عند فتحها.\n\nبيانات الموظفين ووقت الاستلام والصور والموقع عند تسجيل الحركة تُستخدم لإدارة الدوام والطلبات والمتابعة المصرح بها. المتابعة الدورية تعمل أثناء نشاط الصفحة، وليست تتبعًا مضمونًا عند إغلاقها.\n\nالوصول إلى بيانات الموظفين ورسائل العملاء مقيد بالصلاحيات. حذف السجلات والمستندات يخضع لإجراءات الإدارة والنسخ الاحتياطي؛ لا ندّعي حذف جميع البيانات تلقائيًا. للاستفسار أو طلب مراجعة بياناتك استخدم بيانات التواصل المنشورة بالموقع."
+            },
+            "en": {
+              "title": "Use of information",
+              "body": "{{company}} uses your name, contact details and message to follow up on your enquiry and route it to the appropriate department. Reviews are stored for internal consideration. Your name, rating and comment are published only with your consent and management approval. Your email address is not displayed with a published review.\n\nThe site uses sessions to protect forms and remember your language preference. This release does not include advertising or marketing analytics tools. Display fonts are loaded from Google; map links use Google services when opened.\n\nEmployee records, server receipt times, photos and location submitted with attendance events are used for attendance, requests and authorised supervision. Periodic location updates depend on the page remaining active; tracking is not guaranteed when it is closed.\n\nAccess to employee records and customer messages is restricted by permissions. Record and document deletion follows administrative and backup procedures; this notice does not promise automatic deletion of all data. For questions or a request to review your information, use the contact details published on this site."
+            },
+            "fil": {
+              "title": "Paggamit ng impormasyon",
+              "body": "Ginagamit ng {{company}} ang iyong pangalan, detalye sa pakikipag-ugnayan at mensahe upang asikasuhin ang iyong tanong at ipadala ito sa tamang departamento. Itinatago ang mga pagsusuri para sa panloob na pagrepaso. Ilalathala lamang ang iyong pangalan, marka at komento kung pumayag ka at inaprubahan ito ng pamunuan. Hindi inilalathala ang iyong email kasama ng pagsusuri.\n\nGumagamit ang site ng mga session upang protektahan ang mga form at tandaan ang pinili mong wika. Walang kasamang advertising o marketing analytics sa bersiyong ito. Nagmumula sa Google ang mga font; gumagamit ng Google ang mga link sa mapa kapag binuksan.\n\nGinagamit ang tala ng empleyado, oras ng pagtanggap ng server, larawan at lokasyon sa pagtatala ng pagpasok para sa pagdalo, mga kahilingan at awtorisadong pangangasiwa. Nakadepende ang regular na pag-update ng lokasyon sa pagiging aktibo ng pahina; hindi garantisado ang pagsubaybay kapag isinara ito.\n\nLimitado ayon sa pahintulot ang pag-access sa tala ng empleyado at mensahe ng customer. Sinusunod sa pagtanggal ng tala at dokumento ang mga proseso ng administrasyon at backup; hindi ipinapangako ang awtomatikong pagtanggal ng lahat ng datos. Para sa mga tanong o pagrepaso ng iyong impormasyon, gamitin ang mga detalye sa pakikipag-ugnayan sa site."
+            },
+            "hi": {
+              "title": "जानकारी का उपयोग",
+              "body": "{{company}} आपके नाम, संपर्क विवरण और संदेश का उपयोग आपकी पूछताछ पर आगे की कार्रवाई और उसे संबंधित विभाग तक पहुँचाने के लिए करती है। समीक्षाएँ आंतरिक जाँच के लिए रखी जाती हैं। आपका नाम, रेटिंग और टिप्पणी केवल आपकी सहमति तथा प्रबंधन की स्वीकृति के बाद प्रकाशित होते हैं। प्रकाशित समीक्षा में आपका ईमेल नहीं दिखाया जाता।\n\nयह साइट फ़ॉर्म की सुरक्षा और भाषा की पसंद याद रखने के लिए सत्रों का उपयोग करती है। इस संस्करण में विज्ञापन या विपणन विश्लेषण के उपकरण शामिल नहीं हैं। फ़ॉन्ट Google से लोड होते हैं; मानचित्र के लिंक खोलने पर Google की सेवाओं का उपयोग होता है।\n\nकर्मचारी रिकॉर्ड, सर्वर पर प्राप्ति का समय, उपस्थिति दर्ज करते समय भेजी गई तस्वीरें और स्थान का उपयोग उपस्थिति, अनुरोधों और अधिकृत निगरानी के लिए होता है। स्थान के नियमित अपडेट पेज के सक्रिय रहने पर निर्भर करते हैं; पेज बंद होने पर निगरानी की गारंटी नहीं है।\n\nकर्मचारी रिकॉर्ड और ग्राहकों के संदेशों तक पहुँच अनुमतियों के अनुसार सीमित है। रिकॉर्ड और दस्तावेज़ हटाने के लिए प्रशासन और बैकअप की प्रक्रियाएँ लागू होती हैं; सभी डेटा के स्वतः हटने का वादा नहीं किया जाता। प्रश्नों या अपनी जानकारी की समीक्षा के अनुरोध के लिए साइट पर दिए संपर्क विवरण का उपयोग करें।"
+            },
+            "ur": {
+              "title": "معلومات کا استعمال",
+              "body": "{{company}} آپ کا نام، رابطے کی تفصیلات اور پیغام آپ کی درخواست کی پیروی اور اسے متعلقہ شعبے تک پہنچانے کے لیے استعمال کرتی ہے۔ جائزے اندرونی جانچ کے لیے محفوظ کیے جاتے ہیں۔ آپ کا نام، درجہ اور تبصرہ صرف آپ کی رضامندی اور انتظامیہ کی منظوری کے بعد شائع ہوتا ہے۔ شائع شدہ جائزے کے ساتھ ای میل ظاہر نہیں کی جاتی۔\n\nسائٹ فارم کی حفاظت اور زبان کی ترجیح یاد رکھنے کے لیے سیشن استعمال کرتی ہے۔ اس نسخے میں اشتہارات یا مارکیٹنگ تجزیے کے آلات شامل نہیں ہیں۔ فونٹس Google سے لوڈ ہوتے ہیں؛ نقشے کے روابط کھولنے پر Google کی خدمات استعمال ہوتی ہیں۔\n\nملازم کا ریکارڈ، سرور پر وصولی کا وقت، حاضری کے ساتھ بھیجی گئی تصاویر اور مقام حاضری، درخواستوں اور مجاز نگرانی کے لیے استعمال ہوتے ہیں۔ مقام کی باقاعدہ تازہ کاری صفحہ فعال رہنے پر منحصر ہے؛ صفحہ بند ہونے پر نگرانی کی ضمانت نہیں ہے۔\n\nملازمین کے ریکارڈ اور صارفین کے پیغامات تک رسائی اجازتوں کے مطابق محدود ہے۔ ریکارڈ اور دستاویزات حذف کرنے کے لیے انتظامی اور بیک اپ طریقے نافذ ہوتے ہیں؛ تمام ڈیٹا کے خودکار حذف ہونے کا وعدہ نہیں کیا جاتا۔ سوال یا اپنی معلومات کے جائزے کی درخواست کے لیے سائٹ پر موجود رابطے کی تفصیلات استعمال کریں۔"
+            }
+          },
+          "cards": [],
+          "template_key": ""
+        }
+      ]
+    }
+  ]
+}

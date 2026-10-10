@@ -1,0 +1,97 @@
+{
+  "home:0": [
+    "title",
+    "body",
+    "button_label",
+    "button_url",
+    "eyebrow",
+    "secondary_button_label",
+    "secondary_button_url",
+    "body_without_offers"
+  ],
+  "home:10": [
+    "title",
+    "body",
+    "eyebrow",
+    "body_without_offers"
+  ],
+  "home:20": [
+    "title"
+  ],
+  "home:30": [
+    "title",
+    "body",
+    "button_label",
+    "button_url",
+    "body_without_offers"
+  ],
+  "home:60": [
+    "title",
+    "body",
+    "button_label",
+    "button_url",
+    "secondary_button_label",
+    "secondary_button_url",
+    "body_without_offers"
+  ],
+  "about:0": [
+    "title",
+    "body",
+    "body_without_offers"
+  ],
+  "about:10": [
+    "title",
+    "body",
+    "mission_title",
+    "mission_body",
+    "vision_title",
+    "vision_body",
+    "mission_eyebrow",
+    "vision_eyebrow",
+    "eyebrow",
+    "body_without_offers"
+  ],
+  "about:40": [
+    "title",
+    "eyebrow"
+  ],
+  "leadership:10": [
+    "eyebrow",
+    "title",
+    "body",
+    "body_without_offers"
+  ],
+  "how-it-works:0": [
+    "title",
+    "body",
+    "body_without_offers"
+  ],
+  "how-it-works:10": [
+    "note_title",
+    "note_body",
+    "note_button_label",
+    "note_button_url"
+  ],
+  "offers:0": [
+    "title",
+    "body",
+    "note",
+    "body_without_offers"
+  ],
+  "contact:0": [
+    "title",
+    "body",
+    "body_without_offers"
+  ],
+  "contact:10": [
+    "title"
+  ],
+  "ratings:0": [
+    "title",
+    "body",
+    "body_without_offers"
+  ],
+  "ratings:10": [
+    "title"
+  ]
+}

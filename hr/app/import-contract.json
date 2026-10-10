@@ -1,0 +1,431 @@
+[
+  {
+    "name": "الشركات",
+    "kind": "companies",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الشركة",
+        "required": true
+      },
+      {
+        "key": "name",
+        "label": "اسم الشركة",
+        "required": true
+      },
+      {
+        "key": "legal_name",
+        "label": "الاسم القانوني",
+        "required": false
+      },
+      {
+        "key": "bank_name",
+        "label": "بنك الشركة",
+        "required": false
+      },
+      {
+        "key": "bank_account",
+        "label": "حساب الشركة",
+        "required": false
+      },
+      {
+        "key": "labor_file",
+        "label": "رقم ملف الشؤون",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "الموظفون",
+    "kind": "employees",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "name",
+        "label": "اسم الموظف بالعربية",
+        "required": true
+      },
+      {
+        "key": "name_en",
+        "label": "اسم الموظف بالإنجليزية",
+        "required": false
+      },
+      {
+        "key": "company_code",
+        "label": "كود شركة العمل",
+        "required": false
+      },
+      {
+        "key": "residence_company_code",
+        "label": "كود شركة الإقامة",
+        "required": false
+      },
+      {
+        "key": "department",
+        "label": "القسم",
+        "required": false
+      },
+      {
+        "key": "job_title",
+        "label": "الوظيفة",
+        "required": false
+      },
+      {
+        "key": "staff_type",
+        "label": "طبيعة العمل",
+        "required": false
+      },
+      {
+        "key": "hired_on",
+        "label": "تاريخ التعيين",
+        "required": false
+      },
+      {
+        "key": "salary",
+        "label": "الراتب الأساسي",
+        "required": false
+      },
+      {
+        "key": "bank_salary",
+        "label": "مبلغ التحويل البنكي المعتاد",
+        "required": false
+      },
+      {
+        "key": "bank_name",
+        "label": "اسم بنك الموظف",
+        "required": false
+      },
+      {
+        "key": "bank_account",
+        "label": "رقم حساب الموظف",
+        "required": false
+      },
+      {
+        "key": "iban",
+        "label": "IBAN",
+        "required": false
+      },
+      {
+        "key": "civil_id",
+        "label": "رقم البطاقة المدنية",
+        "required": false
+      },
+      {
+        "key": "ended_on",
+        "label": "تاريخ نهاية الخدمة",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "الحضور القديم",
+    "kind": "attendance",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "date",
+        "label": "التاريخ",
+        "required": true
+      },
+      {
+        "key": "attendance",
+        "label": "وقت الحضور",
+        "required": false
+      },
+      {
+        "key": "checkout",
+        "label": "وقت الانصراف",
+        "required": false
+      },
+      {
+        "key": "status",
+        "label": "حالة اليوم",
+        "required": true
+      },
+      {
+        "key": "late_minutes",
+        "label": "دقائق التأخير المعتمدة",
+        "required": false
+      },
+      {
+        "key": "early_minutes",
+        "label": "دقائق المبكر المعتمدة",
+        "required": false
+      },
+      {
+        "key": "permission_minutes",
+        "label": "دقائق الأذونات",
+        "required": false
+      },
+      {
+        "key": "missing",
+        "label": "عدد البصمات المنسية",
+        "required": false
+      },
+      {
+        "key": "penalty_minutes",
+        "label": "جزاء بالدقائق",
+        "required": false
+      },
+      {
+        "key": "penalty_days",
+        "label": "جزاء بالأيام",
+        "required": false
+      },
+      {
+        "key": "note",
+        "label": "ملاحظات",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "الرواتب القديمة",
+    "kind": "payroll",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "month",
+        "label": "الشهر",
+        "required": true
+      },
+      {
+        "key": "salary",
+        "label": "الأساسي",
+        "required": true
+      },
+      {
+        "key": "addition",
+        "label": "الإضافات",
+        "required": true
+      },
+      {
+        "key": "deduction",
+        "label": "الخصومات",
+        "required": true
+      },
+      {
+        "key": "net",
+        "label": "الصافي المعتمد",
+        "required": true
+      },
+      {
+        "key": "note",
+        "label": "ملاحظات",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "تحويلات البنك",
+    "kind": "bank",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "month",
+        "label": "الشهر",
+        "required": true
+      },
+      {
+        "key": "residence_company_code",
+        "label": "كود شركة الإقامة",
+        "required": true
+      },
+      {
+        "key": "amount",
+        "label": "مبلغ التحويل المعتمد",
+        "required": true
+      },
+      {
+        "key": "name",
+        "label": "الاسم بالعربية",
+        "required": false
+      },
+      {
+        "key": "name_en",
+        "label": "الاسم بالإنجليزية",
+        "required": false
+      },
+      {
+        "key": "bank_name",
+        "label": "اسم البنك",
+        "required": false
+      },
+      {
+        "key": "bank_account",
+        "label": "رقم الحساب",
+        "required": false
+      },
+      {
+        "key": "iban",
+        "label": "IBAN",
+        "required": false
+      },
+      {
+        "key": "civil_id",
+        "label": "رقم البطاقة المدنية",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "رصيد الإجازات",
+    "kind": "leave_balance",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "as_of",
+        "label": "تاريخ الرصيد",
+        "required": true
+      },
+      {
+        "key": "days",
+        "label": "رصيد أيام الإجازة",
+        "required": true
+      },
+      {
+        "key": "cash_days",
+        "label": "رصيد أيام الاستحقاق النقدي",
+        "required": true
+      },
+      {
+        "key": "annual_entitlement",
+        "label": "الاستحقاق السنوي بالأيام",
+        "required": false
+      },
+      {
+        "key": "last_return",
+        "label": "آخر عودة للدوام",
+        "required": false
+      },
+      {
+        "key": "note",
+        "label": "ملاحظات",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "الإجازات القديمة",
+    "kind": "leave_history",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "from",
+        "label": "من تاريخ",
+        "required": true
+      },
+      {
+        "key": "to",
+        "label": "إلى تاريخ",
+        "required": true
+      },
+      {
+        "key": "return_date",
+        "label": "تاريخ العودة للدوام",
+        "required": false
+      },
+      {
+        "key": "leave_type",
+        "label": "نوع الإجازة",
+        "required": false
+      },
+      {
+        "key": "note",
+        "label": "ملاحظات",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "تسويات الإجازة",
+    "kind": "leave_settlement",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "date",
+        "label": "تاريخ التسوية",
+        "required": true
+      },
+      {
+        "key": "days",
+        "label": "عدد الأيام المسواة نقدًا",
+        "required": true
+      },
+      {
+        "key": "amount",
+        "label": "المبلغ المصروف",
+        "required": true
+      },
+      {
+        "key": "note",
+        "label": "ملاحظات",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "المرضيات القديمة",
+    "kind": "sick_summary",
+    "fields": [
+      {
+        "key": "code",
+        "label": "كود الموظف",
+        "required": true
+      },
+      {
+        "key": "year",
+        "label": "السنة",
+        "required": true
+      },
+      {
+        "key": "full",
+        "label": "أيام بأجر كامل",
+        "required": true
+      },
+      {
+        "key": "half",
+        "label": "أيام بنصف أجر",
+        "required": true
+      },
+      {
+        "key": "unpaid",
+        "label": "أيام دون أجر",
+        "required": true
+      },
+      {
+        "key": "as_of",
+        "label": "محسوبة حتى تاريخ",
+        "required": true
+      }
+    ]
+  }
+]

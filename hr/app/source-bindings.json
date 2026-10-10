@@ -1,0 +1,716 @@
+{
+  "home.heroTitle": {
+    "page": "home",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "title",
+    "template_key": "home:0"
+  },
+  "home.heroLead": {
+    "page": "home",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "body",
+    "template_key": "home:0"
+  },
+  "home.explore": {
+    "page": "home",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "button_label",
+    "template_key": "home:0"
+  },
+  "home.stat1": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "home:0:1"
+  },
+  "home.stat1l": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 1,
+    "field": "subtitle",
+    "template_key": "home:0:1"
+  },
+  "home.stat2": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "home:0:2"
+  },
+  "home.stat2l": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 2,
+    "field": "subtitle",
+    "template_key": "home:0:2"
+  },
+  "home.stat3": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "home:0:3"
+  },
+  "home.stat3l": {
+    "page": "home",
+    "section_order": 0,
+    "type": "card",
+    "order": 3,
+    "field": "subtitle",
+    "template_key": "home:0:3"
+  },
+  "home.whoTitle": {
+    "page": "home",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "title",
+    "template_key": "home:10"
+  },
+  "home.whoText": {
+    "page": "home",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "body",
+    "template_key": "home:10"
+  },
+  "home.whyTitle": {
+    "page": "home",
+    "section_order": 20,
+    "type": "section",
+    "order": 20,
+    "field": "title",
+    "template_key": "home:20"
+  },
+  "home.why1t": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "home:20:1"
+  },
+  "home.why1d": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 1,
+    "field": "body",
+    "template_key": "home:20:1"
+  },
+  "home.why2t": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "home:20:2"
+  },
+  "home.why2d": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 2,
+    "field": "body",
+    "template_key": "home:20:2"
+  },
+  "home.why3t": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "home:20:3"
+  },
+  "home.why3d": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 3,
+    "field": "body",
+    "template_key": "home:20:3"
+  },
+  "home.why4t": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 4,
+    "field": "title",
+    "template_key": "home:20:4"
+  },
+  "home.why4d": {
+    "page": "home",
+    "section_order": 20,
+    "type": "card",
+    "order": 4,
+    "field": "body",
+    "template_key": "home:20:4"
+  },
+  "home.howPrevTitle": {
+    "page": "home",
+    "section_order": 30,
+    "type": "section",
+    "order": 30,
+    "field": "title",
+    "template_key": "home:30"
+  },
+  "home.howPrevLead": {
+    "page": "home",
+    "section_order": 30,
+    "type": "section",
+    "order": 30,
+    "field": "body",
+    "template_key": "home:30"
+  },
+  "home.step1": {
+    "page": "home",
+    "section_order": 30,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "home:30:1"
+  },
+  "home.step2": {
+    "page": "home",
+    "section_order": 30,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "home:30:2"
+  },
+  "home.step3": {
+    "page": "home",
+    "section_order": 30,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "home:30:3"
+  },
+  "home.step4": {
+    "page": "home",
+    "section_order": 30,
+    "type": "card",
+    "order": 4,
+    "field": "title",
+    "template_key": "home:30:4"
+  },
+  "home.ctaTitle": {
+    "page": "home",
+    "section_order": 60,
+    "type": "section",
+    "order": 60,
+    "field": "title",
+    "template_key": "home:60"
+  },
+  "home.ctaLead": {
+    "page": "home",
+    "section_order": 60,
+    "type": "section",
+    "order": 60,
+    "field": "body",
+    "template_key": "home:60"
+  },
+  "home.ctaPrimary": {
+    "page": "home",
+    "section_order": 60,
+    "type": "section",
+    "order": 60,
+    "field": "button_label",
+    "template_key": "home:60"
+  },
+  "home.ctaGhost": {
+    "page": "home",
+    "section_order": 60,
+    "type": "section",
+    "order": 60,
+    "field": "secondary_button_label",
+    "template_key": "home:60"
+  },
+  "about.title": {
+    "page": "about",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "title",
+    "template_key": "about:0"
+  },
+  "about.lead": {
+    "page": "about",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "body",
+    "template_key": "about:0"
+  },
+  "about.storyTitle": {
+    "page": "about",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "title",
+    "template_key": "about:10"
+  },
+  "about.storyText": {
+    "page": "about",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "body",
+    "template_key": "about:10"
+  },
+  "about.missionTitle": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "mission_title"
+  },
+  "about.missionText": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "mission_body"
+  },
+  "about.visionTitle": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "vision_title"
+  },
+  "about.visionText": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "vision_body"
+  },
+  "about.valuesTitle": {
+    "page": "about",
+    "section_order": 40,
+    "type": "section",
+    "order": 40,
+    "field": "title",
+    "template_key": "about:40"
+  },
+  "about.v1t": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "about:40:1"
+  },
+  "about.v1d": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 1,
+    "field": "body",
+    "template_key": "about:40:1"
+  },
+  "about.v2t": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "about:40:2"
+  },
+  "about.v2d": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 2,
+    "field": "body",
+    "template_key": "about:40:2"
+  },
+  "about.v3t": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "about:40:3"
+  },
+  "about.v3d": {
+    "page": "about",
+    "section_order": 40,
+    "type": "card",
+    "order": 3,
+    "field": "body",
+    "template_key": "about:40:3"
+  },
+  "about.leadEyebrow": {
+    "page": "leadership",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "eyebrow",
+    "template_key": "leadership:10"
+  },
+  "about.leadTitle": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "title",
+    "template_key": "leadership:10"
+  },
+  "about.leadLead": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "body",
+    "template_key": "leadership:10"
+  },
+  "about.l1n": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "leadership:10:1"
+  },
+  "about.l1r": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 1,
+    "field": "subtitle",
+    "template_key": "leadership:10:1"
+  },
+  "about.l2n": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "leadership:10:2"
+  },
+  "about.l2r": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 2,
+    "field": "subtitle",
+    "template_key": "leadership:10:2"
+  },
+  "about.l3n": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "leadership:10:3"
+  },
+  "about.l3r": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "subtitle",
+    "template_key": "leadership:10:3"
+  },
+  "about.l4r": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "subtitle",
+    "template_key": "leadership:10:4"
+  },
+  "about.l5r": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "subtitle",
+    "template_key": "leadership:10:5"
+  },
+  "about.l4n": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 4,
+    "field": "title",
+    "template_key": "leadership:10:4"
+  },
+  "about.l5n": {
+    "page": "leadership",
+    "section_order": 10,
+    "type": "card",
+    "order": 5,
+    "field": "title",
+    "template_key": "leadership:10:5"
+  },
+  "how.title": {
+    "page": "how-it-works",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "title",
+    "template_key": "how-it-works:0"
+  },
+  "how.lead": {
+    "page": "how-it-works",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "body",
+    "template_key": "how-it-works:0"
+  },
+  "how.s1t": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 1,
+    "field": "title",
+    "template_key": "how-it-works:10:1"
+  },
+  "how.s1d": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 1,
+    "field": "body",
+    "template_key": "how-it-works:10:1"
+  },
+  "how.s2t": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 2,
+    "field": "title",
+    "template_key": "how-it-works:10:2"
+  },
+  "how.s2d": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 2,
+    "field": "body",
+    "template_key": "how-it-works:10:2"
+  },
+  "how.s3t": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "title",
+    "template_key": "how-it-works:10:3"
+  },
+  "how.s3d": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 3,
+    "field": "body",
+    "template_key": "how-it-works:10:3"
+  },
+  "how.s4t": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 4,
+    "field": "title",
+    "template_key": "how-it-works:10:4"
+  },
+  "how.s4d": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 4,
+    "field": "body",
+    "template_key": "how-it-works:10:4"
+  },
+  "how.s5t": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 5,
+    "field": "title",
+    "template_key": "how-it-works:10:5"
+  },
+  "how.s5d": {
+    "page": "how-it-works",
+    "section_order": 10,
+    "type": "card",
+    "order": 5,
+    "field": "body",
+    "template_key": "how-it-works:10:5"
+  },
+  "how.noteTitle": {
+    "page": "how-it-works",
+    "section_order": 20,
+    "type": "section",
+    "order": 20,
+    "field": "note_title",
+    "template_key": "how-it-works:10"
+  },
+  "how.noteText": {
+    "page": "how-it-works",
+    "section_order": 20,
+    "type": "section",
+    "order": 20,
+    "field": "note_body",
+    "template_key": "how-it-works:10"
+  },
+  "offers.title": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "title",
+    "template_key": "offers:0"
+  },
+  "offers.o1t": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 10,
+    "field": "title",
+    "template_key": "offers:0:10"
+  },
+  "offers.o1m": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 10,
+    "field": "subtitle",
+    "template_key": "offers:0:10"
+  },
+  "offers.o2t": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 20,
+    "field": "title",
+    "template_key": "offers:0:20"
+  },
+  "offers.o2m": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 20,
+    "field": "subtitle",
+    "template_key": "offers:0:20"
+  },
+  "offers.o3t": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 30,
+    "field": "title",
+    "template_key": "offers:0:30"
+  },
+  "offers.o3m": {
+    "page": "offers",
+    "section_order": 0,
+    "type": "card",
+    "order": 30,
+    "field": "subtitle",
+    "template_key": "offers:0:30"
+  },
+  "contact.title": {
+    "page": "contact",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "title",
+    "template_key": "contact:0"
+  },
+  "contact.lead": {
+    "page": "contact",
+    "section_order": 0,
+    "type": "section",
+    "order": 0,
+    "field": "body",
+    "template_key": "contact:0"
+  },
+  "contact.formTitle": {
+    "page": "contact",
+    "section_order": 10,
+    "type": "section",
+    "order": 10,
+    "field": "title",
+    "template_key": "contact:10"
+  },
+  "about.missionEyebrow": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "mission_eyebrow"
+  },
+  "about.visionEyebrow": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "vision_eyebrow"
+  },
+  "home.eyebrow": {
+    "page": "home",
+    "type": "section",
+    "template_key": "home:0",
+    "field": "eyebrow"
+  },
+  "home.whoEyebrow": {
+    "page": "home",
+    "type": "section",
+    "template_key": "home:10",
+    "field": "eyebrow"
+  },
+  "about.storyEyebrow": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:10",
+    "field": "eyebrow"
+  },
+  "about.valuesEyebrow": {
+    "page": "about",
+    "type": "section",
+    "template_key": "about:40",
+    "field": "eyebrow"
+  },
+  "offers.lead": {
+    "page": "offers",
+    "type": "section",
+    "template_key": "offers:0",
+    "field": "body"
+  },
+  "offers.shopNote": {
+    "page": "offers",
+    "type": "section",
+    "template_key": "offers:0",
+    "field": "note"
+  },
+  "home.contactBtn": {
+    "page": "home",
+    "type": "section",
+    "template_key": "home:0",
+    "field": "secondary_button_label"
+  },
+  "home.howButton": {
+    "page": "home",
+    "type": "section",
+    "template_key": "home:30",
+    "field": "button_label"
+  },
+  "how.noteButton": {
+    "page": "how-it-works",
+    "type": "section",
+    "template_key": "how-it-works:10",
+    "field": "note_button_label"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "removed": {
+    "en": [
+      "When your e‑commerce site is ready, link these buttons to your shop domain for a seamless brand experience."
+    ],
+    "ar": [
+      "عند جاهزية متجركم الإلكتروني، اربطوا هذه الأزرار بنطاق المتجر لتجربة موحّدة."
+    ],
+    "fil": [
+      "Kapag handa na ang inyong online shop, i-link ang mga button sa inyong domain."
+    ],
+    "hi": [
+      "जब आपका ई-कॉमर्स तैयार हो, इन बटनों को अपने शॉप डोमेन से लिंक करें।"
+    ],
+    "ur": [
+      "جب آپ کا آن لائن اسٹور تیار ہو، ان بٹنز کو اپنے شاپ ڈومین سے لنک کریں۔"
+    ]
+  },
+  "replaced": {
+    "en": {
+      "Highlights from our latest campaigns—details may vary by channel.": "Highlights from our latest campaigns."
+    },
+    "ar": {
+      "أبرز حملاتنا—قد تختلف التفاصيل حسب القناة.": "أبرز حملاتنا."
+    },
+    "hi": {
+      "हमारे नवीनतम अभियानों की मुख्य बातें—चैनल के अनुसार भिन्न हो सकती हैं।": "हमारे नवीनतम अभियानों की मुख्य बातें।"
+    },
+    "ur": {
+      "ہماری تازہ مہمات کی جھلکیاں—چینل کے مطابق فرق ممکن ہے۔": "ہماری تازہ مہمات کی جھلکیاں۔"
+    }
+  }
+}
