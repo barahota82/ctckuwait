@@ -6,6 +6,7 @@ require __DIR__.'/app/cms.php';
 require __DIR__.'/app/administration.php';
 require __DIR__.'/app/languages.php';
 require __DIR__.'/app/customers.php';
+require __DIR__.'/app/backups.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
@@ -18,13 +19,13 @@ session_init();
  $b=$_POST;
  if(str_contains($_SERVER['CONTENT_TYPE']??'','application/json'))$b=decode(file_get_contents('php://input'));
  if($_SERVER['REQUEST_METHOD']==='POST'&&!hash_equals($_SESSION['csrf'],(string)($_SERVER['HTTP_X_CSRF_TOKEN']??$b['csrf']??'')))fail('انتهت صلاحية الصفحة؛ أعد تحميلها.',403);
- $read=['bootstrap','list','users','policies','report','sick_summary','locations','notifications','audit','payroll_list','leave_balance','dashboard','cms_list','cms_messages','companies','history_list','bank_list','leave_overview','permissions_list','customer_departments','customer_cases','customer_case_detail','customer_ratings','languages_info'];
+ $read=['bootstrap','list','users','policies','report','sick_summary','locations','notifications','audit','payroll_list','leave_balance','dashboard','cms_list','cms_messages','companies','history_list','bank_list','leave_overview','permissions_list','customer_departments','customer_cases','customer_case_detail','customer_ratings','languages_info','backup_info'];
  if(!in_array($action,$read,true)&&$_SERVER['REQUEST_METHOD']!=='POST')fail('طريقة الطلب غير مسموحة.',405);
  if($action==='bootstrap'){
   $cfg=settings();$public=array_intersect_key($cfg,array_flip(['company_name','company_name_en','site_url','logo_id','timezone','currency','public_site_title']));
   $u=null;if(isset($_SESSION['uid']))try{$u=public_user(current_user());}catch(Throwable $e){}
   $result=['localization'=>localization_boot($u),'csrf'=>$_SESSION['csrf'],'company'=>$public,'user'=>$u,'modules'=>modules(),'server_time'=>utc_now()];
-  if($u){$result['permissions']=$cfg['permissions'][(string)$u['id']]??[];$result['operation']=array_intersect_key($cfg,array_flip(['history_approved','operation_start','attendance_enabled','reports_enabled','payroll_enabled']));$result['settings']=$u['role']==='admin'?$cfg:array_intersect_key($cfg,array_flip(['tracking_enabled','tracking_interval','tracking_stale','timezone','currency','annual_leave_days']));$date=local_time()->format('Y-m-d');$result['policy']=policy_for((int)$u['id'],$date);$result['state']=event_state(query('SELECT event_type FROM ep_events WHERE user_id=? AND work_date=? ORDER BY received_at,id',[$u['id'],$date])->fetchAll());}
+  if($u){$result['permissions']=$cfg['permissions'][(string)$u['id']]??[];$result['operation']=array_intersect_key($cfg,array_flip(['history_approved','operation_start','attendance_enabled','reports_enabled','payroll_enabled']));$result['settings']=$u['role']==='admin'?$cfg:array_intersect_key($cfg,array_flip(['tracking_enabled','tracking_interval','tracking_stale','timezone','currency','annual_leave_days']));$date=local_time()->format('Y-m-d');$result['upgrade_needed']=$u['role']==='admin'?!ratings_phone_ready():false;$result['policy']=policy_for((int)$u['id'],$date);$result['state']=event_state(query('SELECT event_type FROM ep_events WHERE user_id=? AND work_date=? ORDER BY received_at,id',[$u['id'],$date])->fetchAll());}
  }elseif($action==='login'){
   $name=trim((string)($b['username']??''));$key=hash('sha256',strtolower($name).'|'.($_SERVER['REMOTE_ADDR']??''));
   $limit=query('SELECT * FROM ep_login_limits WHERE limit_key=?',[$key])->fetch();
@@ -41,7 +42,7 @@ session_init();
  }else{
   $u=current_user();$uid=(int)$u['id'];$cfg=settings();
   permission_context($action,$u,$b);
-  if(str_starts_with($action,'customer_'))$result=customer_action($action,$u,$b);elseif(in_array($action,['languages_info','languages_save','language_select','translation_prepare','translation_process','translation_key_save','public_language_review'],true))$result=language_action($action,$u,$b);elseif(in_array($action,['permissions_list','permissions_save','launch_save'],true))$result=permissions_action($action,$u,$b);elseif(in_array($action,['companies','company_save','history_list','import_preview','import_commit','bank_list','bank_build','bank_save','bank_approve'],true))$result=administration_action($action,$u,$b);elseif(str_starts_with($action,'cms_'))$result=cms_action($action,$u,$b);else switch($action){
+  if($action==='site_upgrade')$result=site_upgrade($u);elseif(str_starts_with($action,'backup_'))$result=backup_action($action,$u,$b);elseif(str_starts_with($action,'customer_'))$result=customer_action($action,$u,$b);elseif(in_array($action,['languages_info','languages_save','language_select','translation_prepare','translation_process','translation_key_save','public_language_review'],true))$result=language_action($action,$u,$b);elseif(in_array($action,['permissions_list','permissions_save','launch_save'],true))$result=permissions_action($action,$u,$b);elseif(in_array($action,['companies','company_save','history_list','import_preview','import_commit','bank_list','bank_build','bank_save','bank_approve'],true))$result=administration_action($action,$u,$b);elseif(str_starts_with($action,'cms_'))$result=cms_action($action,$u,$b);else switch($action){
    case 'logout':session_destroy();$result=['ok'=>true];break;
    case 'change_password':
     if(!password_verify((string)($b['old_password']??''),$u['password_hash']))fail('كلمة المرور الحالية غير صحيحة.');
