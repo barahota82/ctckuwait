@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works — Click Technology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/app.js"></script>
+  </head>
+  <body class="lang-en">
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="index.html" class="brand">
+          <img
+            class="brand__logo-img"
+            src="assets/images/logo.png"
+            width="200"
+            height="138"
+            alt="Click Company"
+            loading="eager"
+            decoding="async"
+          />
+          <span class="brand__text">
+            <span class="brand__name" data-i18n="brand.name">Click Technology</span>
+            <span class="brand__tagline" data-i18n="brand.slogan">You Can Depend On Us</span>
+          </span>
+        </a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav id="site-nav" class="nav" aria-label="Primary">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a class="nav__link" href="about.html" data-i18n="nav.about">About</a></li>
+            <li><a class="nav__link" href="how-it-works.html" aria-current="page" data-i18n="nav.how">How It Works</a></li>
+            <li><a class="nav__link" href="offers.html" data-i18n="nav.offers">Offers</a></li>
+            <li><a class="nav__link" href="contact.html" data-i18n="nav.contact">Contact</a></li>
+          </ul>
+          <div class="lang-switcher">
+            <button type="button" class="lang-switcher__btn">
+              <span data-lang-label>EN</span>
+              <span aria-hidden="true">▾</span>
+            </button>
+            <ul class="lang-switcher__menu" role="menu">
+              <li><button type="button" class="lang-switcher__option" data-lang="en" role="menuitem">English</button></li>
+              <li><button type="button" class="lang-switcher__option" data-lang="fil" role="menuitem">Filipino</button></li>
+              <li><button type="button" class="lang-switcher__option" data-lang="hi" role="menuitem">हिन्दी</button></li>
+              <li><button type="button" class="lang-switcher__option" data-lang="ar" role="menuitem">العربية</button></li>
+              <li><button type="button" class="lang-switcher__option" data-lang="ur" role="menuitem">اردو</button></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h1 data-i18n="how.title">How it works</h1>
+          <p data-i18n="how.lead">A clear path from interest to delivery—designed to reduce friction.</p>
+        </div>
+      </section>
+
+      <section class="section section--dark">
+        <div class="container">
+          <div class="timeline">
+            <div class="timeline__item">
+              <div class="timeline__step">1</div>
+              <div>
+                <h3 class="timeline__title" data-i18n="how.s1t">Choose your product</h3>
+                <p class="timeline__desc" data-i18n="how.s1d">Pick the handset or plan that fits your needs.</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__step">2</div>
+              <div>
+                <h3 class="timeline__title" data-i18n="how.s2t">Submit your request</h3>
+                <p class="timeline__desc" data-i18n="how.s2d">Share details securely for review.</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__step">3</div>
+              <div>
+                <h3 class="timeline__title" data-i18n="how.s3t">Review & approval</h3>
+                <p class="timeline__desc" data-i18n="how.s3d">We validate eligibility and confirm next steps quickly.</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__step">4</div>
+              <div>
+                <h3 class="timeline__title" data-i18n="how.s4t">Delivery & start</h3>
+                <p class="timeline__desc" data-i18n="how.s4d">Receive your device and begin your installment schedule.</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__step">5</div>
+              <div>
+                <h3 class="timeline__title" data-i18n="how.s5t">Ongoing support</h3>
+                <p class="timeline__desc" data-i18n="how.s5d">Our team stays available for questions and service.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-lite source-inline-4c6593a928">
+            <h3 class="card-lite__title" data-i18n="how.noteTitle">Important</h3>
+            <p class="card-lite__text" data-i18n="how.noteText">
+              Final terms depend on product and policy at the time of request. Our team will explain everything clearly before you
+              proceed.
+            </p>
+          </div>
+
+          <p class="source-inline-47236be25f">
+            <a class="btn btn--primary" href="offers.html" data-i18n="how.noteButton">View offers</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__grid">
+        <div>
+          <div class="site-footer__brand">Click Technology</div>
+          <p data-i18n="footer.copy" class="source-inline-c1b07e3aab">© 2017–2026 Click Company. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
