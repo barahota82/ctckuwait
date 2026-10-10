@@ -1,6 +1,22 @@
 <?php
 declare(strict_types=1);
 
+/** Classify driver errors without returning server text, credentials or SQL. */
+function database_install_error(PDOException $error): string {
+ $info=$error->errorInfo??[];
+ $state=(string)($info[0]??$error->getCode());
+ $native=(int)($info[1]??0);
+ $message=strtolower((string)($info[2]??$error->getMessage()));
+ $suffix=' [SQLSTATE '.preg_replace('/[^A-Z0-9]/','',$state).'; driver '.$native.']';
+ if(str_contains($message,'certificate')||str_contains($message,'ssl provider')||str_contains($message,'tls'))
+  return 'فشل التحقق من شهادة الاتصال المشفّر. اطلب من الاستضافة شهادة موثوقة أو تأكيد استخدام شهادة ذاتية قبل تفعيل DB_TRUST_SERVER_CERTIFICATE.' .$suffix;
+ if($native===18456||$state==='28000')return 'رفض SQL Server تسجيل الدخول. راجع DB_USER وDB_PASS وربط المستخدم بقاعدة الموقع والسماح بمصادقة SQL Server.'.$suffix;
+ if($native===4060)return 'تعذر فتح قاعدة البيانات المحددة. راجع DB_NAME وربط المستخدم بهذه القاعدة.'.$suffix;
+ if($native===229||$native===262)return 'مستخدم القاعدة لا يملك صلاحيات العملية المطلوبة. امنحه صلاحيات إنشاء وإدارة جداول قاعدة الموقع فقط.'.$suffix;
+ if($state==='08001'||$state==='HYT00'||$state==='HYT01')return 'تعذر الوصول إلى مثيل SQL Server أو انتهت مهلة الاتصال. اطلب من الاستضافة عنوان TCP والمنفذ المتاحين لاتصال PHP؛ اسم المثيل وحده قد يحتاج SQL Server Browser وبروتوكول TCP/IP. لا تغيّر كلمة المرور لهذا السبب وحده.'.$suffix;
+ return 'فشل SQL Server أثناء التثبيت. أرسل كود التشخيص التالي لتحديد الخطوة المطلوبة؛ لا ترسل كلمات المرور.'.$suffix;
+}
+
 /** SQL Server connection configuration. Credentials never form part of the DSN. */
 function database_dsn(array $config): string {
  $host=trim((string)($config['host']??''));
