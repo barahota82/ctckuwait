@@ -18,16 +18,23 @@
   },
   "replaced": {
     "en": {
-      "Highlights from our latest campaigns—details may vary by channel.": "Highlights from our latest campaigns."
+      "Highlights from our latest campaigns—details may vary by channel.": "Highlights from our latest campaigns.",
+      "We respond quickly—choose the channel that suits you.": "We welcome your enquiry. Our team is here to help."
     },
     "ar": {
-      "أبرز حملاتنا—قد تختلف التفاصيل حسب القناة.": "أبرز حملاتنا."
+      "أبرز حملاتنا—قد تختلف التفاصيل حسب القناة.": "أبرز حملاتنا.",
+      "نرد بسرعة—اختر القناة المناسبة.": "يسعدنا تواصلك، وفريقنا حاضر لخدمتك."
     },
     "hi": {
-      "हमारे नवीनतम अभियानों की मुख्य बातें—चैनल के अनुसार भिन्न हो सकती हैं।": "हमारे नवीनतम अभियानों की मुख्य बातें।"
+      "हमारे नवीनतम अभियानों की मुख्य बातें—चैनल के अनुसार भिन्न हो सकती हैं।": "हमारे नवीनतम अभियानों की मुख्य बातें।",
+      "हम जल्दी जवाब देते हैं—अपनी सुविधानुसार चैनल चुनें।": "आपका संदेश हमारे लिए महत्वपूर्ण है। हमारी टीम आपकी सहायता के लिए तैयार है।"
     },
     "ur": {
-      "ہماری تازہ مہمات کی جھلکیاں—چینل کے مطابق فرق ممکن ہے۔": "ہماری تازہ مہمات کی جھلکیاں۔"
+      "ہماری تازہ مہمات کی جھلکیاں—چینل کے مطابق فرق ممکن ہے۔": "ہماری تازہ مہمات کی جھلکیاں۔",
+      "ہم جلد جواب دیتے ہیں—اپنی سہولت کے مطابق چینل منتخب کریں۔": "ہم آپ کے رابطے کا خیرمقدم کرتے ہیں۔ ہماری ٹیم آپ کی مدد کے لیے موجود ہے۔"
+    },
+    "fil": {
+      "Mabilis kaming tumutugon—pumili ng channel.": "Malugod naming tinatanggap ang inyong mensahe. Narito ang aming team upang tumulong."
     }
   }
 }
