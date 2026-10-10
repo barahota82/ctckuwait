@@ -4,7 +4,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const labels={attendance:'حضور',checkout:'انصراف',permission_exit:'إذن خروج',permission_return:'عودة',approved:'معتمد',pending:'بانتظار المراجعة',rejected:'مرفوض',revision:'مطلوب تعديل',active:'نشط',closed:'مغلق',working:'داخل الدوام',away:'خارج بإذن',none:'لم يسجل حضورًا',draft:'مسودة'};
 let boot,users=[],view='dashboard',stream=null,photo=null,photoAt=0,captureTicket='',geo=null,geoWatch=null,trackingTimer=null,pending=null,selectedEvent='attendance',serverOffset=0;
 const icons={permissions:'♧',launch:'◉',publication:'◧',companies:'▦',import:'⇧',bank:'▧',leave_overview:'◇',dashboard:'◈',attendance:'◷',users:'♙',notifications:'◉',settings:'⚙',policies:'▤',report:'▥',tracking:'⌖',payroll:'▧',audit:'≡'};
-function toast(t){$('#toast').textContent=boot?.localization?.dictionary?.[t]||t;$('#toast').style.display='block';setTimeout(()=>$('#toast').style.display='none',6000);}
+function toast(t){$('#toast').textContent=uiText(t);$('#toast').style.display='block';setTimeout(()=>$('#toast').style.display='none',6000);}
 async function api(action,data=null,params={}){
  const url='api.php?'+new URLSearchParams({action,...params});
  const options={credentials:'same-origin',headers:{}};
@@ -15,16 +15,17 @@ async function api(action,data=null,params={}){
  return body.data;
 }
 const dateNow=()=>new Intl.DateTimeFormat('en-CA',{timeZone:boot.company.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(Date.now()+serverOffset));
-function localDisplay(utc){if(!utc)return '—';const d=new Date(utc.replace(' ','T')+'Z');return new Intl.DateTimeFormat('ar-KW',{timeZone:boot.company.timezone,dateStyle:'medium',timeStyle:'short'}).format(d);}
+function localDisplay(utc){if(!utc)return '—';const d=new Date(utc.replace(' ','T')+'Z');return new Intl.DateTimeFormat(boot?.localization?.language==='en'?'en-GB':'ar-KW',{timeZone:boot.company.timezone,dateStyle:'medium',timeStyle:'short'}).format(d);}
 function badge(s){return '<span class="badge '+esc(s)+'">'+esc(labels[s]??s)+'</span>';}
 function companyLogo(){return boot.company.logo_id?'<img class="brand-logo" src="file.php?id='+Number(boot.company.logo_id)+'" alt="شعار الشركة">':'<div class="brand-mark">◆</div>';}
 function closeCamera(){if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;}
 function stopLocation(){if(geoWatch!==null)navigator.geolocation.clearWatch(geoWatch);geoWatch=null;if(trackingTimer)clearInterval(trackingTimer);trackingTimer=null;}
-async function loadBoot(){boot=await api('bootstrap');serverOffset=new Date(boot.server_time.replace(' ','T')+'Z').getTime()-Date.now();document.title=(boot.company.public_site_title?.ar||boot.company.company_name)+' — شؤون الموظفين';}
+async function loadBoot(){boot=await api('bootstrap');serverOffset=new Date(boot.server_time.replace(' ','T')+'Z').getTime()-Date.now();document.title=(boot.company.public_site_title?.[boot.localization?.language||'ar']||boot.company.company_name)+' — '+uiText('شؤون الموظفين');}
 async function start(){try{await loadBoot();if(!boot.user)return login();users=await api('users');shell();await navigate(view);}catch(e){$('#app').innerHTML='<main class="install-card"><h1>تعذر فتح النظام</h1><p>'+esc(e.message)+'</p></main>';}}
 function login(){
  stopLocation();closeCamera();document.body.className='auth-page';
  $('#app').innerHTML='<main class="login-card">'+companyLogo()+'<p class="eyebrow">'+esc(boot.company.company_name_en)+'</p><h1>'+esc(boot.company.company_name)+'</h1><p class="muted">مساحة واحدة لكل ما يخص عملك.</p><div class="gold-rule"></div><form id="loginForm"><label>رقم الموظف / اسم الدخول<input name="username" autocomplete="username" required></label><label>كلمة المرور<input name="password" type="password" autocomplete="current-password" required></label><button class="primary submit-wide">دخول مساحة العمل</button></form><p class="tiny muted">الوقت المسجل من الخادم، ولا يعتمد على ساعة الهاتف.</p></main>';
+ installInterfaceLanguage();
  $('#loginForm').onsubmit=async e=>{e.preventDefault();try{await api('login',Object.fromEntries(new FormData(e.target)));await start();}catch(e){toast(e.message);}};
 }
 function teamPermission(screen,action='view'){return boot.user.role==='admin'||(boot.user.role==='manager'&&(boot.permissions?.[screen]??[]).includes('view')&&(boot.permissions?.[screen]??[]).includes(action));}
@@ -44,10 +45,10 @@ function shell(){
  if($('#interfaceLanguage'))$('#interfaceLanguage').onchange=async e=>{try{await api('language_select',{language:e.target.value});await loadBoot();shell();await navigate(view);}catch(err){toast(err.message);}};installInterfaceLanguage();
  if(boot.user.staff_type==='rep'&&boot.settings.tracking_enabled&&boot.operation?.attendance_enabled)watchLocation();
 }
-function navItem(key,title){return '<button class="nav-item" data-view="'+key+'"><span>'+esc(icons[key]??'▫')+'</span><span>'+esc(title)+'</span></button>';}
-function head(title,subtitle='',actions=''){const loc=boot?.localization;const note=loc&&loc.language!=='ar'&&loc.translated_count<loc.source_count?'<p class="translation-fallback">Translation pending · بعض النصوص تُعرض بالعربية حتى اكتمال تجهيز الترجمة.</p>':'';return note+'<div class="page-head"><div><p class="eyebrow">PEOPLE · OPERATIONS</p><h1>'+esc(title)+'</h1><p>'+esc(subtitle)+'</p></div>'+actions+'</div>';}
-function empty(t='لا توجد سجلات بعد'){return '<div class="empty">'+esc(t)+'</div>';}
-function table(headers,rows){return '<div class="table-wrap"><table><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,i)=>'<td data-label="'+esc(headers[i]??'')+'">'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
+function navItem(key,title){title=uiText(title);return '<button class="nav-item" data-view="'+key+'"><span>'+esc(icons[key]??'▫')+'</span><span>'+esc(title)+'</span></button>';}
+function head(title,subtitle='',actions=''){title=uiText(title);subtitle=uiText(subtitle);const loc=boot?.localization;const note=loc&&loc.language!=='ar'&&loc.translated_count<loc.source_count?'<p class="translation-fallback">Translation pending · بعض النصوص تُعرض بالعربية حتى اكتمال تجهيز الترجمة.</p>':'';return note+'<div class="page-head"><div><p class="eyebrow">PEOPLE · OPERATIONS</p><h1>'+esc(title)+'</h1><p>'+esc(subtitle)+'</p></div>'+actions+'</div>';}
+function empty(t='لا توجد سجلات بعد'){t=uiText(t);return '<div class="empty">'+esc(t)+'</div>';}
+function table(headers,rows){headers=headers.map(uiText);return '<div class="table-wrap"><table><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,i)=>'<td data-label="'+esc(headers[i]??'')+'">'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
 function userOptions(selected=boot.user.id,all=false){return (all?'<option value="0">كل الموظفين / السياسة العامة</option>':'')+users.map(u=>'<option value="'+u.id+'" '+(Number(selected)===Number(u.id)?'selected':'')+'>'+esc(u.name)+'</option>').join('');}
 async function navigate(key){
  closeCamera();if(!screenAllowed(key))key='dashboard';view=key;
@@ -163,8 +164,8 @@ function modal(title,body,onSubmit=null){
  $('#closeModal').onclick=()=>$('#modal').close();$('#modal').showModal();
  if(onSubmit&&$('#modalForm'))$('#modalForm').onsubmit=async e=>{e.preventDefault();const btn=e.target.querySelector('button[type="submit"]');if(btn)btn.disabled=true;try{await onSubmit(e.target);$('#modal').close();await navigate(view);}catch(e){toast(e.message);}finally{if(btn)btn.disabled=false;}};
 }
-function input(name,label,value='',type='text',extra=''){return '<label>'+esc(label)+'<input name="'+name+'" type="'+type+'" value="'+esc(value)+'" '+extra+'></label>';}
-function check(name,label,value){return '<label class="check"><input name="'+name+'" type="checkbox" '+(value?'checked':'')+'>'+esc(label)+'</label>';}
+function input(name,label,value='',type='text',extra=''){label=uiText(label);return '<label>'+esc(label)+'<input name="'+name+'" type="'+type+'" value="'+esc(value)+'" '+extra+'></label>';}
+function check(name,label,value){label=uiText(label);return '<label class="check"><input name="'+name+'" type="checkbox" '+(value?'checked':'')+'>'+esc(label)+'</label>';}
 function saveButton(){return '<div class="modal-foot"><button type="submit" class="primary">حفظ</button></div>';}
 function passwordModal(){modal('تغيير كلمة المرور','<form id="modalForm">'+input('old_password','كلمة المرور الحالية','','password','required')+input('new_password','كلمة المرور الجديدة','','password','required minlength="12"')+saveButton()+'</form>',form=>api('change_password',Object.fromEntries(new FormData(form))));}
 async function employees(){

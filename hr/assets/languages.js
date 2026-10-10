@@ -1,5 +1,6 @@
 'use strict';
 let translationWorkerBusy=false,languageObserver=null;
+const interfaceOriginalText=new Map();
 async function languagesView(){
  const info=await api('languages_info'),s=info.settings,c=info.catalog;
  const options=(selected,keys=['ar','en','fil','hi','ur'])=>keys.map(key=>'<option value="'+key+'" '+(key===selected?'selected':'')+'>'+esc(c[key].name)+'</option>').join('');
@@ -12,11 +13,19 @@ async function startTranslationWorker(){
  if(translationWorkerBusy||boot?.user?.role!=='admin'||!boot.settings.translation_enabled)return;translationWorkerBusy=true;
  try{for(let i=0;i<150&&boot?.user?.role==='admin'&&document.visibilityState!=='hidden';i++){const r=await api('translation_process',{});const n=$('#translationProgress');if(n)n.textContent=r.reason||'تمت معالجة خطوة: '+r.status;if(!r.processed||r.status==='failed')break;await new Promise(resolve=>setTimeout(resolve,120));}}catch(e){toast(e.message);}finally{translationWorkerBusy=false;}
 }
+function uiText(source){
+ if(boot?.localization?.language!=='en')return source;const dictionary=boot.localization.dictionary||{};if(dictionary[source])return dictionary[source];if(!/[\u0600-\u06ff]/.test(source))return source;
+ for(const [prefix,value] of Object.entries(dictionary)){if(/[:：\s]$/.test(prefix)&&source.startsWith(prefix))return value+source.slice(prefix.length);}
+ return String(source).split(/([0-9]+(?:[.,][0-9]+)*|[A-Za-z][A-Za-z ._-]*)/).map(part=>{const key=part.trim();return dictionary[key]?part.replace(key,dictionary[key]):part;}).join('');
+}
 function applyInterfaceLanguage(){
  if(!boot?.localization)return;const loc=boot.localization;document.documentElement.lang=loc.language;document.documentElement.dir=loc.catalog[loc.language]?.dir||'rtl';
- if(!document.createTreeWalker||loc.language==='ar')return;const dictionary=loc.dictionary||{};const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);for(const node of nodes){if(node.parentElement?.closest('script,style,textarea,input,video,[data-no-translate]'))continue;const source=node.textContent.trim();if(dictionary[source])node.textContent=node.textContent.replace(source,dictionary[source]);}
+ if(loc.language==='ar'){for(const [node,value]of interfaceOriginalText){if(node.isConnected)node.textContent=value;}interfaceOriginalText.clear();return;}
+ for(const node of interfaceOriginalText.keys())if(!node.isConnected)interfaceOriginalText.delete(node);
+ if(!document.createTreeWalker)return;const dictionary=loc.dictionary||{};const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);for(const node of nodes){if(node.parentElement?.closest('script,style,textarea,input,video,[data-no-translate]'))continue;const source=node.textContent.trim();const translated=uiText(source);if(translated!==source){interfaceOriginalText.set(node,node.textContent);node.textContent=node.textContent.replace(source,translated);}}
+ for(const element of document.querySelectorAll('[placeholder],[title],[aria-label],[alt],[data-label]')){if(element.closest('[data-no-translate]'))continue;for(const attribute of ['placeholder','title','aria-label','alt','data-label']){const value=element.getAttribute(attribute);if(value&&dictionary[value])element.setAttribute(attribute,dictionary[value]);}}
 }
 function installInterfaceLanguage(){
- if(typeof MutationObserver==='undefined')return;if(languageObserver)languageObserver.disconnect();let scheduled=false;languageObserver=new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;applyInterfaceLanguage();});});languageObserver.observe(document.body,{childList:true,subtree:true});applyInterfaceLanguage();
+ if(typeof MutationObserver==='undefined')return;if(languageObserver)languageObserver.disconnect();let scheduled=false;languageObserver=new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;applyInterfaceLanguage();});});languageObserver.observe(document.body,{childList:true,subtree:true,characterData:true});applyInterfaceLanguage();
 }
 function languagePicker(){const loc=boot.localization;if(!loc)return '';return '<select id="interfaceLanguage" aria-label="Language">'+loc.allowed.map(k=>'<option value="'+k+'" '+(k===loc.language?'selected':'')+'>'+esc(loc.catalog[k].name)+'</option>').join('')+'</select>'+(loc.translated_count<loc.source_count?'<span class="language-pending" title="Translation pending — some text is shown in Arabic">◌</span>':'');}
