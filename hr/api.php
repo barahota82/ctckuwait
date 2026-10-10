@@ -94,7 +94,7 @@ session_init();
     if($cfg['translation_enabled'])foreach(language_setting_keys()as $key)if(isset($values[$key]['ar'])&&($cfg[$key]['ar']??null)!==$values[$key]['ar'])foreach($cfg['public_languages']as $target)if($target!=='ar')unset($values[$key][$target]);
     db()->beginTransaction();
     foreach($values as $k=>$v)if(array_key_exists($k,default_settings()))query('MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES (?, ?)) AS source (setting_key, value_json) ON target.setting_key=source.setting_key WHEN MATCHED THEN UPDATE SET value_json=source.value_json WHEN NOT MATCHED THEN INSERT (setting_key, value_json) VALUES (source.setting_key, source.value_json);',[$k,jencode($v)]);
-    translation_settings_enqueue($values);audit('settings_save','settings',['keys'=>array_keys($values)]);db()->commit();$result=['ok'=>true];break;
+    foreach(['public_site_title','public_slogan','public_hours','public_address']as $key)if(array_key_exists($key,$values)&&$values[$key]!==$cfg[$key]){public_languages_invalidate(['site']);break;}translation_settings_enqueue($values);audit('settings_save','settings',['keys'=>array_keys($values)]);db()->commit();$result=['ok'=>true];break;
    case 'logo_upload':
     admin_only($u);$fid=upload_file($_FILES['file']??[],$uid,true);
     query("MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES ('logo_id', ?)) AS source (setting_key, value_json) ON target.setting_key=source.setting_key WHEN MATCHED THEN UPDATE SET value_json=source.value_json WHEN NOT MATCHED THEN INSERT (setting_key, value_json) VALUES (source.setting_key, source.value_json);",[jencode($fid)]);audit('logo_upload','file:'.$fid);$result=['ok'=>true];break;

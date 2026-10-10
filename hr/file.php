@@ -15,7 +15,7 @@ try{
   if(!$allowed)fail('ليس لديك صلاحية مشاهدة الملف.',403);
  }
  $path=EP_ROOT.'/private/files/'.$file['disk_name'];if(!is_file($path))fail('الملف غير متاح.',404);
- header('Content-Type: '.$file['mime']);header('X-Content-Type-Options: nosniff');header('Cache-Control: private, no-store');
+ header('Content-Type: '.$file['mime']);header('X-Content-Type-Options: nosniff');header($logo?'Cache-Control: public, max-age=86400, immutable':'Cache-Control: private, no-store');
  header("Content-Security-Policy: default-src 'none'; sandbox");
  header('Content-Disposition: inline; filename="attachment'.($file['mime']==='application/pdf'?'.pdf':'.jpg').'"');
  readfile($path);
