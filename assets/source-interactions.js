@@ -1,0 +1,10 @@
+'use strict';
+(()=>{const button=document.querySelector('.nav-toggle'),nav=document.querySelector('#site-nav'),language=document.querySelector('.lang-switcher'),toggle=language?.querySelector('.lang-switcher__btn'),header=document.querySelector('.site-header'),mobile=()=>matchMedia('(max-width:1100px)').matches;
+const closeNav=()=>{button?.setAttribute('aria-expanded','false');nav?.classList.remove('is-open');};
+const closeLanguages=()=>{toggle?.setAttribute('aria-expanded','false');language?.classList.remove('is-open');};
+const height=()=>document.documentElement.style.setProperty('--source-header-height',(header?.offsetHeight||64)+'px');height();window.addEventListener('resize',()=>{height();if(!mobile())closeNav();});
+button?.addEventListener('click',()=>{const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);});
+toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));language.classList.toggle('is-open',open);});
+document.addEventListener('click',event=>{if(language&&!language.contains(event.target))closeLanguages();if(mobile()&&nav&&!nav.contains(event.target)&&!button?.contains(event.target))closeNav();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){const focusLanguage=language?.contains(document.activeElement)&&language.classList.contains('is-open');closeLanguages();if(focusLanguage)toggle?.focus();if(nav?.classList.contains('is-open')){closeNav();button?.focus();}}});
+})();
