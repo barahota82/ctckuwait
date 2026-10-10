@@ -27,10 +27,12 @@ function customer_submit(array $b): int {
  db()->beginTransaction();query('INSERT INTO ep_messages(name,email,phone,body,created_at,status,ip_hash,department_id,kind) VALUES(?,?,?,?,?,?,?,?,?)',[$name,$email,$phone,$body,utc_now(),'new',$ip,$dep,$kind]);$id=(int)db()->lastInsertId();customer_event($id,null,'received',null,$dep,'استلام من الموقع');customer_notify($dep,$id);db()->commit();return $id;
 }
 function rating_submit(array $b): int {
- if(!settings()['ratings_enabled'])fail('استقبال التقييمات غير متاح.');$name=trim((string)($b['name']??''));$email=trim((string)($b['email']??''));$score=(int)($b['score']??0);$body=trim((string)($b['message']??''));
- if(!$name||mb_strlen($name)>150||!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>180||$score<1||$score>5||mb_strlen($body)>3000)fail('راجع الاسم والبريد والتقييم.');
+ if(!settings()['ratings_enabled'])fail('استقبال التقييمات غير متاح.');$name=trim((string)($b['name']??''));$email=trim((string)($b['email']??''));$phone=trim((string)($b['phone']??''));$score=(int)($b['score']??0);$body=trim((string)($b['message']??''));
+ if(!$name||mb_strlen($name)>150||!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>180||mb_strlen($phone)>50||$score<1||$score>5||mb_strlen($body)>3000)fail('راجع الاسم والبريد والتقييم.');
  $ip=hash('sha256','public-rating|'.($_SERVER['REMOTE_ADDR']??''));if((int)query('SELECT COUNT(*) FROM ep_ratings WHERE ip_hash=? AND created_at>=?',[$ip,gmdate('Y-m-d H:i:s',time()-3600)])->fetchColumn()>=3)fail('انتظر قبل تقديم تقييم آخر.',429);
- query('INSERT INTO ep_ratings(name,email,score,body,consent_public,created_at,ip_hash) VALUES(?,?,?,?,?,?,?)',[$name,$email,$score,$body,empty($b['consent_public'])?0:1,utc_now(),$ip]);return (int)db()->lastInsertId();
+ if(!ratings_phone_ready()&&$phone!=='')fail('تعذر حفظ بيانات التقييم؛ حاول لاحقًا.');
+ $columns=ratings_phone_ready()?'name,email,phone,score,body,consent_public,created_at,ip_hash':'name,email,score,body,consent_public,created_at,ip_hash';$values=[$name,$email];if(ratings_phone_ready())$values[]=$phone;$values=array_merge($values,[$score,$body,empty($b['consent_public'])?0:1,utc_now(),$ip]);
+ query('INSERT INTO ep_ratings('.$columns.') VALUES('.implode(',',array_fill(0,count($values),'?')).')',$values);return (int)db()->lastInsertId();
 }
 function customer_action(string $action,array $u,array $b): array {
  if($action==='customer_routes_save'){admin_only($u);$routes=$b['routes']??[];if(!is_array($routes))fail('توجيه الرسائل غير صالح.');$clean=[];foreach(['general','payment','purchase_enquiry','delivery','complaint','support']as $kind){$id=(int)($routes[$kind]??0);if(!query('SELECT id FROM ep_customer_departments WHERE id=? AND active=1',[$id])->fetchColumn())fail('اختر قسمًا متاحًا لكل نوع رسالة.');$clean[$kind]=$id;}query('MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES (?, ?)) AS source (setting_key, value_json) ON target.setting_key=source.setting_key WHEN MATCHED THEN UPDATE SET value_json=source.value_json WHEN NOT MATCHED THEN INSERT (setting_key, value_json) VALUES (source.setting_key, source.value_json);',['customer_routes',jencode($clean)]);audit('customer_routes_save','customers');return ['ok'=>true];}
@@ -66,7 +68,7 @@ function customer_action(string $action,array $u,array $b): array {
   }
   audit($action,'message:'.$r['id']);db()->commit();return ['ok'=>true];
  }
- if($action==='customer_ratings'){admin_only($u);return query('SELECT TOP (500) id,name,email,score,body,consent_public,status,created_at,reviewed_by FROM ep_ratings ORDER BY id DESC')->fetchAll();}
+ if($action==='customer_ratings'){admin_only($u);return query('SELECT TOP (500) id,name,email,'.(ratings_phone_ready()?'phone':"N'' AS phone").',score,body,consent_public,status,created_at,reviewed_by FROM ep_ratings ORDER BY id DESC')->fetchAll();}
  if($action==='customer_rating_review'){
   admin_only($u);$id=(int)($b['id']??0);$status=(string)($b['status']??'');if(!in_array($status,['pending','private','published'],true))fail('الحالة غير صالحة.');$r=query('SELECT * FROM ep_ratings WHERE id=?',[$id])->fetch();if(!$r)fail('التقييم غير موجود.',404);if($status==='published'&&!$r['consent_public'])fail('العميل لم يوافق على نشر تقييمه.');query('UPDATE ep_ratings SET status=?,reviewed_by=? WHERE id=?',[$status,$u['id'],$id]);audit($action,'rating:'.$id,['status'=>$status]);return ['ok'=>true];
  }

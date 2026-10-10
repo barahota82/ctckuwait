@@ -21,12 +21,28 @@ function session_init(): void {
  session_name('EP_SESSION');
  session_set_cookie_params(['lifetime'=>0,'path'=>rtrim(str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']??'/')), '/').'/','secure'=>secure_request(),'httponly'=>true,'samesite'=>'Strict']);
  session_start();
+ $epoch=is_file(EP_ROOT.'/private/session-epoch.txt')?trim(file_get_contents(EP_ROOT.'/private/session-epoch.txt')):'';
+ if(isset($_SESSION['epoch'])&&!hash_equals($_SESSION['epoch'],$epoch)){session_regenerate_id(true);$_SESSION=[];}
+ $_SESSION['epoch']=$epoch;
  if (!isset($_SESSION['csrf'])) $_SESSION['csrf']=bin2hex(random_bytes(32));
 }
 require_once __DIR__.'/database.php';
+function operation_lock():void {
+ if(isset($GLOBALS['EP_OPERATION_LOCK']))return;
+ $h=fopen(EP_ROOT.'/private/operation.lock','c');
+ if(!$h||!flock($h,LOCK_SH|LOCK_NB))fail('تجري عملية نسخ أو استرجاع؛ حاول بعد قليل.',503);
+ $GLOBALS['EP_OPERATION_LOCK']=$h;
+}
+function ratings_phone_ready():bool {return query("SELECT COL_LENGTH('dbo.ep_ratings','phone')")->fetchColumn()!==null;}
+function site_upgrade(array $u):array {
+ admin_only($u);require_once __DIR__.'/backups.php';backup_exclusive();
+ if(!ratings_phone_ready())query("ALTER TABLE [dbo].[ep_ratings] ADD phone NVARCHAR(50) NOT NULL CONSTRAINT ep_rating_phone_v23 DEFAULT N''");
+ audit('site_upgrade','V23');return ['ok'=>true];
+}
 function db(): PDO {
  static $pdo=null;
  if($pdo)return $pdo;
+ operation_lock();
  $config=require EP_ROOT.'/../config.php';
  return $pdo=database_connect($config);
 }

@@ -52,7 +52,8 @@
     "empty_offers": "There are no offers available at the moment. Contact our team for enquiries.",
     "rating_required": "Select a rating from 1 to 5.",
     "employee_privacy": "Employee data notice",
-    "address": "Address"
+    "address": "Address",
+    "contact_details_notice": "We retain your email address and phone number for follow-up. Neither is shown with your published review."
   },
   "ar": {
     "title": "تواصل معنا",
@@ -107,7 +108,8 @@
     "empty_offers": "لا توجد عروض متاحة حاليًا. للاستفسارات، تواصل مع فريقنا.",
     "rating_required": "اختر تقييمًا من 1 إلى 5.",
     "employee_privacy": "بيان بيانات الموظفين",
-    "address": "العنوان"
+    "address": "العنوان",
+    "contact_details_notice": "نحتفظ بالبريد الإلكتروني والهاتف لمتابعة التواصل، ولا يظهران مع التقييم المنشور."
   },
   "fil": {
     "title": "Makipag-ugnayan",
@@ -144,7 +146,8 @@
     "empty_offers": "Walang available na alok sa ngayon. Makipag-ugnayan sa aming team para sa mga katanungan.",
     "rating_required": "Pumili ng marka mula 1 hanggang 5.",
     "employee_privacy": "Abiso sa datos ng empleyado",
-    "address": "Address"
+    "address": "Address",
+    "contact_details_notice": "Itinatago namin ang iyong email at numero ng telepono para sa follow-up. Hindi ito ipinapakita kasama ng iyong nailathalang pagsusuri."
   },
   "hi": {
     "title": "संपर्क करें",
@@ -181,7 +184,8 @@
     "empty_offers": "फ़िलहाल कोई ऑफ़र उपलब्ध नहीं है। जानकारी के लिए हमारी टीम से संपर्क करें।",
     "rating_required": "1 से 5 तक रेटिंग चुनें।",
     "employee_privacy": "कर्मचारी डेटा सूचना",
-    "address": "पता"
+    "address": "पता",
+    "contact_details_notice": "आपसे संपर्क करने के लिए आपका ईमेल और फ़ोन नंबर सुरक्षित रखा जाता है। प्रकाशित समीक्षा के साथ इन्हें नहीं दिखाया जाता।"
   },
   "ur": {
     "title": "رابطہ کریں",
@@ -218,6 +222,7 @@
     "empty_offers": "فی الحال کوئی آفر دستیاب نہیں۔ معلومات کے لیے ہماری ٹیم سے رابطہ کریں۔",
     "rating_required": "1 سے 5 تک درجہ منتخب کریں۔",
     "employee_privacy": "ملازمین کے ڈیٹا کا نوٹس",
-    "address": "پتا"
+    "address": "پتا",
+    "contact_details_notice": "آپ سے رابطے کے لیے ای میل اور فون نمبر محفوظ رکھے جاتے ہیں۔ یہ شائع شدہ تبصرے کے ساتھ دکھائے نہیں جاتے۔"
   }
 }
