@@ -26,7 +26,7 @@ function database_dsn(array $config): string {
  $port=trim((string)($config['port']??''));
  if($port!==''&&(!preg_match('/^[0-9]+$/D',$port)||(int)$port<1||(int)$port>65535))throw new RuntimeException('منفذ SQL Server غير صالح.');
  if(str_contains($host,'\\')&&$port!=='')throw new RuntimeException('للمثيل المسمى اترك المنفذ فارغًا، أو استخدم عنوان الخادم ومنفذ TCP الذي تحدده الاستضافة.');
- return 'sqlsrv:Server='.$host.($port!==''?','.$port:'').';Database='.$database.';Encrypt=yes;TrustServerCertificate='.(!empty($config['trust_server_certificate'])?'yes':'no').';MultipleActiveResultSets=true;LoginTimeout=15';
+ return 'sqlsrv:Server='.$host.($port!==''?','.$port:'').';Database='.$database.';Encrypt=1;TrustServerCertificate='.(!empty($config['trust_server_certificate'])?'1':'0').';MultipleActiveResultSets=true;LoginTimeout=15';
 }
 function database_connect(array $config): PDO {
  if(($config['driver']??'')!=='sqlsrv')throw new RuntimeException('V19 مخصصة لـSQL Server. لا تستخدم ملف اتصال MySQL من V18.');
