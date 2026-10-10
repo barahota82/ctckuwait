@@ -58,7 +58,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
    foreach(array_diff(glob(__DIR__.'/private/files/*.bin')?:[],$seedFiles)as $path)@unlink($path);
    @unlink(EP_SITE_ROOT.'/.env.tmp.php');
   }
-  $error=$e instanceof PDOException?'تعذر الاتصال بـSQL Server أو إنشاء الجداول. راجع الخادم وبيانات الدخول والصلاحيات وإعداد شهادة الخادم.':($e instanceof RuntimeException?$e->getMessage():'تعذر إكمال التثبيت.');
+  $error=$e instanceof PDOException?database_install_error($e):($e instanceof RuntimeException?$e->getMessage():'تعذر إكمال التثبيت.');
+  if($e instanceof PDOException && isset($config)){
+   $error.=' [الإعداد الفعلي TrustServerCertificate=' . (!empty($config['trust_server_certificate'])?'yes':'no') . '; Encrypt=yes]';
+   $native=(int)($e->errorInfo[1]??0);
+   if($native===-2146893019)$error.=' [الشهادة: جهة الإصدار غير موثوقة]';
+   if($native===-2146893022)$error.=' [الشهادة: اسم الخادم لا يطابق الاسم في الشهادة]';
+  }
   security_log($e,'EP install');
  }finally{if(is_resource($lock)){flock($lock,LOCK_UN);fclose($lock);}}
 
