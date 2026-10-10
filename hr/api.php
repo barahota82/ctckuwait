@@ -12,7 +12,8 @@ header('X-Content-Type-Options: nosniff');
 try {
  if(!app_installed())fail('النظام يحتاج تثبيتًا.',503);
  if(!secure_request())fail('استخدم HTTPS لحماية بيانات الموظفين.',403);
- session_init();
+ require_once __DIR__.'/app/salary.php';
+session_init();
  $action=(string)($_GET['action']??'bootstrap');
  $b=$_POST;
  if(str_contains($_SERVER['CONTENT_TYPE']??'','application/json'))$b=decode(file_get_contents('php://input'));
@@ -67,8 +68,8 @@ try {
     $args=[$username,$name,$role,$manager?:null,mb_substr((string)($b['department']??''),0,100),mb_substr((string)($b['job_title']??''),0,100),$type,$active,empty($b['show_sick'])?0:1,$hired,max(0,(float)($b['salary']??0)),jencode($b['profile']??[])];
     if(!empty($b['password'])&&strlen($b['password'])<12)fail('كلمة المرور 12 حرفًا على الأقل.');
     db()->beginTransaction();
-    if($id){query('UPDATE ep_users SET username=?,name=?,role=?,manager_id=?,department=?,job_title=?,staff_type=?,active=?,show_sick=?,hired_on=?,salary=?,profile_json=? WHERE id=?',[...$args,$id]);}
-    else{if(strlen((string)($b['password']??''))<12)fail('كلمة مرور الموظف 12 حرفًا على الأقل.');query('INSERT INTO ep_users(username,name,role,manager_id,department,job_title,staff_type,active,show_sick,hired_on,salary,profile_json,password_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[...$args,password_hash($b['password'],PASSWORD_DEFAULT),utc_now()]);$id=(int)db()->lastInsertId();}
+    if($id){$previous=query('SELECT * FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$id])->fetch();if(!$previous)fail('الموظف غير موجود.');if($previous['username']!==$username&&query('SELECT id FROM ep_history WHERE employee_code=?',[$previous['username']])->fetch())fail('لا تغيّر كود موظف له بيانات تاريخية.');if(abs((float)$previous['salary']-(float)($b['salary']??0))>.0001||!query("SELECT id FROM ep_history WHERE kind='salary_history' AND employee_code=?",[$username])->fetch())salary_record(array_replace($previous,['username'=>$username]),(float)($b['salary']??0),(string)($b['salary_effective_from']??''),(string)($b['salary_note']??''),$uid);query('UPDATE ep_users SET username=?,name=?,role=?,manager_id=?,department=?,job_title=?,staff_type=?,active=?,show_sick=?,hired_on=?,salary=?,profile_json=? WHERE id=?',[...$args,$id]);}
+    else{if(strlen((string)($b['password']??''))<12)fail('كلمة مرور الموظف 12 حرفًا على الأقل.');query('INSERT INTO ep_users(username,name,role,manager_id,department,job_title,staff_type,active,show_sick,hired_on,salary,profile_json,password_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[...$args,password_hash($b['password'],PASSWORD_DEFAULT),utc_now()]);$id=(int)db()->lastInsertId();salary_record(['username'=>$username,'hired_on'=>$hired],(float)($b['salary']??0),(string)($b['salary_effective_from']??''),(string)($b['salary_note']??''),$uid);}
     if(!empty($b['password'])&&isset($b['id'])){if(strlen($b['password'])<12)fail('كلمة المرور 12 حرفًا على الأقل.');query('UPDATE ep_users SET password_hash=? WHERE id=?',[password_hash($b['password'],PASSWORD_DEFAULT),$id]);}
     audit('user_save','user:'.$id);db()->commit();$result=['ok'=>true,'id'=>$id];break;
    case 'settings_save':
@@ -99,10 +100,10 @@ try {
     query("MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES ('logo_id', ?)) AS source (setting_key, value_json) ON target.setting_key=source.setting_key WHEN MATCHED THEN UPDATE SET value_json=source.value_json WHEN NOT MATCHED THEN INSERT (setting_key, value_json) VALUES (source.setting_key, source.value_json);",[jencode($fid)]);audit('logo_upload','file:'.$fid);$result=['ok'=>true];break;
    case 'policies':admin_only($u);$result=query('SELECT p.*,u.name AS employee_name FROM ep_policies p LEFT JOIN ep_users u ON u.id=p.user_id ORDER BY effective_from DESC,id DESC')->fetchAll();break;
    case 'leave_overview':
-    if($u['role']==='employee')fail('للإدارة فقط.',403);$result=[];foreach(scope_ids($u)as $target){$staff=query('SELECT name FROM ep_users WHERE id=?',[$target])->fetch();$result[]=['id'=>$target,'name'=>$staff['name'],'balance'=>leave_balance($target,$cfg)];}break;
+    if($u['role']==='employee')fail('للإدارة فقط.',403);$result=[];foreach(scope_ids($u)as $target){$staff=query('SELECT name FROM ep_users WHERE id=?',[$target])->fetch();$balance=leave_balance($target,$cfg);if($u['role']!=='admin')unset($balance['valuation_salary'],$balance['cash_value'],$balance['salary_effective_from']);$result[]=['id'=>$target,'name'=>$staff['name'],'balance'=>$balance];}break;
    case 'leave_balance':
     $target=(int)($_GET['user_id']??$uid);if(!can_view($u,$target))fail('خارج الصلاحيات.',403);
-    $result=leave_balance($target,$cfg);break;
+    $result=leave_balance($target,$cfg);if($u['role']!=='admin'&&$target!==$uid)unset($result['valuation_salary'],$result['cash_value'],$result['salary_effective_from']);break;
    case 'dashboard':
     $date=local_time()->format('Y-m-d');$result=['staff'=>[],'expiring'=>[],'stale'=>[]];
     foreach(scope_ids($u)as $target){
@@ -221,7 +222,7 @@ try {
       $body['_approved_days']=$requested;
      }
     }
-    if($status==='approved'&&$r['module']==='leave_cash'){query('SELECT id FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$r['user_id']]);$days=(float)($body['days']??0);$balance=leave_balance((int)$r['user_id'],$cfg,$r['date_from']??local_time()->format('Y-m-d'));if($days<=0||$balance['cash_days']===null||$days>$balance['cash_days'])fail('أيام التسوية تتجاوز الرصيد النقدي أو الرصيد غير محدد.');if(!preg_match('/^\d{4}-(0[1-9]|1[0-2])$/',$body['payroll_month']??''))fail('حدد شهر إضافة مبلغ التسوية.');}
+    if($status==='approved'&&$r['module']==='leave_cash'){query('SELECT id FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$r['user_id']]);$days=(float)($body['days']??0);$balance=leave_balance((int)$r['user_id'],$cfg,$r['date_from']??local_time()->format('Y-m-d'));if($days<=0||$balance['cash_days']===null||$days>$balance['cash_days'])fail('أيام التسوية تتجاوز الرصيد النقدي أو الرصيد غير محدد.');if(!preg_match('/^\d{4}-(0[1-9]|1[0-2])$/',$body['payroll_month']??''))fail('حدد شهر إضافة مبلغ التسوية.');if($balance['valuation_salary']===null)fail('أدخل تاريخ الراتب قبل اعتماد تسوية الإجازة.');$amount=round($days*$balance['valuation_salary']/max(1,(float)$cfg['salary_divisor']),3);$body['_valuation']=['date'=>$balance['valuation_date'],'salary'=>$balance['valuation_salary'],'effective_from'=>$balance['salary_effective_from'],'days'=>$days,'divisor'=>$cfg['salary_divisor'],'amount'=>$amount];query('UPDATE ep_records SET amount=? WHERE id=?',[$amount,$id]);}
     if($status==='approved'&&$r['module']==='loan'&&((float)($body['installment']??0)<=0||!preg_match('/^\\d{4}-(0[1-9]|1[0-2])$/',$body['payroll_month']??'')))fail('حدد قسطًا موجبًا وأول شهر سداد صحيحًا.');
     if($status==='approved'&&$r['module']==='external'&&$r['date_from']<local_time()->format('Y-m-d'))fail('لا اعتماد بأثر رجعي للانصراف الخارجي.');
     query('UPDATE ep_records SET status=?,body_json=?,reviewed_by=?,review_note=?,updated_at=? WHERE id=?',[$status,jencode($body),$uid,mb_substr((string)($b['note']??''),0,5000),utc_now(),$id]);
@@ -307,7 +308,7 @@ try {
       $days+=$d['penalty_days'];$minutes+=$d['late_minutes']+$d['early_minutes']+$d['penalty_minutes'];
       $overtime+=$d['overtime_minutes'];
      }
-     $rate=(float)$staff['salary']/max(1,(float)$cfg['salary_divisor']);$hour=$rate/max(1,(float)$cfg['work_hours']);
+     $salarySnapshot=salary_at($staff,$to);$monthlySalary=$salarySnapshot['salary'];$rate=$monthlySalary/max(1,(float)$cfg['salary_divisor']);$hour=$rate/max(1,(float)$cfg['work_hours']);
      $deduction=$days*$rate+$minutes*$hour/60;$addition=$cfg['overtime_enabled']?$overtime*$hour/60*(float)$cfg['overtime_multiplier']:0;
      $loanItems=[];
      foreach(query("SELECT * FROM ep_records WHERE user_id=? AND status='approved' AND module IN ('discipline','adjustment','loan','leave_cash')",[$uid2])->fetchAll()as $r){
@@ -321,8 +322,8 @@ try {
       }
       if(($body['payroll_month']??'')===$month){if(in_array($r['module'],['adjustment','leave_cash'],true))$addition+=(float)$r['amount'];else$deduction+=(float)$r['amount'];}
      }
-     $calc=['salary'=>(float)$staff['salary'],'deduction'=>round($deduction,3),'addition'=>round($addition,3),'days'=>$days,'minutes'=>$minutes,'flags'=>$flags,'settings'=>$cfg,'days_detail'=>$report,'loan_items'=>$loanItems,'note'=>'مسودة للمراجعة؛ لا تمثل حكمًا قانونيًا أو تحويل راتب'];
-     $net=round((float)$staff['salary']+$addition-$deduction,3);
+     $calc=['salary'=>$monthlySalary,'salary_effective_from'=>$salarySnapshot['effective_from'],'salary_rule'=>'latest_in_month_whole_month','deduction'=>round($deduction,3),'addition'=>round($addition,3),'days'=>$days,'minutes'=>$minutes,'flags'=>$flags,'settings'=>$cfg,'days_detail'=>$report,'loan_items'=>$loanItems,'note'=>'مسودة للمراجعة؛ لا تمثل حكمًا قانونيًا أو تحويل راتب'];
+     $net=round($monthlySalary+$addition-$deduction,3);
      query("MERGE INTO ep_payroll WITH (HOLDLOCK) AS target USING (VALUES (?, ?, ?, ?, ?)) AS source (user_id, month_key, calculation_json, net_amount, created_at) ON target.user_id=source.user_id AND target.month_key=source.month_key WHEN MATCHED THEN UPDATE SET calculation_json=source.calculation_json,net_amount=source.net_amount,created_at=source.created_at WHEN NOT MATCHED THEN INSERT (user_id, month_key, calculation_json, net_amount, created_at) VALUES (source.user_id, source.month_key, source.calculation_json, source.net_amount, source.created_at);",[$uid2,$month,jencode($calc),$net,utc_now()]);
     }
     audit('payroll_build','month:'.$month);db()->commit();$result=['ok'=>true];break;
