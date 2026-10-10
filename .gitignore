@@ -1,0 +1,34 @@
+# Server-only secrets; commit the empty example only.
+.env*
+!.env.example.php
+config.local.php
+# Private installation/runtime files. Keep directory protection files tracked.
+hr/private/*
+!hr/private/.htaccess
+!hr/private/web.config
+!hr/private/files/
+hr/private/files/*
+!hr/private/files/.htaccess
+# Never commit deployment archives, DB dumps, logs or review exports.
+DOCUMENTATION/
+*.zip
+*.bak
+*.bak.*
+*.dump
+*.sql
+!hr/app/schema.sql
+*.log
+*.key
+*.lock
+*.tmp
+*.php.txt
+*.sql.txt
+*.sql.TXT
+*.local.sql
+database-backups/
+backups/
+logs/
+_compare*/
+.tmp*/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+.env.php
+.env.tmp.php
+hr/private/install.key
+hr/private/files/
+backups/
+database-backups/
+logs/

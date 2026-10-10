@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /hr/
+Disallow: /*receipt=
+Disallow: /*preview=
