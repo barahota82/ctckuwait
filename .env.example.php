@@ -6,7 +6,7 @@ declare(strict_types=1);
 return [
     'APP_INSTALLED' => false,
     'DB_DRIVER' => 'sqlsrv',
-    'DB_HOST' => '.\\MSSQLSERVER2022',
+    'DB_HOST' => 'localhost',
     'DB_PORT' => '', // Named instance: empty. TCP host: hosting-provided port.
     'DB_NAME' => '',
     'DB_USER' => '',

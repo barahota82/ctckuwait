@@ -1,0 +1,7 @@
+const ROOT=require('path').resolve(__dirname,require('fs').existsSync(require('path').join(__dirname,'../SITE_FILES'))?'../SITE_FILES':'..');
+const fs=require('fs'),vm=require('vm'),assert=require('assert');let n=0,desktop=true,moves=0;const ok=(a,b)=>{assert.strictEqual(a,b);n++;};const classes=new Set(),card={isConnected:true,before(){},append(el){el.place='card';moves++;}},filters={before(){},place:'page'},portal={isConnected:true,classList:{add:k=>classes.add(k),remove:k=>classes.delete(k)},append(el){el.place='portal';moves++;}};
+const c={view:'document',window:{addEventListener(){},matchMedia:()=>({matches:desktop})},document:{createComment:()=>({after(el){el.place='page';moves++;}})}};vm.createContext(c);vm.runInContext(fs.readFileSync(ROOT+'/hr/assets/record-tabs.js','utf8'),c);
+c.prepareDocumentLayout54(card,filters,portal);ok(card.place,'portal');ok(filters.place,'card');ok(classes.has('has-document54'),true);let before=moves;c.refreshDocumentLayout54();ok(moves,before);
+desktop=false;c.refreshDocumentLayout54();ok(card.place,'page');ok(filters.place,'page');ok(classes.has('has-document54'),false);
+desktop=true;c.refreshDocumentLayout54();ok(card.place,'portal');ok(filters.place,'card');card.isConnected=false;before=moves;c.refreshDocumentLayout54();ok(moves,before);ok(vm.runInContext('documentLayoutState54',c),null);
+console.log('PASS',n,'desktop consolidation, mobile restoration, repeat stability and stale document cleanup');

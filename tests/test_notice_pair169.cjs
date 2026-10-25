@@ -1,0 +1,14 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const {JSDOM}=require('jsdom');
+const dom=new JSDOM('<dialog id="modal"><button id="closeModal"></button><form id="noticeForm32"><input name="title"><textarea name="body"></textarea><button type="submit">Send</button></form></dialog>');
+const c={document:dom.window.document,boot:{localization:{language:'ar'}},$:s=>dom.window.document.querySelector(s)};vm.createContext(c);vm.runInContext(fs.readFileSync(__dirname+'/../hr/assets/notifications.js','utf8'),c);
+const f=c.$('#noticeForm32');c.noticePairForm169(f);
+assert.equal(f.querySelectorAll('input[type=hidden]').length,5);assert.equal(f.elements.source_language169.value,'ar');
+f.elements.title.value='عنوان';f.elements.title.dispatchEvent(new dom.window.Event('input'));assert.equal(f.elements.title_ar169.value,'عنوان');assert.equal(f.elements.title_en169.value,'');
+c.noticePairSaved169(f,{ar:{title:'عنوان',body:'رسالة'},en:{title:'Title',body:'Message'}});assert.equal(f.elements.title_en169.value,'Title');
+f.elements.title.value='عنوان جديد';f.elements.title.dispatchEvent(new dom.window.Event('input'));assert.equal(f.elements.title_en169.value,'');
+const unlock=c.noticePairLock169(f);assert(f.inert);assert([...f.elements].filter(n=>n.tagName!=='BUTTON').every(n=>!n.disabled));unlock();assert(!f.inert);assert([...f.elements].every(n=>!n.disabled));
+const row={title:'Original',meta:{text_pair169:{ar:{title:'العربي',body:'الرسالة'},en:{title:'English',body:'Message'}}}};
+assert.equal(c.noticeText142(row,'title'),'العربي');c.boot.localization.language='en';assert.equal(c.noticeText142(row,'title'),'English');assert.equal(c.noticeText142(row,'body'),'Message');
+const form=c.document.createElement('form');form.innerHTML='<input name="title"><textarea name="body"></textarea>';c.noticePairForm169(form);assert.equal(form.elements.source_language169.value,'en');form.elements.body.value='Edited English';form.elements.body.dispatchEvent(new dom.window.Event('input'));assert.equal(form.elements.body_en169.value,'Edited English');assert.equal(form.elements.body_ar169.value,'');
+console.log('PASS hidden counterparts, AR/EN source, stale clearing, request input lock and stored display without retranslating.');

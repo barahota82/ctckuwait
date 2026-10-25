@@ -1,0 +1,5 @@
+{
+  "test": "record-pairs-current-dependencies.php",
+  "code": 0,
+  "output": "PASS 155 paired record fields, persisted sidecars, source-language directions, identifiers, replies/reviews, stale record, privacy and failure atomicity checks\nPASS 177 total helper and production API writer assertions\nHR paired text translation unavailable\n"
+}

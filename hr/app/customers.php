@@ -16,7 +16,7 @@ function customer_event(int $id,?int $actor,string $type,?int $from,?int $to,str
  query('INSERT INTO ep_message_events(message_id,user_id,event_type,from_department,to_department,note,created_at) VALUES(?,?,?,?,?,?,?)',[$id,$actor,$type,$from,$to,$note,utc_now()]);
 }
 function customer_notify(int $department,int $id):void {
- foreach(query('SELECT u.* FROM ep_users u JOIN ep_customer_members m ON m.user_id=u.id WHERE m.department_id=? AND u.active=1',[$department])->fetchAll() as $u)if(permission_has($u,'customer_cases'))query('INSERT INTO ep_notifications(user_id,title,body,require_ack,created_at) VALUES(?,?,?,?,?)',[$u['id'],'حالة عميل جديدة','حالة M-'.$id.' أُسندت إلى قسمك. افتح حالات العملاء للمتابعة.',0,utc_now()]);
+ foreach(query('SELECT u.* FROM ep_users u JOIN ep_customer_members m ON m.user_id=u.id WHERE m.department_id=? AND u.active=1',[$department])->fetchAll() as $u)if(permission_has(supervisor_project31($u),'customer_cases'))query('INSERT INTO ep_notifications(user_id,title,body,require_ack,created_at) VALUES(?,?,?,?,?)',[$u['id'],'حالة عميل جديدة','حالة M-'.$id.' أُسندت إلى قسمك. افتح حالات العملاء للمتابعة.',0,utc_now()]);
 }
 function customer_submit(array $b): int {
  $kind=(string)($b['kind']??'general');$routes=['general'=>'general','payment'=>'collection','purchase_enquiry'=>'service','delivery'=>'delivery','complaint'=>'complaints','support'=>'service'];if(!isset($routes[$kind]))fail('نوع الرسالة غير صالح.');
@@ -39,12 +39,12 @@ function customer_action(string $action,array $u,array $b): array {
 
  if($action==='customer_departments'){
   if($u['role']!=='admin')permission_require($u,'customer_cases');$out=['departments'=>query('SELECT * FROM ep_customer_departments ORDER BY sort_order,id')->fetchAll()];
-  if($u['role']==='admin')$out['members']=query('SELECT * FROM ep_customer_members')->fetchAll();return $out;
+  if($u['role']==='admin'){$out['members']=query('SELECT * FROM ep_customer_members')->fetchAll();$out['assignees']=[];foreach(query('SELECT * FROM ep_users WHERE active=1')->fetchAll()as $person)if(permission_has(supervisor_project31($person),'customer_cases'))$out['assignees'][]=['id'=>(int)$person['id'],'name'=>$person['name'],'profile'=>['name_en'=>decode($person['profile_json'])['name_en']??''],'employee_code'=>employee_key($person)?:$person['username']];usort($out['assignees'],fn($a,$b)=>strnatcasecmp($a['employee_code'],$b['employee_code']));}return $out;
  }
  if($action==='customer_department_save'){
   admin_only($u);$id=(int)($b['id']??0);$code=trim((string)($b['code']??''));$name=trim((string)($b['name']??''));$members=array_values(array_unique(array_map('intval',$b['members']??[])));
   if(!preg_match('/^[a-z0-9_-]{1,40}$/',$code)||!$name||mb_strlen($name)>150)fail('اسم القسم ورمزه مطلوبان.');
-  foreach($members as $uid)if(!query("SELECT id FROM ep_users WHERE id=? AND active=1 AND role IN ('admin','manager')",[$uid])->fetch())fail('مسؤول القسم يجب أن يكون مديرًا أو مشرفًا نشطًا.');
+  foreach($members as $uid){$member=query('SELECT * FROM ep_users WHERE id=? AND active=1',[$uid])->fetch();if(!$member||!permission_has(supervisor_project31($member),'customer_cases'))fail('مسؤول القسم يجب أن يكون حسابًا نشطًا لديه صلاحية حالات العملاء.');}
   if($id&&!query('SELECT id FROM ep_customer_departments WHERE id=?',[$id])->fetch())fail('القسم غير موجود.',404);
   db()->beginTransaction();$content=['ar'=>['title'=>$name],'en'=>['title'=>trim((string)($b['name_en']??''))]];
   if($id)query('UPDATE ep_customer_departments SET code=?,content_json=?,active=?,sort_order=? WHERE id=?',[$code,jencode($content),empty($b['active'])?0:1,(int)($b['sort_order']??0),$id]);else{query('INSERT INTO ep_customer_departments(code,content_json,active,sort_order) VALUES(?,?,?,?)',[$code,jencode($content),empty($b['active'])?0:1,(int)($b['sort_order']??0)]);$id=(int)db()->lastInsertId();}
@@ -52,7 +52,7 @@ function customer_action(string $action,array $u,array $b): array {
   translation_enqueue('department',$id,$content['ar']);audit($action,'department:'.$id,['members'=>$members]);db()->commit();return ['ok'=>true,'id'=>$id];
  }
  if($action==='customer_cases'){
-  $ids=customer_department_ids($u);$where=$u['role']==='admin'?'1=1':($ids?'department_id IN ('.implode(',',array_fill(0,count($ids),'?')).')':'1=0');return query('SELECT TOP (500) id,name,email,phone,body,created_at,status,department_id,kind FROM ep_messages WHERE '.$where.' ORDER BY id DESC',$u['role']==='admin'?[]:$ids)->fetchAll();
+  $ids=customer_department_ids($u);$where=$u['role']==='admin'?'1=1':($ids?'department_id IN ('.implode(',',array_fill(0,count($ids),'?')).')':'1=0');return query('SELECT id,name,email,phone,body,created_at,status,department_id,kind FROM ep_messages WHERE '.$where.' ORDER BY id DESC',$u['role']==='admin'?[]:$ids)->fetchAll();
  }
  if($action==='customer_case_detail'){
   $r=customer_case($u,(int)($_GET['id']??0));$r['events']=query('SELECT e.*,u.name AS actor_name FROM ep_message_events e LEFT JOIN ep_users u ON u.id=e.user_id WHERE e.message_id=? ORDER BY e.id',[$r['id']])->fetchAll();return $r;
@@ -68,7 +68,7 @@ function customer_action(string $action,array $u,array $b): array {
   }
   audit($action,'message:'.$r['id']);db()->commit();return ['ok'=>true];
  }
- if($action==='customer_ratings'){admin_only($u);return query('SELECT TOP (500) id,name,email,'.(ratings_phone_ready()?'phone':"N'' AS phone").',score,body,consent_public,status,created_at,reviewed_by FROM ep_ratings ORDER BY id DESC')->fetchAll();}
+ if($action==='customer_ratings'){admin_only($u);return query('SELECT id,name,email,'.(ratings_phone_ready()?'phone':"N'' AS phone").',score,body,consent_public,status,created_at,reviewed_by FROM ep_ratings ORDER BY id DESC')->fetchAll();}
  if($action==='customer_rating_review'){
   admin_only($u);$id=(int)($b['id']??0);$status=(string)($b['status']??'');if(!in_array($status,['pending','private','published'],true))fail('الحالة غير صالحة.');$r=query('SELECT * FROM ep_ratings WHERE id=?',[$id])->fetch();if(!$r)fail('التقييم غير موجود.',404);if($status==='published'&&!$r['consent_public'])fail('العميل لم يوافق على نشر تقييمه.');query('UPDATE ep_ratings SET status=?,reviewed_by=? WHERE id=?',[$status,$u['id'],$id]);audit($action,'rating:'.$id,['status'=>$status]);return ['ok'=>true];
  }

@@ -1,0 +1,56 @@
+/* Scope layout to the five record workspaces; dimensions and colours come from
+   the approved employee editor classes in style.css. */
+.record-workspace173 .record-filters173{display:grid;grid-template-columns:minmax(0,2fr) repeat(2,minmax(0,1fr));gap:12px;margin-block:12px}
+.record-workspace173 .record-filters173 label{margin:0;min-width:0}
+.record-workspace173 [data-record-list173]{display:grid;gap:6px}
+.record-workspace173 .record-details32>div{min-width:0;overflow-wrap:anywhere}
+.record-workspace173 .record-actions32{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.record-workspace173 summary[hidden],.record-workspace173 [hidden]{display:none!important}
+#staffPanel32.record-workspace173 .record-browser32{padding:0;margin:0;border:0;background:transparent;box-shadow:none}
+#staffPanel32.record-workspace173 details[data-employee-id]{padding:0;border:0;background:transparent;box-shadow:none;color:inherit;margin:0}
+#staffPanel32.record-workspace173 details[data-employee-id]>.record-details32{background:transparent;color:inherit;padding:12px 0}
+#staffPanel32.record-workspace173 details[data-employee-id]>.record-details32 .record-value32{color:inherit}
+#staffPanel32.record-workspace173 details[data-employee-id]>.record-details32>.employee-footer48:empty{display:none}
+#staffPanel32.record-workspace173 details[data-employee-id]>.policy-history32{margin-block:6px}
+#staffPanel32.record-workspace173 .employee-editor-top-actions136:has(>button:only-child){grid-template-columns:1fr}
+.record-modal174 .record-attachment174{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-width:0}
+.record-modal174 .record-attachment174 img{max-width:160px;max-height:120px;object-fit:contain}
+@media(max-width:760px){
+ .record-workspace173 .record-filters173{grid-template-columns:minmax(0,1fr)}
+}
+
+@media(max-width:760px),(hover:none) and (pointer:coarse){
+ #page .record-workspace173 :is([data-record-count173],[data-policy-count173]){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+
+.record-person-pending176{display:block;min-height:24px;min-width:12rem}
+.document-modal176 .employee-editor-fields134{display:block}
+.document-modal176 .document-modal-row176{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-block-end:12px;align-items:end}
+.document-modal176 .document-modal-row176 label{min-width:0;margin:0}
+.document-modal176 [data-document-field176="user_id"]{grid-column:span 2}
+.document-modal176 [data-document-field176="file"]{grid-column:span 2}
+@media(max-width:760px){
+ .document-modal176 .document-modal-row176{grid-template-columns:minmax(0,1fr)}
+ .document-modal176 [data-document-field176]{grid-column:auto}
+}
+
+
+/* V6: cards inherit the reference history layout, including natural-width status. */
+#page .record-workspace173 #addRecord :is(.record-add-icon180,span){color:inherit}
+#page .record-workspace173 .record-details32>div>.record-value32{color:var(--gold,#c5a66a)}
+/* Approved V7 palette is scoped strictly to closed-card summary status text. */
+#page .record-group32>summary :is(.badge,.profile-status33){background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;min-width:0;width:auto;white-space:normal}
+#page .record-group32>summary :is(.badge,.profile-status33):is(.approved,.active,.working,.valid){color:#8FC9A3!important}
+#page .record-group32>summary :is(.badge,.profile-status33):is(.rejected,.expired){color:#EF9691!important}
+#page .record-group32>summary :is(.badge,.profile-status33).pending{color:#B8A6E8!important}
+#page .record-group32>summary :is(.badge,.profile-status33):is(.revision,.incomplete,.unconfirmed,.stale){color:#E8AC78!important}
+#page .record-group32>summary :is(.badge,.profile-status33).returned{color:#91B8DC!important}
+#page .record-group32>summary :is(.badge,.profile-status33):is(.future,.closed){color:#B9BDC5!important}
+#modalContent .record-form181 .employee-editor-fields134{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
+#modalContent .record-form181 label{min-width:0;margin:0}
+#modalContent .record-form181 textarea{height:calc(var(--record-input181,44px) * 2);min-height:calc(var(--record-input181,44px) * 2);box-sizing:border-box;resize:vertical}
+#modalContent .record-form181 [hidden]{display:none!important}
+@media(max-width:760px){
+ #modalContent .record-form181 .employee-editor-fields134{grid-template-columns:minmax(0,1fr)}
+ #modalContent .record-form181 [data-record-field181]{grid-column:1 / -1!important}
+}

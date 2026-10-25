@@ -1,0 +1,35 @@
+{
+  "version": "41.0",
+  "changed_files": [
+    "hr/api.php",
+    "hr/index.php",
+    "hr/export.php",
+    "hr/assets/operations.js",
+    "hr/assets/style.css",
+    "hr/assets/payroll-grid.js",
+    "hr/app/payroll-grid-export.php",
+    "hr/app/payroll-layout.php",
+    "hr/app/payroll-export.php",
+    "hr/app/ui-source.json",
+    "hr/app/payroll-settlement.php",
+    "hr/app/payroll.php",
+    "hr/app/payroll-grid.php",
+    "hr/app/ui-en.json",
+    "hr/app/permissions.php",
+    "hr/app/finance.php"
+  ],
+  "checks": [
+    "Changed PHP delimiters balanced (not PHP lint)",
+    "All staged JavaScript syntax and JSON/XML valid",
+    "PASS 48 payroll/commission rendering, edit, scopes, state, zero/blank, returns and race checks",
+    "PASS 48 payroll/commission rendering, edit, scopes, state, zero/blank, returns and race checks",
+    "PASS 39 location checks: permission, fresh reading, accuracy, no autosave, errors, closure, manual selection and stale callbacks.",
+    "PASS 31 employee ordering, boundaries, scope, dirty-form guard and profile navigation checks.",
+    "PASS 7 actual profile async race, navigation context and permitted-tab checks.",
+    "Shared update source exact; GitHub private-file and actual-secret scan passed"
+  ],
+  "native_php_lint": "NOT RUN",
+  "native_sqlserver_iis_http_xlsx": "NOT RUN",
+  "real_browser": "NOT RUN",
+  "data_migrations": false
+}

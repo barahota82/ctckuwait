@@ -6,6 +6,7 @@ function environment_values():array {
  if(!is_file($path))return [];
  $values=(static function(string $file):mixed{return require $file;})($path);
  if(!is_array($values))throw new RuntimeException('ملف إعدادات الخادم غير صالح.');
+ if(is_file(EP_SITE_ROOT.'/TRIAL_INSTANCE')&&is_file(EP_SITE_ROOT.'/../.env.php')){$production=(static function($file){return require $file;})(EP_SITE_ROOT.'/../.env.php');if(!empty($values['DB_NAME'])&&strcasecmp((string)$values['DB_NAME'],(string)($production['DB_NAME']??''))===0)throw new RuntimeException('بيئة التجربة تحتاج قاعدة مستقلة عن قاعدة التشغيل الفعلي.');}
  return $values;
 }
 function environment_bool(mixed $value):bool {
@@ -15,7 +16,7 @@ function environment_bool(mixed $value):bool {
 }
 function app_installed():bool{return environment_bool(environment_values()['APP_INSTALLED']??false);}
 function environment_defaults():array {
- return ['APP_INSTALLED'=>false,'DB_DRIVER'=>'sqlsrv','DB_HOST'=>'.\\MSSQLSERVER2022','DB_PORT'=>'','DB_NAME'=>'','DB_USER'=>'','DB_PASS'=>'','DB_TRUST_SERVER_CERTIFICATE'=>false,
+ return ['APP_INSTALLED'=>false,'DB_DRIVER'=>'sqlsrv','DB_HOST'=>'localhost','DB_PORT'=>'','DB_NAME'=>'','DB_USER'=>'','DB_PASS'=>'','DB_TRUST_SERVER_CERTIFICATE'=>false,
   'HEALTH_CHECK_KEY'=>'','MAIL_ENABLED'=>false,'SMTP_HOST'=>'','SMTP_PORT'=>587,'SMTP_SECURE'=>'tls','SMTP_USER'=>'','SMTP_PASS'=>'','MAIL_FROM'=>'','MAIL_FROM_NAME'=>''];
 }
 function environment_database(array $env):array {

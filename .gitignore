@@ -32,3 +32,16 @@ _compare*/
 .tmp*/
 .DS_Store
 Thumbs.db
+
+# Development-only dependencies and generated local evidence.
+node_modules/
+.qa-output/
+.cache/
+coverage/
+*.epbackup
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.pfx
+*.p12

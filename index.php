@@ -9,7 +9,7 @@ if(!app_installed()){header('Location: hr/install.php');exit;}
 if(!secure_request()){http_response_code(403);exit('افتح الموقع باستخدام HTTPS.');}
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'");
 header('Cache-Control: no-store');header('X-Content-Type-Options: nosniff');header('Referrer-Policy: same-origin');
-$draft=false;if(!empty($_GET['preview'])){session_init();try{$viewer=current_user();admin_only($viewer);$draft=true;}catch(Throwable $e){http_response_code(403);exit('هذه المعاينة للمشرف العام فقط.');}}
+$draft=false;if(!empty($_GET['preview'])){session_init();try{$viewer=current_user();if($viewer['role']!=='admin'&&!permission_has($viewer,'cms','view')&&!(($_GET['page']??'')==='offers'&&permission_has($viewer,'offers','view')))fail('المعاينة خارج الصلاحيات',403);$draft=true;}catch(Throwable $e){http_response_code(403);exit('هذه المعاينة للمشرف العام فقط.');}}
 if($_SERVER['REQUEST_METHOD']==='GET'){db()->exec('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');db()->beginTransaction();}
 $cfg=settings();$languages=$draft?array_intersect_key(array_map(fn($v)=>$v['name'],language_catalog()),array_flip($cfg['public_languages'])):public_available_languages((($_GET['page']??'home')==='offers')?'offers':'site');
 $requestedPage=(string)($_GET['page']??'home');if($requestedPage==='offers')$languages=array_intersect_key($languages,array_flip($cfg['offers_languages']));if(!$languages)$languages=['ar'=>'العربية'];

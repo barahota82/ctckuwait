@@ -1,0 +1,25 @@
+/* No status colors here: the approved V14 palette remains in record-lists.css. */
+#page .record-table187 .record-scroll191{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+#page .record-table187 table.record-table191{width:100%;min-width:100%;table-layout:auto;white-space:normal}
+#page .record-table187 .record-table191 :is(th,td){width:auto;padding:12px 10px;vertical-align:middle;text-align:center;overflow-wrap:normal}
+#page .record-table187 .record-table191 th{white-space:nowrap}
+#page .record-table187 .record-table191 [data-column191="employee"]{min-width:240px;text-align:start}
+#page .record-table187 .record-table191 .record-employee187{white-space:nowrap;overflow:visible}
+#page .record-table187 .record-table191 .record-employee187 [data-employee-name143]{display:inline-block;white-space:nowrap;overflow:visible;text-overflow:clip;max-width:none}
+#page .record-table187 .record-table191 :is([data-column191="category"],[data-column191="status"],[data-column191="detail"]){white-space:nowrap}
+#page .record-table187 .record-table191 :is([data-column191="category"],[data-column191="title"],[data-column191="reason"],[data-column191="details"],[data-column191="request_type"],[data-column191="recipient"],[data-column191="requested_item"]){text-align:start}
+#page .record-table187 .record-table191 [data-column191="detail"]{padding-inline:8px}
+#page .record-table187 .record-table191 :is(.badge,.profile-status33){white-space:nowrap}
+#page .record-table187 .record-table191 .record-text191{min-width:100px;max-width:180px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#page .record-table187 .record-table191 [data-column191="title"] .record-text191{max-width:160px}
+#page .record-table187 .record-table191 .record-value191 bdi{white-space:nowrap}
+#page .record-table187 .record-table191 .record-period191{display:grid;gap:2px;white-space:nowrap}
+#page .record-table187 .record-table191 .record-meta191{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+@media(max-width:760px){
+ #page .record-table187 table.record-table191{display:table}
+ #page .record-table187 .record-table191 thead{display:table-header-group}
+ #page .record-table187 .record-table191 tbody{display:table-row-group}
+ #page .record-table187 .record-table191 tr{display:table-row;background:transparent;border:0;border-radius:0;margin:0;padding:0}
+ #page .record-table187 .record-table191 :is(th,td){display:table-cell}
+ #page .record-table187 .record-table191 td::before{display:none}
+}

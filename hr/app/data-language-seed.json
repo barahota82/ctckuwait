@@ -1,0 +1,102 @@
+{
+  "department": {
+    "الادارة": "Management",
+    "قسم التحصيل": "Collections",
+    "قسم الحسابات": "Accounts",
+    "قسم القضائي": "Legal Affairs",
+    "قسم المبيعات": "Sales",
+    "قسم المشتريات": "Purchasing"
+  },
+  "job_title": {
+    "امين الخزينة": "Cashier",
+    "اوفيس بوي": "Office Assistant",
+    "رئيس مجلس الادارة": "Chairman",
+    "سكرتيرة": "Secretary",
+    "عضو مجلس ادارة": "Board Member",
+    "عضو مجلس ادارة - المدير العام": "Board Member and General Manager",
+    "عضو مجلس ادارة - مدير المبيعات": "Board Member and Sales Director",
+    "كول سنتر تحصيل": "Collections Call Centre Agent",
+    "كول سنتر قضائي": "Legal Affairs Call Centre Agent",
+    "محاسب": "Accountant",
+    "مدير التحصيل": "Collections Manager",
+    "مدير التوصيل": "Delivery Manager",
+    "مدير المشتريات": "Purchasing Manager",
+    "مدير تسويق": "Marketing Manager",
+    "مسئول ادخال عقود المبيعات": "Sales Contract Administrator",
+    "مسئول تشيك العملاء": "Customer Verification Officer",
+    "مسئول تشييك السستم": "System Review Officer",
+    "مسئول سستم المحاكم": "Court Systems Officer",
+    "مسئول مبيعات": "Sales Representative",
+    "مندوب المحاكم": "Court Liaison Officer",
+    "مندوب تحصيل": "Collections Representative",
+    "مندوب توصيل": "Delivery Representative",
+    "مندوب مشتريات": "Purchasing Representative",
+    "موظفه تسويق": "Marketing Officer",
+    "المشرف العام": "General Administrator"
+  },
+  "company_name": {
+    "كليك تكنولوجي": "Click Technology",
+    "اورانج تكنولوجي": "Orange Technology",
+    "آفاق العالمية": "Afaq International",
+    "افاق العالمية": "Afaq International"
+  },
+  "company_legal": {
+    "شركة كليك تكنولوجي للتجارة العامة": "Click Technology General Trading W.L.L.",
+    "شركة اورانج تكنولوجي للتجارة العامة": "Orange Technology General Trading W.L.L.",
+    "شركه افاق العالميه لتحصيل اموال الغير بصفه وديه": "Afaq International for Amicable Debt Collection W.L.L."
+  },
+  "group_name": {
+    "مشرف عام": "General Administrator",
+    "الشركاء": "Partners",
+    "الشركاء - المديرون": "Partners — Managers",
+    "المديرون": "Managers",
+    "الموظفون": "Employees"
+  },
+  "group_description": {
+    "مشرف عام له كل الصلاحيات": "General administrator with full access",
+    "صلاحيات الشريك بالشركة": "Company partner permissions",
+    "صلاحيات الشريك المدير": "Managing partner permissions",
+    "صلاحيات مدير القسم": "Department manager permissions",
+    "صلاحيات موظف الشركة": "Company employee permissions"
+  },
+  "additional_job": {
+    "مندوب الشؤون والجوازات": "Government and Passport Affairs Representative"
+  },
+  "record_title:employment": {
+    "إجراءات التعيين": "Appointment procedures",
+    "إجراءات إنهاء الخدمة": "Termination procedures",
+    "إنهاء الخدمة": "Termination of service",
+    "إعادة تعيين": "Reappointment",
+    "إعادة التعيين": "Reappointment",
+    "تعيين": "Appointment",
+    "إخلاء الطرف": "Clearance",
+    "تسليم العهد": "Asset handover"
+  },
+  "occupation": {
+    "باحث قانوني": "Legal Researcher",
+    "خدمه عملاء": "Customer Service",
+    "سائق مركبه خفيفه": "Light Vehicle Driver",
+    "سكرتيرة": "Secretary",
+    "شريك": "Partner",
+    "عامل تنظيف": "Cleaner",
+    "كاتب ادخال بيانات": "Data Entry Clerk",
+    "كاتب استعلامات الهاتف": "Telephone Enquiries Clerk",
+    "كاتب حسابات": "Accounts Clerk",
+    "كاتب حسابات / عام": "General Accounts Clerk",
+    "كاتب مركز اتصالات العملاء - 11996": "Customer Contact Centre Clerk - 11996",
+    "محاسب": "Accountant",
+    "مدخل بيانات": "Data Entry Operator",
+    "مدقق طباعة": "Proofreader",
+    "مراسل": "Office Messenger",
+    "مشرف ادخال بيانات": "Data Entry Supervisor",
+    "مندوب تامين صحي": "Health Insurance Representative",
+    "مندوب تجاري خدمات": "Commercial Services Representative",
+    "مندوب مبيعات": "Sales Representative",
+    "مندوب مشتريات": "Purchasing Representative",
+    "موظف استقبال": "Receptionist",
+    "موظف خدمه عملاء": "Customer Service Officer"
+  },
+  "field_label:address": {
+    "العنوان": "Address"
+  }
+}

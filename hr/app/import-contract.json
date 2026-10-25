@@ -435,11 +435,26 @@
       {
         "key": "code",
         "label": "كود الموظف",
-        "required": true
+        "required": false
+      },
+      {
+        "key": "setup_serial",
+        "label": "مسلسل الموظف",
+        "required": false
+      },
+      {
+        "key": "employee_name",
+        "label": "اسم الموظف",
+        "required": false
       },
       {
         "key": "effective_from",
         "label": "تاريخ سريان الراتب",
+        "required": true
+      },
+      {
+        "key": "fixed_salary",
+        "label": "له راتب ثابت",
         "required": true
       },
       {
@@ -471,11 +486,6 @@
       {
         "key": "residence_company_code",
         "label": "كود شركة الإقامة",
-        "required": true
-      },
-      {
-        "key": "amount",
-        "label": "مبلغ التحويل المعتمد",
         "required": true
       },
       {

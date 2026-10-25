@@ -1,0 +1,26 @@
+[
+  {
+    "source": "before",
+    "test": "test_google171.php",
+    "code": 0,
+    "output": "PASS 10 Google transport parsing, no-key URL, bidirection, protected values, chunking and failure checks\n"
+  },
+  {
+    "source": "before",
+    "test": "test_data_translation160.php",
+    "code": 0,
+    "output": "PASS 544 dynamic text discovery, isolated HR credentials/budget, machine translation, source edits, concurrent workers, manual override, protected numbers, retries and public translation preservation checks\n"
+  },
+  {
+    "source": "after",
+    "test": "test_google171.php",
+    "code": 0,
+    "output": "PASS 10 Google transport parsing, no-key URL, bidirection, protected values, chunking and failure checks\n"
+  },
+  {
+    "source": "after",
+    "test": "test_data_translation160.php",
+    "code": 0,
+    "output": "PASS 544 dynamic text discovery, isolated HR credentials/budget, machine translation, source edits, concurrent workers, manual override, protected numbers, retries and public translation preservation checks\n"
+  }
+]

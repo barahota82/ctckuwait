@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "test:header": "node test_header76.cjs",
+    "test:stack": "node test_stack77.cjs",
+    "test:ready": "node test_ready79.cjs",
+    "test:revision": "node test_revision80.cjs",
+    "test:connection": "node test_connection81.cjs && node test_api81.cjs",
+    "test:geometry": "node test_geometry81.cjs",
+    "test:batch82": "node test_surface82.cjs && node test_payroll_reload82.cjs",
+    "test:action-rows": "node test_action_rows84.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.3"
+  }
+}

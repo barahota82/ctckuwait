@@ -1,0 +1,59 @@
+<?php
+declare(strict_types=1);
+/* Pure daily ledger: integer eligible-day counts keep accrual independent of UI rounding. */
+function leave_ledger_compute(string $from,string $to,callable $state,array $leaves,array $cash,float $annual=30,float $divisor=365,array $opening=[]):array {
+ if($to<$from)return ['remaining'=>0.0,'cash_days'=>0.0,'cash_total_days'=>0.0,'cash_reserved_days'=>0.0,'cash_paid_days'=>0.0,'cash_ledger_valid'=>true,'cash_errors'=>[],'used'=>0,'pending'=>0,'accrued'=>0.0,'excess_days'=>0.0,'cash_shortfall'=>0.0,'leave_details'=>[],'eligible_days'=>0,'cash_eligible_days'=>0];
+ $segments=[];$cashBy=[];foreach($cash as $c)$cashBy[$c['date']][]=$c;
+ foreach($leaves as $l){if(($l['status']??'approved')!=='approved')continue;$end=$l['late_open']??false?$to:($l['actual_end']??$l['to']);if(empty($l['late_open'])&&empty($l['actual_end'])&&!empty($l['returned_on']))$end=(new DateTimeImmutable($l['returned_on']))->modify('-1 day')->format('Y-m-d');$l['effective_end']=$end;$segments[]=$l;}
+ usort($segments,fn($a,$b)=>strcmp($a['from'],$b['from']));
+ $days=(float)($opening['days']??0);$financial=(float)($opening['cash_days']??0);$eligible=0;$cashEligible=0;$used=0;$excess=0.0;$details=[];$shortfall=0.0;$pending=0;$cashErrors=[];$reservations=[];$paidDays=0.0;
+ for($d=new DateTimeImmutable($from),$last=new DateTimeImmutable($to);$d<=$last;$d=$d->modify('+1 day')){
+  $date=$d->format('Y-m-d');$s=$state($date);$employed=!empty($s['employed']);$active=null;
+  foreach($segments as $l)if($employed&&$l['from']<=$date&&$l['effective_end']>=$date){$active=$l;break;}
+  if($active){$used++;$id=(string)$active['id'];if(!isset($details[$id]))$details[$id]=['id'=>$active['id'],'from'=>$active['from'],'planned_end'=>$active['to'],'actual_end'=>$active['effective_end'],'total_days'=>0,'covered_days'=>0.0,'excess_days'=>0.0,'late_days'=>0,'excess_by_date'=>[],'eos_excess_days'=>0.0];$tracks=$s['tracks_days']??true;$covered=$tracks?min(1.0,max(0.0,$days)):0;$extra=$tracks?1-$covered:0;if($tracks)$days=max(0,$days-1);$excess+=$extra;$details[$id]['total_days']++;$details[$id]['covered_days']+=$covered;$details[$id]['excess_days']+=$extra;$details[$id]['excess_by_date'][$date]=$extra;if(!empty($s['eos']))$details[$id]['eos_excess_days']+=$extra;if($date>$active['to'])$details[$id]['late_days']++;
+  }else{if($employed&&!empty($s['leave_days'])){$eligible++;$days+=(float)$annual/$divisor;}if($employed&&!empty($s['leave_cash'])){$cashEligible++;$financial+=(float)$annual/$divisor;}}
+  $events=$cashBy[$date]??[];usort($events,fn($a,$b)=>(($a['kind']??'paid')==='reserve'?0:1)<=>(($b['kind']??'paid')==='reserve'?0:1));
+  foreach($events as $c){$n=(float)$c['days'];$key=(string)($c['reservation_id']??$c['id']??'');$kind=$c['kind']??'paid';
+   if($kind==='release'){unset($reservations[$key]);continue;}
+   $available=$financial-array_sum($reservations);
+   if($kind==='reserve'){if($n>$available+1e-8){$gap=$n-$available;$shortfall+=$gap;$cashErrors[]=['id'=>$c['id']??null,'date'=>$date,'available'=>$available,'paid_days'=>$n,'difference'=>$gap,'kind'=>'reservation'];}$reservations[$key]=$n;continue;}
+   if(isset($reservations[$key])){$reservations[$key]=max(0,$reservations[$key]-$n);}
+   $availableForPayment=$financial-array_sum($reservations);if($n>$availableForPayment+1e-8){$gap=$n-$availableForPayment;$shortfall+=$gap;$cashErrors[]=['id'=>$c['id']??null,'date'=>$date,'available'=>$availableForPayment,'paid_days'=>$n,'difference'=>$gap];}$financial-=$n;$paidDays+=$n;
+  }
+ }
+ foreach($leaves as $l)if(($l['status']??'approved')==='pending')$pending+=(int)(new DateTimeImmutable($l['from']))->diff(new DateTimeImmutable($l['to']))->format('%a')+1;
+ // Reserve the unelapsed part of an approved ongoing leave once; the daily ledger
+ // keeps deducting elapsed days, so the reservation shrinks without double charging.
+ $reservedDates=[];$asOfState=$state($to);
+ if($asOfState['tracks_days']??true)foreach($segments as $l){
+  if($l['from']>$to||$l['effective_end']<=$to)continue;
+  for($rd=(new DateTimeImmutable($to))->modify('+1 day'),$re=new DateTimeImmutable($l['effective_end']);$rd<=$re;$rd=$rd->modify('+1 day'))$reservedDates[$rd->format('Y-m-d')]=true;
+ }
+ $reserved=count($reservedDates);$available=max(0,$days-$reserved);
+ $reservedCash=array_sum($reservations);
+ return ['remaining'=>$available,'ledger_remaining_days'=>max(0,$days),'reserved_leave_days'=>$reserved,'cash_days'=>$cashErrors?null:max(0,$financial-$reservedCash),'cash_total_days'=>$cashErrors?null:max(0,$financial),'cash_reserved_days'=>$reservedCash,'cash_paid_days'=>$paidDays,'cash_ledger_valid'=>!$cashErrors,'cash_errors'=>$cashErrors,'used'=>$used,'pending'=>$pending,'accrued'=>$eligible*$annual/$divisor,'cash_accrued'=>$cashEligible*$annual/$divisor,'excess_days'=>$excess,'cash_shortfall'=>$shortfall,'leave_details'=>array_values($details),'eligible_days'=>$eligible,'cash_eligible_days'=>$cashEligible];
+}
+function v26_entitlements(array $s,string $date):array {
+ $st=service_state($s,$date);$partner=($st['staff_type']??$s['staff_type'])==='partner';$flags=['tracks_days'=>!$partner,'employed'=>$st['employed'],'leave_days'=>!$partner&&(bool)$st['leave'],'leave_cash'=>(bool)$st['leave'],'eos'=>(bool)$st['leave']];
+ $id=(int)$s['id'];if(!isset($GLOBALS['V26_ENTITLEMENTS'][$id]))$GLOBALS['V26_ENTITLEMENTS'][$id]=query("SELECT * FROM ep_records WHERE user_id=? AND module='entitlement' AND status='approved' ORDER BY date_from,id",[$id])->fetchAll();
+ foreach($GLOBALS['V26_ENTITLEMENTS'][$id]as $r)if($r['date_from']<=$date&&(!$r['date_to']||$r['date_to']>=$date)&&(!$st['from']||$r['date_from']>=$st['from'])){$b=decode($r['body_json']);$flags[$b['kind']]=(bool)$b['enabled'];}
+ return $flags;
+}
+function v26_leave_sources(array $s,string $from,string $to):array {
+ $id=(int)$s['id'];$leaves=[];$cash=[];$live=((function_exists('leave_rows195')?leave_rows195($id,'leave',$to,['approved'],false):null)??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave' AND status='approved' AND date_from<=?",[$id,$to])->fetchAll());$shadowIds=[];foreach($live as $record){$v=decode($record['body_json']);if(!empty($v['history_id']))$shadowIds[]=(int)$v['history_id'];}
+ foreach(historical_for($id,'leave_history','0000-01-01','9999-12-31')as $r){$b=decode($r['body_json']);if(in_array((int)$r['id'],$shadowIds,true))continue;if($b['to']<$from||$b['from']>$to)continue;$leaves[]=['id'=>'H'.$r['id'],'from'=>$b['from'],'to'=>$b['to'],'status'=>'approved'];}
+ foreach($live as $r){$b=decode($r['body_json']);$leaves[]=['id'=>'R'.$r['id'],'from'=>$r['date_from'],'to'=>$r['date_to'],'status'=>'approved','late_open'=>!empty($b['late_open']),'actual_end'=>$b['actual_end']??null,'returned_on'=>$b['returned_on']??null];}
+ foreach(historical_for($id,'leave_settlement',$from,$to)as $r){$b=decode($r['body_json']);$cash[]=['id'=>'H'.$r['id'],'date'=>$b['date']??$r['period_key'],'days'=>(float)$b['days']];}
+ foreach(((function_exists('leave_rows195')?leave_rows195($id,'leave_cash',$to,['approved','cancelled'],false):null)??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave_cash' AND status IN ('approved','cancelled') AND date_from<=?",[$id,$to])->fetchAll())as $r){$b=decode($r['body_json']);$date=max($r['date_from'],$b['_approved_on']??$r['date_from']);if($date>$to)continue;$key='R'.$r['id'];$cash[]=['id'=>$key,'reservation_id'=>$key,'kind'=>'reserve','date'=>$date,'days'=>(float)$b['days']];if($r['status']==='cancelled'&&!empty($b['_cancelled_on'])&&$b['_cancelled_on']<=$to)$cash[]=['id'=>$key,'reservation_id'=>$key,'kind'=>'release','date'=>max($date,$b['_cancelled_on']),'days'=>0];}
+ foreach(((function_exists('leave_rows195')?leave_rows195($id,'payment',$to,['approved'],true):null)??query("SELECT * FROM ep_records WHERE user_id=? AND module='payment' AND status='approved' AND date_from<=? ORDER BY date_from,id",[$id,$to])->fetchAll())as $r){$body=decode($r['body_json']);$alloc=$body['leave_allocations']??[];if(!$alloc&&($body['kind']??'')==='leave_cash'){$source=query("SELECT * FROM ep_records WHERE id=? AND user_id=? AND module='leave_cash'",[(int)$body['source_id'],$id])->fetch();if($source&&$source['amount']>0)$alloc=[['id'=>(int)$source['id'],'days'=>(float)decode($source['body_json'])['days']*(float)$r['amount']/(float)$source['amount']]];}foreach($alloc as $a)$cash[]=['id'=>'P'.$r['id'].'-'.$a['id'],'reservation_id'=>'R'.$a['id'],'kind'=>'paid','date'=>$r['date_from'],'days'=>(float)$a['days']];}
+ return [$leaves,$cash];
+}
+function v26_leave_balance(int $uid,array $cfg,string $date):array {
+ $s=employee_required($uid);$window=leave_service_window($s,$date);$from=$window['from'];if(!$from)return ['remaining'=>null,'cash_days'=>null,'cash_total_days'=>null,'cash_reserved_days'=>0.0,'cash_paid_days'=>0.0,'cash_ledger_valid'=>false,'cash_errors'=>[],'cash_value'=>null,'used'=>0,'pending'=>0,'cash_shortfall'=>0.0,'excess_days'=>0.0,'leave_details'=>[],'flags'=>['leave_days'=>false,'leave_cash'=>false,'eos'=>false],'eligible_days'=>0,'cash_eligible_days'=>0,'entitlement'=>null,'year_from'=>substr($date,0,4).'-01-01','year_to'=>substr($date,0,4).'-12-31'];
+ [$ls,$cash]=v26_leave_sources($s,$from,$date);$opening=[];
+ $h=(function_exists('leave_opening195')?leave_opening195($uid,$from,$date):null)??query("SELECT TOP (1) * FROM ep_history WHERE employee_code=? AND kind='leave_balance' AND period_key>=? AND period_key<=? ORDER BY period_key DESC",[employee_key($s),$from,$date])->fetch();
+ if($h){$opening=decode($h['body_json']);$from=(new DateTimeImmutable($h['period_key']))->modify('+1 day')->format('Y-m-d');$cash=array_values(array_filter($cash,fn($c)=>$c['date']>=$from));}
+ $x=leave_ledger_compute($from,$date,fn($d)=>v26_entitlements($s,$d),$ls,$cash,(float)($cfg['annual_leave_days']??30),(float)($cfg['leave_accrual_divisor']??365),$opening);$sal=salary_at($s,$date);$basic=$sal['fixed_salary']?$sal['salary']:0;$flags=v26_entitlements($s,$date);
+ $pending198=$GLOBALS['LEAVE_ROWS195'][$uid]['leave']??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave' AND status IN ('pending','revision') AND date_to>=?",[$uid,$window['from']])->fetchAll();$x['pending']=0;foreach($pending198 as $request198){if(!in_array($request198['status'],['pending','revision'],true))continue;$pFrom198=max($window['from'],$request198['date_from']);$pTo198=min($request198['date_to'],$window['to']??'9999-12-31');if($pTo198>=$pFrom198)$x['pending']+=(int)(new DateTimeImmutable($pFrom198))->diff(new DateTimeImmutable($pTo198))->format('%a')+1;}
+ return $x+['year_from'=>substr($date,0,4).'-01-01','year_to'=>substr($date,0,4).'-12-31','entitlement'=>$cfg['annual_leave_days']??30,'valuation_date'=>$date,'valuation_salary'=>$basic,'salary_effective_from'=>$sal['effective_from'],'cash_value'=>$x['cash_days']===null?null:round($x['cash_days']*$basic/30,3),'flags'=>$flags,'opening_days'=>$h?(float)($opening['days']??0):0.0,'calculation_from'=>$window['from'],'opening_as_of'=>$h['period_key']??null];
+}

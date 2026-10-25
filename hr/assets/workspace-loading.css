@@ -1,0 +1,15 @@
+/* The plus follows the button's existing text color in every interaction state. */
+button .create-icon32, a.button .create-icon32{color:inherit!important}
+button .create-icon32 svg, a.button .create-icon32 svg{color:inherit;stroke:currentColor}
+.read-feedback196{display:flex;align-items:center;gap:12px;padding:10px 0;min-height:42px}
+.read-feedback196[hidden]{display:none}
+.read-feedback196 button{flex:none}
+#page .permission-workspace196{background:#fff;min-width:0;padding-bottom:0}
+#page .permission-workspace196 [data-permission-person196]{display:block;margin-top:4px}
+#page .permission-workspace196 .permission-actions196{display:flex;justify-content:center;gap:8px}
+#page .permission-workspace196 .record-table191 [data-column191="employee"]{width:1%;white-space:nowrap}
+#page .permission-workspace196 .record-table191 :is([data-column191="date"],[data-column191="time"],[data-column191="minutes"],[data-column191="status"],[data-column191="detail"]){width:1%;white-space:nowrap}
+#page .permission-workspace196 #permissionPanel183:empty{display:none}
+#page .permission-workspace196 .permission-editor183{border:0;box-shadow:none;border-radius:0;margin:0 0 20px;padding:16px 0}
+#page .permission-workspace196 .permission-capture183{margin-inline:auto}
+#page .permission-workspace196 #permissionPanel183{scroll-margin-top:100px}

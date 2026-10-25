@@ -1,0 +1,53 @@
+/* Scoped to V18; the approved palette and fourteen frozen screens are unchanged. */
+#page .review-workspace193{background:#fff;min-width:0;padding-bottom:0}
+#page .review-workspace193 .review-heading193>span{display:block;margin-top:4px}
+#page .review-workspace193 .review-tabs193{top:0;background:var(--ivory);margin-inline:-8px;padding-inline:8px}
+#page .review-filters193{display:flex;gap:12px;align-items:end;padding-block:16px;flex-wrap:wrap}
+#page .review-filters193 label{margin:0;min-width:130px;flex:1 1 140px}
+#page .review-filters193 .review-query193{flex:3 1 220px}
+#page .review-filters193 input,#page .review-filters193 select{width:100%;min-width:0}
+#page .review-filters193>button{min-height:44px;flex:0 0 80px}
+#page .review-selection193{display:flex;justify-content:flex-end;margin-bottom:12px}
+#page .review-selection193:has(button[hidden]){display:none}
+#page .review-workspace193 .review-table193 [data-column191="employee"]{width:1%;min-width:240px}
+#page .review-workspace193 .review-table193 :is([data-column191="date"],[data-column191="number"],[data-column191="time"],[data-column191="month"],[data-column191="days"],[data-column191="detail"],[data-column191="status"]){width:1%;white-space:nowrap}
+#page .review-workspace193 .review-table193 [data-column191="name"]{min-width:170px;max-width:300px;text-align:start}
+#page .review-workspace193 .review-table193 [data-column191="company"]{min-width:145px;text-align:start}
+#page .review-workspace193 .review-table193 :is([data-column191="legal"],[data-column191="location"]){min-width:150px;max-width:260px;text-align:start}
+#page .review-workspace193 .review-table193 .badge{white-space:nowrap}
+.review-details193{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.review-details193>div{border-bottom:1px solid #e7e7e7;padding-bottom:10px;min-width:0}
+.review-details193 dt{font-weight:600;font-size:13px;color:#666;margin-bottom:4px}
+.review-details193 dd{margin:0;overflow-wrap:anywhere}
+.review-form193{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.review-form193>label{margin:0;min-width:0}
+.review-form193 .review-wide193,.review-form193>.modal-foot{grid-column:1/-1}
+.review-form193 [hidden]{display:none!important}
+.review-form193 fieldset{border:1px solid #ddd;border-radius:10px;padding:12px}
+.review-form193 [data-files193]{display:flex;flex-wrap:wrap;gap:14px}
+.review-summary193{padding:12px 0;border-block:1px solid #e5e5e5;margin-bottom:16px;background:transparent}
+.review-summary193>summary{cursor:pointer;font-weight:600;padding:8px}
+.review-totals193{display:flex;gap:24px;flex-wrap:wrap;margin:0 0 16px}
+.review-totals193>div{display:flex;gap:8px;align-items:center}
+.review-totals193 dd{margin:0;font-weight:600}
+.review-map193{min-height:220px;border:1px solid #ddd;border-radius:10px;background:repeating-linear-gradient(0deg,#f5f5f5,#f5f5f5 31px,#e6e6e6 32px);display:grid;place-content:center;text-align:center;gap:14px}
+.review-map193>span{font-size:48px}
+.receipt-workspace193 video{display:block;width:100%;max-height:330px;background:#111;border-radius:12px;margin:12px 0}
+.receipt-workspace193 video[hidden]{display:none}
+.receipt-workspace193 .receipt-script{white-space:pre-wrap;line-height:1.9;padding:16px;border:1px solid #ddd;border-radius:10px;background:#fafafa}
+.receipt-workspace193 output{font-variant-numeric:tabular-nums;align-self:center}
+@media(max-width:700px){
+ #page .review-filters193{gap:8px}
+ #page .review-filters193 label{flex:1 1 40%;min-width:0}
+ #page .review-filters193 .review-query193{flex:1 1 100%}
+ #page .review-filters193>button{flex:1 1 100%}
+ .review-form193,.review-details193{grid-template-columns:1fr}
+ #page .review-workspace193 .employee-editor-top-actions136{flex-wrap:wrap}
+ .receipt-workspace193 .row-actions{flex-wrap:wrap}
+}
+
+#reviewMap193{display:block;height:280px;min-height:280px;background:#eee}
+
+.review-map-frame193{width:100%;height:280px;border:1px solid #ddd;border-radius:10px}
+
+.review-summary193 .summary-pager195{position:static!important;inset:auto!important;margin-top:12px}

@@ -1,0 +1,8 @@
+/* Keep the source header in normal flow, including debt's legacy sticky cells. */
+#page .record-table187 table.record-table191 thead th,
+#page .finance-workspace190 .finance-results190 .table-wrap table thead th{position:static!important}
+.table-head192{position:fixed;z-index:24;overflow:hidden;pointer-events:none;contain:layout paint;box-shadow:0 1px 0 #e8e2d7}
+.table-head192[hidden]{display:none!important}
+.table-head192 .table-head-cell192{position:absolute;box-sizing:border-box;display:flex;align-items:center;margin:0;overflow:hidden}
+.table-head192 .table-head-cell192>span{display:block;width:100%;min-width:0}
+@media print{.table-head192{display:none!important}}

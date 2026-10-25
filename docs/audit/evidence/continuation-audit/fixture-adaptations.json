@@ -1,0 +1,30 @@
+[
+  {
+    "file": "mobile-focus-current-dependencies.cjs",
+    "original": "/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_mobile_focus141.cjs",
+    "original_sha256": "c22aa7175520545f5005ff84735da6a8f7ac7ec95ce9c536a3c1456b873e64ce",
+    "adaptation": "Load actual workspace-data.js providing employeeSearchText195; no assertion changes. Export the actual helper from strict eval into the browser-fixture scope (production uses script tags).",
+    "original_assertions_unchanged": true
+  },
+  {
+    "file": "loading-queries-current-dependencies.php",
+    "original": "/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_loading_queries140.php",
+    "original_sha256": "2419cc942151c353393756af12329506747e20f6df6556ca58dc201c19f9ecf6",
+    "adaptation": "Load actual leave-engine.php and complete existing service_state fixture fields for benefits projection; no assertion changes.",
+    "original_assertions_unchanged": true
+  },
+  {
+    "file": "notice-names-current-dependencies.php",
+    "original": "/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notice_names142.php",
+    "original_sha256": "4288624469234e9d47986c9ddd180f3161f1b374f6b1730548d10094111e0915",
+    "adaptation": "Use same current loading fixture; no assertion changes.",
+    "original_assertions_unchanged": true
+  },
+  {
+    "file": "record-pairs-current-dependencies.php",
+    "original": "/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_pairs173.php",
+    "original_sha256": "b82243a24ac944cb77783f44c60afba2347242465eaa2d4eb1ec2612c48d0a49",
+    "adaptation": "Load actual personal, decisions, evaluation modules; add roles to synthetic users, fixed clock, SQL Server MERGE to SQLite equivalent in test transport. Assertions unchanged. Does not validate SQL Server locks.",
+    "original_assertions_unchanged": true
+  }
+]

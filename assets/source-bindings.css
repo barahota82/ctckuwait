@@ -18,3 +18,9 @@
 
 /* Keep identity stable on Safari before external fonts arrive. */
 .site-header .brand{flex-shrink:0;min-width:0}.site-header .brand__logo-img{opacity:1;visibility:visible;animation:none;transition:none}.site-header .brand__text{min-width:0}
+
+/* V24: partner cards only; retain page background and original gold variables. */
+.leadership-grid .leader{background:var(--black,#101010);border-color:rgba(212,175,55,.3)}
+.leadership-grid .leader__name{color:var(--white,#fff)}
+.leadership-grid .leader__role{color:var(--gold-mid,#d4af37)}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield;appearance:textfield}

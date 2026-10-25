@@ -1,0 +1,13 @@
+<?php
+require __DIR__.'/test_finance_daily103.php';
+query('DELETE FROM ep_records');query('DELETE FROM ep_payroll');query('DELETE FROM ep_bank_payroll');query('CREATE TABLE ep_history(id INTEGER PRIMARY KEY,kind TEXT,employee_code TEXT,period_key TEXT,body_json TEXT)');
+$component=['type'=>'sales_agent','base'=>10,'delivered'=>10,'returned'=>0,'rate'=>9,'gross'=>90,'loan_repayment'=>10,'net'=>80,'paid_amount'=>80,'paid'=>true];
+$rid=v26_insert('commission_month',1,'2026-09-01','2026-09-30',['month'=>'2026-09','lines'=>[['type'=>'sales_agent','base'=>10,'amount'=>90,'historical_component106'=>$component]],'total'=>90,'net'=>80,'paid_amount'=>80],'approved',90);
+$component['commission_record_id']=$rid;query('INSERT INTO ep_history VALUES(1,?,?,?,?)',['payroll','EMP-0001','2026-09',jencode(['salary'=>100,'addition'=>90,'deduction'=>10,'net'=>180,'paid_amount'=>180,'historical_commissions106'=>[$component]])]);
+save_day('contract_sales99','2026-09-30',[['user_id'=>1,'delivered'=>12,'returns'=>['2026-08'=>1]]]);$h=decode(query('SELECT body_json FROM ep_history WHERE id=1')->fetchColumn());ok($h['salary']===100&&$h['net']===189);ok($h['historical_commissions106'][0]['base']===11);ok($h['paid_amount']===180&&$h['unpaid_amount']===9&&!$h['paid']);ok($h['historical_commissions106'][0]['paid_amount']===80);ok((float)query('SELECT amount FROM ep_records WHERE id=?',[$rid])->fetchColumn()===99.0);ok(!query("SELECT id FROM ep_records WHERE module='finance_daily103'")->fetch());
+$d=day('contract_sales99','2026-09-30');ok($d['legacy'][0]['delivered']===12&&$d['legacy'][0]['returns']['2026-08']===1);
+$before=query('SELECT body_json FROM ep_history WHERE id=1')->fetchColumn();save_day('contract_sales99','2026-09-30',[['user_id'=>1,'delivered'=>12,'returns'=>['2026-08'=>1]]]);ok($before===query('SELECT body_json FROM ep_history WHERE id=1')->fetchColumn());
+save_day('contract_sales99','2026-09-30',[['user_id'=>1,'delivered'=>12,'returns'=>['2026-08'=>1]],['user_id'=>4,'delivered'=>5]]);ok(finance_bases103(4,'2026-09')['bases']['sales_agent']===5);
+query("INSERT INTO ep_payroll VALUES(10,1,'2026-09','approved','{}')");rejected(fn()=>save_day('contract_sales99','2026-09-30',[['user_id'=>1,'delivered'=>15]]));ok($before===query('SELECT body_json FROM ep_history WHERE id=1')->fetchColumn());query('DELETE FROM ep_payroll');
+$GLOBALS['denied']=['edit'];rejected(fn()=>save_day('contract_sales99','2026-09-30',[['user_id'=>1,'delivered'=>15]]));$GLOBALS['denied']=[];
+echo 'PASS historical source updates, linked payroll delta, salary unchanged, no daily duplicate, returns and operational locks'.PHP_EOL;

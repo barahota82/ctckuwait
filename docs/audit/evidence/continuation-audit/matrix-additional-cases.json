@@ -1,0 +1,23 @@
+[
+  {
+    "lang": "en",
+    "mobile": "0",
+    "exit": 0,
+    "seconds": 45.53,
+    "output": "{\"language\":\"en\",\"mobile\":false,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}\n"
+  },
+  {
+    "lang": "ar",
+    "mobile": "1",
+    "exit": 0,
+    "seconds": 36.49,
+    "output": "{\"language\":\"ar\",\"mobile\":true,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}\n"
+  },
+  {
+    "lang": "en",
+    "mobile": "1",
+    "exit": 0,
+    "seconds": 40.93,
+    "output": "{\"language\":\"en\",\"mobile\":true,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}\n"
+  }
+]

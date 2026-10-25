@@ -1,0 +1,15 @@
+'use strict';
+async function delegationsScreen199(){
+ const epoch=navigationEpoch32,data=await api('delegation_list199');if(epoch!==navigationEpoch32)return;
+ const name=id=>data.staff.find(s=>Number(s.id)===Number(id))?.name||uiText('بدون مدير مباشر');
+ const rows=data.records.map(r=>{const b=JSON.parse(r.body_json),ended=r.date_to&&r.date_to<dateNow();return [esc(name(b.manager_id)),esc(b.route==='admin'?uiText('المشرف العام'):name(b.substitute_id)),esc(dateDisplay32(r.date_from)),esc(r.date_to?dateDisplay32(r.date_to):uiText('مستمر')),'<span class="badge '+(ended?'expired':r.date_from>dateNow()?'draft':'approved')+'">'+esc(uiText(ended?'منتهي':r.date_from>dateNow()?'لم يبدأ السريان':'ساري'))+'</span>',!ended?'<button data-end-delegation199="'+r.id+'">'+esc(uiText('إنهاء التكليف'))+'</button>':''];});
+ $('#page').innerHTML=head('تفويض المديرين','')+'<section class="card"><div class="toolbar"><button class="primary" id="addDelegation199">'+esc(uiText('+ إضافة تكليف'))+'</button></div>'+table(['المدير الأساسي','جهة التحويل / البديل','بداية التكليف','نهاية التكليف','الحالة','الإجراء'],rows)+'</section>';
+ $('#addDelegation199').onclick=()=>delegationForm199(data);
+ document.querySelectorAll('[data-end-delegation199]').forEach(button=>button.onclick=()=>{const r=data.records.find(x=>Number(x.id)===Number(button.dataset.endDelegation199));modal(uiText('إنهاء التكليف'),'<form id="modalForm">'+input('date_to','تاريخ الانتهاء',r.date_to||dateNow(),'date','required min="'+r.date_from+'"')+'<p class="muted">'+esc(uiText('تنتهي صلاحية البديل بنهاية التاريخ المحدد، وتظل صلاحية المدير الأساسي كما هي.'))+'</p>'+saveButton()+'</form>',f=>api('delegation_end199',{id:r.id,revision199:r.revision199,date_to:f.elements.date_to.value}));});
+}
+function delegationForm199(data){
+ const opts=(rows,empty)=>'<option value="0">'+esc(uiText(empty))+'</option>'+rows.map(s=>'<option value="'+s.id+'">'+esc(s.name)+'</option>').join('');
+ const managers=data.staff.filter(s=>s.role==='manager'||data.staff.some(p=>Number(p.manager_id)===Number(s.id)));
+ modal(uiText('إضافة تكليف'),'<form id="modalForm"><div class="form-grid"><label>'+uiText('المدير الأساسي')+'<select name="manager_id">'+opts(managers,'بدون مدير مباشر')+'</select></label>'+input('date_from','بداية التكليف',dateNow(),'date','required')+'</div><label>'+uiText('جهة تحويل الطلبات')+'<select name="route"><option value="substitute">'+uiText('مدير بديل')+'</option><option value="admin">'+uiText('المشرف العام مباشرة')+'</option></select></label><label id="substituteField199">'+uiText('الموظف البديل')+'<select name="substitute_id">'+opts(data.staff,'اختر الموظف البديل')+'</select></label><p class="muted">'+uiText('المدير الأساسي يحتفظ بصلاحياته. أول قرار على الطلب ينفذ، ويظهر اسم صاحبه.')+'</p>'+saveButton()+'</form>',f=>api('delegation_save199',{manager_id:Number(f.elements.manager_id.value),substitute_id:Number(f.elements.substitute_id.value),route:f.elements.route.value,date_from:f.elements.date_from.value}));
+ const form=$('#modalForm');form.elements.route.onchange=()=>{$('#substituteField199').hidden=form.elements.route.value==='admin';};
+}

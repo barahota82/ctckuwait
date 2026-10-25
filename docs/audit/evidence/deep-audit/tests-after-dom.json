@@ -1,0 +1,1076 @@
+[
+  {
+    "test": "test_action_rows84.cjs",
+    "code": 0,
+    "seconds": 8.34,
+    "output": "PASS 479 original action-slot restoration checks across 18 ordinary buttons, 7 explicitly approved actions, RTL/LTR and ready/early/pending states; mixed rows and repeated shortcut hydration. DOM/source only.\n"
+  },
+  {
+    "test": "test_addstyle93.cjs",
+    "code": 0,
+    "seconds": 2.686,
+    "output": "PASS 224 exact named action scope, Add palette/shape, waiting and permission states, export at inline end, original callbacks, RTL/LTR\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\nCould not parse CSS @import URL \"design-tokens.css\" relative to base URL \"about:blank\"\n"
+  },
+  {
+    "test": "test_api81.cjs",
+    "code": 0,
+    "seconds": 0.979,
+    "output": "PASS 10 actual API error classification, auth expiry, write safety and scoped in-flight choice dedup assertions.\n"
+  },
+  {
+    "test": "test_arrows74.cjs",
+    "code": 0,
+    "seconds": 0.091,
+    "output": "PASS 14 exempt-footer placement, matching padded action container, history controls restoration, read-only history, boundary state, original handlers and idempotence checks\n"
+  },
+  {
+    "test": "test_attendance_load127.cjs",
+    "code": 1,
+    "seconds": 0.898,
+    "output": "ReferenceError: departureButton199 is not defined\n    at Object.attendance (evalmachine.<anonymous>:15:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_attendance_load127.cjs:2:1078\n"
+  },
+  {
+    "test": "test_backup_batch109.php",
+    "code": 0,
+    "seconds": 0.02,
+    "output": "PASS 154 production batch SQL bounds, parameter binding, identity wrapper, cached byte limit and operation-wide time budget"
+  },
+  {
+    "test": "test_backup_progress107.cjs",
+    "code": 0,
+    "seconds": 2.112,
+    "output": "PASS 52 real progress values, Arabic/English stages, single guarded restore POST, independent read-only polling, cleanup and failure without false completion\n"
+  },
+  {
+    "test": "test_backup_session111.cjs",
+    "code": 0,
+    "seconds": 1.377,
+    "output": "PASS 61 restore session hold, read/write isolation, Arabic/English confirmed success, no success from polling or failure, single POST and explicit sign-in\n"
+  },
+  {
+    "test": "test_backup_time109.cjs",
+    "code": 0,
+    "seconds": 0.154,
+    "output": "PASS 14 backup-only long timeout, ordinary read/write budgets unchanged and no automatic write replay\n"
+  },
+  {
+    "test": "test_backup_transport104.cjs",
+    "code": 0,
+    "seconds": 0.344,
+    "output": "PASS 87 preview transport never flags an uncertain database write, restore has its own receipt guard, ordinary writes still guarded, auth preserved, bounded chunks, lost-response replay and byte equality\n"
+  },
+  {
+    "test": "test_batch118.cjs",
+    "code": 1,
+    "seconds": 0.808,
+    "output": "ReferenceError: financeWorkspace190 is not defined\n    at Object.financeView103 (evalmachine.<anonymous>:13:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_batch118.cjs:7:673\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_batch118.cjs:12:3)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_benefits198.php",
+    "code": 0,
+    "seconds": 0.275,
+    "output": "PASS 46 V198 financial source, history, stop, concurrency, scope, idempotency, payroll and redaction checks. SQLite only.\n"
+  },
+  {
+    "test": "test_buttons70.cjs",
+    "code": 0,
+    "seconds": 0.092,
+    "output": "PASS 42 approved action identities, Arabic/English labels, early placeholders, exclusions and sticky-host coverage checks\n"
+  },
+  {
+    "test": "test_buttons72.cjs",
+    "code": 1,
+    "seconds": 0.105,
+    "output": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(x)\n\n    at check (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_buttons72.cjs:5:27)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_buttons72.cjs:10:1)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_calendar114.cjs",
+    "code": 0,
+    "seconds": 0.972,
+    "output": "PASS 10 calendar month/year selectors, September day count, native-date synchronization and close for AR/EN\n"
+  },
+  {
+    "test": "test_categories49.cjs",
+    "code": 0,
+    "seconds": 0.155,
+    "output": "PASS 13 classification, legacy preservation, scope, linked routes, expiry and custody-state checks\n"
+  },
+  {
+    "test": "test_chrome61.cjs",
+    "code": 0,
+    "seconds": 0.698,
+    "output": "PASS 20 shell-before-data, results-only refresh, delegate prerequisites, stale/detached response, failure and navigation-order checks\n"
+  },
+  {
+    "test": "test_company41.php",
+    "code": 255,
+    "seconds": 0.04,
+    "output": "\nWarning: require(/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/../site/hr/app/payroll-layout.php): Failed to open stream: No such file or directory in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_company41.php on line 11\n\nFatal error: Uncaught Error: Failed opening required '/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/../site/hr/app/payroll-layout.php' (include_path='.:/usr/share/php') in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_company41.php:11\nStack trace:\n#0 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_company41.php on line 11\n"
+  },
+  {
+    "test": "test_company_incentive114.php",
+    "code": 0,
+    "seconds": 0.051,
+    "output": "PASS independent company entitlement, monthly approval and payment idempotency, overlap/primary-company/authority guards, no base salary/leave/EOS rows PASS employee terms listing, recurring months without repeated entry, authority guard"
+  },
+  {
+    "test": "test_connection81.cjs",
+    "code": 0,
+    "seconds": 1.213,
+    "output": "PASS 18 connection health, bounded failure confirmation, hint tolerance, recovery authentication, stale probe race, healthy-write performance and uncertain-save safety assertions.\n"
+  },
+  {
+    "test": "test_context64.cjs",
+    "code": 0,
+    "seconds": 1.233,
+    "output": "PASS 14 shared employee context, fields, collapse, duplicate-title removal and synchronous tab preparation checks\n"
+  },
+  {
+    "test": "test_contract_terms119.php",
+    "code": 0,
+    "seconds": 0.044,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\nPASS automatic settings: no manual effective date, historical first setup, persistent checkbox, automatic price history, net staff-tab supervisor pool, agent/direct exclusion, unchanged save, amount validation, approved payroll preservation\nPASS same employee in both tabs: independent sales and contract commissions; supervisor counts staff-tab five contracts only, excluding twenty agent-tab contracts\n"
+  },
+  {
+    "test": "test_controls195.cjs",
+    "code": 0,
+    "seconds": 0.968,
+    "output": "PASS remote pager tab isolation, paging controls, empty/loading states, bilingual picker, BIGINT IDs, no hidden selection, modal Tab/Shift+Tab and focus return\n"
+  },
+  {
+    "test": "test_core40.php",
+    "code": 255,
+    "seconds": 0.022,
+    "output": "\nFatal error: Uncaught RuntimeException: Unexpected SQL in isolated test in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_core40.php:24\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/employee-source.php(5): query('SELECT * FROM e...', Array)\n#1 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/workforce.php(39): employee_residence134(2, '2017-01-01')\n#2 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/workforce.php(81): service_state(Array, '2017-01-01')\n#3 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_core40.php(49): bank_identity_record(Array, Array, '2017-01-01', 1)\n#4 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_core40.php on line 24\n"
+  },
+  {
+    "test": "test_creation_ready88.cjs",
+    "code": 0,
+    "seconds": 1.314,
+    "output": "PASS 1944 all registered creation actions across page/header/modal, first paint, keyboard/click blocking, permission preservation, delayed readiness, idempotence and replacement\n"
+  },
+  {
+    "test": "test_dashboard_compact140.php",
+    "code": 0,
+    "seconds": 0.021,
+    "output": "PASS actual dashboard route compact projection keeps staff and skips document/location reads; default expiring/stale response retained. SQLite, not live SQLServer.\n"
+  },
+  {
+    "test": "test_data_translation160.php",
+    "code": 0,
+    "seconds": 0.257,
+    "output": "PASS 544 dynamic text discovery, isolated HR credentials/budget, machine translation, source edits, concurrent workers, manual override, protected numbers, retries and public translation preservation checks\n"
+  },
+  {
+    "test": "test_debt_labels96.cjs",
+    "code": 1,
+    "seconds": 3.145,
+    "output": "node:fs:483\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open '/workspace/scratch/5705d8b169fb/review96/baseline/hr/assets/debt-statement.js'\n    at Object.readFileSync (node:fs:483:20)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_labels96.cjs:1:248)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/workspace/scratch/5705d8b169fb/review96/baseline/hr/assets/debt-statement.js'\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_debt_math95.cjs",
+    "code": 0,
+    "seconds": 0.412,
+    "output": "PASS 9932 statement arithmetic in thousandths, random period checks, existing engine reconciliation, monthly effective date vs approval, boundaries, precision, source immutability and invalid/duplicate detection\n"
+  },
+  {
+    "test": "test_debt_nav95.cjs",
+    "code": 0,
+    "seconds": 0.777,
+    "output": "PASS 18 finance order, employee navigation permission, self-only route, fixed period fields and asset wiring\n"
+  },
+  {
+    "test": "test_debt_paging196.php",
+    "code": 0,
+    "seconds": 0.02,
+    "output": "PASS 8 debt paging checks; default page computes 50 of 251 ledgers with complete history\n"
+  },
+  {
+    "test": "test_debt_period115.cjs",
+    "code": 0,
+    "seconds": 1.167,
+    "output": "PASS 36 600 is a period debit or computed opening depending on start; no duplicate opening or internal type labels AR/EN\n"
+  },
+  {
+    "test": "test_debt_ui95.cjs",
+    "code": 1,
+    "seconds": 1.113,
+    "output": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(x)\n\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_ui95.cjs:1:190)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_ui95.cjs:6:533\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_ui95.cjs:23:3)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: null,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\nevalmachine.<anonymous>:44\n const workspace=personal?null:financeWorkspace190(view,host,()=>render());host._resetDetail190=()=>{debtDetail95=0;};\n                 ^\n\nReferenceError: financeWorkspace190 is not defined\n    at Object.debtScreen32 (evalmachine.<anonymous>:44:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_ui95.cjs:6:474\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_debt_ui95.cjs:23:3)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_decisions199.php",
+    "code": 0,
+    "seconds": 0.03,
+    "output": "PASS 58 V199 decision, cancellation, ownership, catalogue, delegation, financial approval and late-checkout cases. SQLite fixture; no production writes.\n"
+  },
+  {
+    "test": "test_delegation_scope199.php",
+    "code": 0,
+    "seconds": 0.023,
+    "output": "PASS 13 real permission composition/scope cases: original manager unaffected, substitute expires by entered date.\n"
+  },
+  {
+    "test": "test_display_names143.cjs",
+    "code": 0,
+    "seconds": 1.15,
+    "output": "PASS 24 display locale checks: duplicate names, cold/late/cleared caches, AR/EN, stable options, escaping and runtime dictionary gaps.\n"
+  },
+  {
+    "test": "test_display_names143.php",
+    "code": 0,
+    "seconds": 0.015,
+    "output": "PASS ID-bound read-only display labels, namesakes, authorized rows only, minimal payload, empty/missing names, snapshot preservation and post-scope integration.\n"
+  },
+  {
+    "test": "test_document54.cjs",
+    "code": 0,
+    "seconds": 0.088,
+    "output": "PASS 11 desktop consolidation, mobile restoration, repeat stability and stale document cleanup\n"
+  },
+  {
+    "test": "test_document_modes86.cjs",
+    "code": 0,
+    "seconds": 1.241,
+    "output": "PASS 79 document mode switching, category filtering, original add action, waiting state and both directions/layouts\n"
+  },
+  {
+    "test": "test_employee73.cjs",
+    "code": 0,
+    "seconds": 0.149,
+    "output": "PASS 73 employee selection, hub persistence, personal/modal/write exclusions, preserved params, screen coverage, dimensions and native control source guards\n"
+  },
+  {
+    "test": "test_employee73.php",
+    "code": 0,
+    "seconds": 0.016,
+    "output": "PASS 33 read-only intersection, empty scope, response shape and historical employee-code tests\n"
+  },
+  {
+    "test": "test_employee_actions136.cjs",
+    "code": 1,
+    "seconds": 0.946,
+    "output": "TypeError: Cannot read properties of null (reading 'elements')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_actions136.cjs:20:77\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_employee_cache138.cjs",
+    "code": 0,
+    "seconds": 1.61,
+    "output": "PASS company/employee source lists refresh on screen return and stay cached during arrow navigation, both languages.\n"
+  },
+  {
+    "test": "test_employee_editor134.cjs",
+    "code": 0,
+    "seconds": 2.005,
+    "output": "PASS 160 inline editor checks AR/EN directions, direct rendering, empty add, real field payload, search, arrows, dirty guard, one-request save, failure retention and duplicate guard.\n"
+  },
+  {
+    "test": "test_employee_editor134.php",
+    "code": 0,
+    "seconds": 0.034,
+    "output": "PASS independent company entitlement, monthly approval and payment idempotency, overlap/primary-company/authority guards, no base salary/leave/EOS rows PASS employee terms listing, recurring months without repeated entry, authority guard\nPASS inline employee atomic transaction: production child writers, unchanged values omitted by client, shared commit, final-child rollback, approved payroll protection, authority and input guards. SQLite, not live SQL Server.\n"
+  },
+  {
+    "test": "test_employee_fields130.php",
+    "code": 0,
+    "seconds": 0.035,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS V130 collection percent, sales additive bonus at/exceed target retro/excess, disabled, validation, scoped history, transaction rollback and approved guards.\nPASS V133 real bank history date, expired and future excluded.\n"
+  },
+  {
+    "test": "test_employee_history140.cjs",
+    "code": 0,
+    "seconds": 1.168,
+    "output": "PASS 24 lazy history query/build, pending dedup, one read per employee, untouched edits, retry and stale guards in RTL/LTR\n"
+  },
+  {
+    "test": "test_employee_incentive115.cjs",
+    "code": 0,
+    "seconds": 0.853,
+    "output": "PASS 7 employee-bound recurring terms, fixed selected employee, existing terms display, save and no payroll setup button\n"
+  },
+  {
+    "test": "test_employee_localization137.cjs",
+    "code": 0,
+    "seconds": 1.854,
+    "output": "PASS 64 V137 bilingual nationality search, stable submitted codes, unresolved legacy preservation, contextual translation, edit roundtrip and unchanged source values. DOM, not pixel layout.\n"
+  },
+  {
+    "test": "test_employee_localization137.php",
+    "code": 0,
+    "seconds": 0.026,
+    "output": "PASS 1083 V137 nationality catalogue and alias integrity, original preservation, rejection of new unknown values, approved contextual precedence and conflict isolation. No database migration.\n"
+  },
+  {
+    "test": "test_employee_note_fields159.cjs",
+    "code": 1,
+    "seconds": 1.02,
+    "output": "TypeError: Cannot read properties of null (reading 'elements')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_note_fields159.cjs:20:77\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_employee_notes159.php",
+    "code": 255,
+    "seconds": 0.053,
+    "output": "\nFatal error: Uncaught RuntimeException: البدلات تسجل من ملف الموظف فقط. in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_notes159.php:4\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/allowances.php(19): fail('\\xD8\\xA7\\xD9\\x84\\xD8\\xA8\\xD8\\xAF\\xD9\\x84\\xD8\\xA7\\xD8\\xAA ...')\n#1 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_notes159.php(12): allowance_action('allowance_save', Array, Array)\n#2 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_notes159.php on line 4\n"
+  },
+  {
+    "test": "test_employee_permissions134.php",
+    "code": 0,
+    "seconds": 0.033,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS 11 V134 actual permission gates and delegated basic writer: submitted id scope, view-only denial, salary/bank/password/service injection ignored, dated job save atomic. SQLite, not live sessions.\n"
+  },
+  {
+    "test": "test_employee_service136.php",
+    "code": 0,
+    "seconds": 0.055,
+    "output": "PASS production service actions: dated terms, termination, same-code rehire, overlap/closed periods, approved payroll/events, employee-target and authority guards; SQLite, not live SQL Server.\n"
+  },
+  {
+    "test": "test_employee_sources134.php",
+    "code": 0,
+    "seconds": 0.039,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS 25 V134 dated permit/legacy projections, renewal and return file dates, future exclusion, unchanged bank and identity preservation, job history and company same-save merge, rollback, server source guard. SQLite, not live SQLServer.\n"
+  },
+  {
+    "test": "test_employee_title159.cjs",
+    "code": 1,
+    "seconds": 1.26,
+    "output": "TypeError: Cannot read properties of null (reading 'elements')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_title159.cjs:20:77\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_employee_translation160.cjs",
+    "code": 1,
+    "seconds": 1.574,
+    "output": "TypeError: Cannot read properties of null (reading 'elements')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_employee_translation160.cjs:20:77\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_employee_unified143.php",
+    "code": 0,
+    "seconds": 0.021,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\n"
+  },
+  {
+    "test": "test_employees58.cjs",
+    "code": 0,
+    "seconds": 0.118,
+    "output": "PASS 14 employee list uses one API; editor loads prerequisites only on demand; close/navigation guards and manager path preserved\n"
+  },
+  {
+    "test": "test_evaluation_cache195.php",
+    "code": 0,
+    "seconds": 0.02,
+    "output": "PASS evaluation snapshots: 57 staff, 50/7 paging, one batch/page, fresh read zero calculations/writes, revision invalidation, stable reference and no score\n"
+  },
+  {
+    "test": "test_export_language143.php",
+    "code": 0,
+    "seconds": 0.087,
+    "output": "PASS real payroll producer, bilingual names and approved fields, numeric equality, original/free data intact, actual XLSX text/numbers and RTL.\n"
+  },
+  {
+    "test": "test_filters56.cjs",
+    "code": 0,
+    "seconds": 0.098,
+    "output": "PASS 24 specified record screens: desktop filters inside sticky card, mobile restoration and stale state cleanup\n"
+  },
+  {
+    "test": "test_filters75.cjs",
+    "code": 0,
+    "seconds": 0.087,
+    "output": "PASS 29 search consolidation, native/remote callbacks, repeated mounts, picker clipping, desktop/mobile layout and stale-ID cleanup tests\n"
+  },
+  {
+    "test": "test_finance_channels115.php",
+    "code": 0,
+    "seconds": 0.035,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\nPASS channels115 distinct save/read/edit, combined online totals by period, new-registration overwrite rejection, no payroll base\n"
+  },
+  {
+    "test": "test_finance_daily103.cjs",
+    "code": 1,
+    "seconds": 1.302,
+    "output": "ReferenceError: financeWorkspace190 is not defined\n    at Object.financeView103 (evalmachine.<anonymous>:13:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_daily103.cjs:9:256\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_daily103.cjs:19:211)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_finance_daily103.php",
+    "code": 0,
+    "seconds": 0.052,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\n"
+  },
+  {
+    "test": "test_finance_employee118.cjs",
+    "code": 0,
+    "seconds": 1.637,
+    "output": "PASS 53 tab-scoped employee lists, direct channels disabled/no read, stale selection cleared, actual employee checkbox true/false submit\n"
+  },
+  {
+    "test": "test_finance_filters101.cjs",
+    "code": 1,
+    "seconds": 1.053,
+    "output": "ReferenceError: financeWorkspace190 is not defined\n    at financeView103 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_filters101.cjs:5:141), <anonymous>:435:18)\n    at financeShell101 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_filters101.cjs:5:141), <anonymous>:421:44)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_filters101.cjs:6:64\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_filters101.cjs:11:179)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n"
+  },
+  {
+    "test": "test_finance_flow119.cjs",
+    "code": 1,
+    "seconds": 1.508,
+    "output": "ReferenceError: financeWorkspace190 is not defined\n    at Object.financeView103 (evalmachine.<anonymous>:13:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_flow119.cjs:1:1958\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_flow119.cjs:2:1063)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_finance_history114.php",
+    "code": 0,
+    "seconds": 0.047,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\nPASS historical source updates, linked payroll delta, salary unchanged, no daily duplicate, returns and operational locks\n"
+  },
+  {
+    "test": "test_finance_ready103.cjs",
+    "code": 1,
+    "seconds": 0.768,
+    "output": "TypeError: Cannot read properties of null (reading 'disabled')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_ready103.cjs:7:53\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\nevalmachine.<anonymous>:13\n const workspace=financeWorkspace190(key,host,()=>render(),'',stage196);host._resetDetail190=()=>{detailId115=null;};\n                 ^\n\nReferenceError: financeWorkspace190 is not defined\n    at Object.financeView103 (evalmachine.<anonymous>:13:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_ready103.cjs:6:15\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_ready103.cjs:10:160)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_finance_scope118.php",
+    "code": 0,
+    "seconds": 0.038,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\nPASS scope118 company restriction, tampered company rejection, opt-in only creation, historical corrections after opt-out, preservation and channel totals\n"
+  },
+  {
+    "test": "test_finance_shells99.cjs",
+    "code": 1,
+    "seconds": 0.926,
+    "output": "ReferenceError: head is not defined\n    at Object.navigate (evalmachine.<anonymous>:79:94)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_shells99.cjs:11:28\n"
+  },
+  {
+    "test": "test_finance_statement114.cjs",
+    "code": 1,
+    "seconds": 1.103,
+    "output": "ReferenceError: financeWorkspace190 is not defined\n    at Object.financeView103 (evalmachine.<anonymous>:13:18)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_statement114.cjs:2:1398\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_statement114.cjs:2:2477)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_finance_unified114.cjs",
+    "code": 0,
+    "seconds": 1.392,
+    "output": "PASS 214 V115 seven tabs AR/EN: default blank registration, editable zero rows, save, explicit historic query, disabled after query, date reset, no overwrite of existing day, channel names\n"
+  },
+  {
+    "test": "test_footer63.cjs",
+    "code": 0,
+    "seconds": 0.085,
+    "output": "PASS 14 external form submission, payload, repeat save, double-submit guard, permission and profile-state checks\n"
+  },
+  {
+    "test": "test_geometry81.cjs",
+    "code": 0,
+    "seconds": 7.668,
+    "output": "PASS 287 reserved-field identity, declared geometry, hidden-field visibility, enhanced/native controls, second-level rows and inverse palette checks across 32 view/direction/device scenarios. No pixel rendering claim.\n"
+  },
+  {
+    "test": "test_google171.php",
+    "code": 0,
+    "seconds": 0.018,
+    "output": "PASS 10 Google transport parsing, no-key URL, bidirection, protected values, chunking and failure checks\n"
+  },
+  {
+    "test": "test_grid41.cjs",
+    "code": 0,
+    "seconds": 0.118,
+    "output": "PASS 58 payroll/commission rendering, edit, scopes, state, zero/blank, returns and race checks\n"
+  },
+  {
+    "test": "test_grid73.cjs",
+    "code": 0,
+    "seconds": 0.112,
+    "output": "PASS 53 payroll/commission rendering, edit, scopes, state, zero/blank, returns and race checks\n"
+  },
+  {
+    "test": "test_header76.cjs",
+    "code": 0,
+    "seconds": 3.931,
+    "output": "PASS 1753 DOM/structure assertions across 100 screen/language cases, stable handlers, form ownership, no duplicate fields, primary order, label alignment, responsive CSS and Arabic date guards. No visual rendering claim.\n"
+  },
+  {
+    "test": "test_header_notes92.cjs",
+    "code": 1,
+    "seconds": 1.338,
+    "output": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(x)\n\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_header_notes92.cjs:1:190)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_header_notes92.cjs:12:535)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_hr_automatic161.cjs",
+    "code": 0,
+    "seconds": 1.281,
+    "output": "PASS 30 actual button navigation, automatic wake for three roles, legacy activation ignored, no manual process controls, throttled retries and visible errors in AR/EN\n"
+  },
+  {
+    "test": "test_hr_coverage164.cjs",
+    "code": 1,
+    "seconds": 0.116,
+    "output": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: every semantic field in the current source must have an explicit classification\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_coverage164.cjs:1:228)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_coverage164.cjs:4:1)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_hr_export164.php",
+    "code": 0,
+    "seconds": 0.024,
+    "output": "PASS 34 sales and collection export text, original AR, scope isolation, unchanged numeric values and actual OOXML\n"
+  },
+  {
+    "test": "test_hr_manual_display166.cjs",
+    "code": 1,
+    "seconds": 0.959,
+    "output": "<anonymous_script>:176\nfunction recordReviewPolicy188(record){return RecordFields194.reviewPolicy(record,typeof boot==='undefined'?null:boot?.modules?.[record.module]);}\n                                       ^\n\nReferenceError: RecordFields194 is not defined\n    at recordReviewPolicy188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:3:460), <anonymous>:176:40)\n    at recordStatus188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:3:460), <anonymous>:177:41)\n    at recordForReview188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:3:460), <anonymous>:178:50)\n    at recordBadge181 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:3:460), <anonymous>:181:9)\n    at recordDetail (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:3:460), <anonymous>:427:388)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_manual_display166.cjs:4:298)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_hr_record_form167.cjs",
+    "code": 1,
+    "seconds": 0.879,
+    "output": "ReferenceError: recordForm181 is not defined\n    at recordModal (eval at make (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_record_form167.cjs:6:83), <anonymous>:182:18)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_record_form167.cjs:9:64\n"
+  },
+  {
+    "test": "test_hr_refresh162.cjs",
+    "code": 0,
+    "seconds": 0.091,
+    "output": "PASS 9 scoped GET refresh, no write replay, unchanged source, stale navigation/company/employee filtering and registry parity checks\n"
+  },
+  {
+    "test": "test_hr_refresh165.cjs",
+    "code": 0,
+    "seconds": 0.133,
+    "output": "PASS 12 locale failure isolation, ordinary recovery, identity expiry, stale scope and read-only checks\n"
+  },
+  {
+    "test": "test_hr_registry162.php",
+    "code": 0,
+    "seconds": 0.041,
+    "output": "PASS 48 registry coverage, scoped source isolation, fixed dictionary bypass, internal notice/customer separation and normalized report checks\n"
+  },
+  {
+    "test": "test_hr_render162.cjs",
+    "code": 1,
+    "seconds": 1.267,
+    "output": "<anonymous_script>:176\nfunction recordReviewPolicy188(record){return RecordFields194.reviewPolicy(record,typeof boot==='undefined'?null:boot?.modules?.[record.module]);}\n                                       ^\n\nReferenceError: RecordFields194 is not defined\n    at recordReviewPolicy188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:4:311), <anonymous>:176:40)\n    at recordStatus188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:4:311), <anonymous>:177:41)\n    at recordForReview188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:4:311), <anonymous>:178:50)\n    at recordBadge181 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:4:311), <anonymous>:181:9)\n    at recordDetail (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:4:311), <anonymous>:427:388)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_hr_render162.cjs:5:226)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_hr_shared_display164.cjs",
+    "code": 0,
+    "seconds": 1.368,
+    "output": "PASS 64 real shared language renderer: free text, source roundtrip, fixed receipt templates, custom receipt, notice fragments, form/identity/numbers, public and audit isolation in AR/EN mobile/desktop\n"
+  },
+  {
+    "test": "test_hr_stream167.php",
+    "code": 0,
+    "seconds": 0.03,
+    "output": "PASS 12 forward-only SQLSRV branch,25000rows/25MB, bounded scan memory, no full fetch, exception/abandonment cleanup and complete inventory checks; driver boundary simulated, not live SQL Server\n"
+  },
+  {
+    "test": "test_hr_translation_api160.cjs",
+    "code": 0,
+    "seconds": 0.137,
+    "output": "PASS 14 actual API error classification, auth expiry, write safety and scoped in-flight choice dedup assertions.\n"
+  },
+  {
+    "test": "test_hr_translation_ui160.cjs",
+    "code": 0,
+    "seconds": 1.251,
+    "output": "PASS 38 HR translation UI, independent credentials/budget, pending states, fresh display, focused typing and source roundtrip checks at mobile/desktop widths in AR/EN\n"
+  },
+  {
+    "test": "test_hr_worker162.cjs",
+    "code": 0,
+    "seconds": 0.129,
+    "output": "PASS canceled worker is inert; no timers, API requests or visibility listeners\n"
+  },
+  {
+    "test": "test_incentive_dialog114.cjs",
+    "code": 0,
+    "seconds": 0.941,
+    "output": "PASS 4 incentive dialog duplicate-click, loading, stale navigation and button recovery\n"
+  },
+  {
+    "test": "test_incentive_recurring132.php",
+    "code": 0,
+    "seconds": 0.029,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS recurring incentive132: open entitlement, dated rate change, stop, approved snapshot and payment preservation, employee scope and parent rollback. SQLite, not live hosting.\n"
+  },
+  {
+    "test": "test_incentive_resume135.php",
+    "code": 0,
+    "seconds": 0.03,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS recurring incentive132: open entitlement, dated rate change, stop, approved snapshot and payment preservation, employee scope and parent rollback. SQLite, not live hosting.\nPASS 31 V135 resume period: same company new term, old periods/paid records unchanged, no gap payments, invalid target/overlap/old id guards, parent rollback and approved period protection. SQLite, not live hosting.\n"
+  },
+  {
+    "test": "test_initial_appointment136.php",
+    "code": 0,
+    "seconds": 0.03,
+    "output": "PASS unified production writers: employee/service/allowance/incentive/checklist single transaction; final failure rolls all back; targeted employee enforced; close/rehire/terms do not commit internally; multipart and file rollback hooks. SQLite, not live HTTP/SQL Server.\nPASS 18 V136 new employee + initial appointment atomic, hire vs recording date, no duplicate title/date request, blank documentation no empty record, attachment links, production failure cleanup, existing-mode guard and later action date. SQLite/upload adapter, not live HTTP/SQLServer.\n"
+  },
+  {
+    "test": "test_inventory_ready89.cjs",
+    "code": 1,
+    "seconds": 1.144,
+    "output": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(x)\n\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_inventory_ready89.cjs:1:196)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_inventory_ready89.cjs:13:3\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "test": "test_language_lifecycle138.cjs",
+    "code": 0,
+    "seconds": 2.715,
+    "output": "PASS 128 actual locale lifecycle, counted labels, original data/unsaved edits, shared SVGs, canonical attendance name, context records, status/currency and search-only dirty behavior. DOM, not pixels.\n"
+  },
+  {
+    "test": "test_layout115.cjs",
+    "code": 0,
+    "seconds": 1.92,
+    "output": "PASS 14 CSS computed rules in RTL/LTR: hidden unused document category row and explicit same-row date/query (not browser pixel verification)\n"
+  },
+  {
+    "test": "test_leave67.php",
+    "code": 0,
+    "seconds": 0.022,
+    "output": "PASS 16 day/cash separation, independent permission, historical inclusion, redaction and no duplicate shadows checks\n"
+  },
+  {
+    "test": "test_leave_prefetch195.php",
+    "code": 0,
+    "seconds": 0.024,
+    "output": "PASS identical full leave/day/cash ledger with live/history shadows, late return, reservations/payment/cancellation/opening/salary: 12 queries -> 2 batch queries\n"
+  },
+  {
+    "test": "test_loading196.cjs",
+    "code": 1,
+    "seconds": 1.814,
+    "output": "TypeError: Cannot read properties of null (reading 'textContent')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_loading196.cjs:29:271\n"
+  },
+  {
+    "test": "test_loading_queries140.php",
+    "code": 255,
+    "seconds": 0.032,
+    "output": "\nFatal error: Uncaught Error: Call to undefined function v26_entitlements() in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/benefits.php:5\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/profile.php(48): employee_benefits198(Array)\n#1 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_loading_queries140.php(13): employee_profile33(Array, 1)\n#2 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/benefits.php on line 5\n"
+  },
+  {
+    "test": "test_location40.cjs",
+    "code": 0,
+    "seconds": 0.125,
+    "output": "PASS 39 location checks: permission, fresh reading, accuracy, no autosave, errors, closure, manual selection and stale callbacks.\n"
+  },
+  {
+    "test": "test_login105.cjs",
+    "code": 0,
+    "seconds": 0.139,
+    "output": "PASS 35 login token refresh, duplicate submit guard, retry after failure, token rotation, bad credentials and protected auth\n"
+  },
+  {
+    "test": "test_login_feedback127.cjs",
+    "code": 0,
+    "seconds": 1.272,
+    "output": "PASS 18 login feedback shown immediately, credentials not blanked while startup is pending, double submit blocked, AR/EN stages and controls restored\n"
+  },
+  {
+    "test": "test_mobile_bar147.cjs",
+    "code": 0,
+    "seconds": 1.513,
+    "output": "PASS 20 actual shell mobile ordering, bilingual labels, permission filtering, employee-bar and sidebar preservation, click navigation.\n"
+  },
+  {
+    "test": "test_mobile_focus141.cjs",
+    "code": 1,
+    "seconds": 1.063,
+    "output": "ReferenceError: employeeSearchText195 is not defined\n    at eval (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_mobile_focus141.cjs:3:429), <anonymous>:8:81)\n    at Array.filter (<anonymous>)\n    at render (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_mobile_focus141.cjs:3:429), <anonymous>:8:69)\n    at search.oninput (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_mobile_focus141.cjs:3:429), <anonymous>:9:31)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_mobile_focus141.cjs:3:1122\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_native73.cjs",
+    "code": 0,
+    "seconds": 0.091,
+    "output": "PASS 6 native-control adoption, enhanced-wrapper idempotence, retained callback, form association and live selection checks\n"
+  },
+  {
+    "test": "test_navigation40.cjs",
+    "code": 0,
+    "seconds": 0.114,
+    "output": "PASS 43 employee ordering, boundaries, scope, dirty-form guard and profile navigation checks.\n"
+  },
+  {
+    "test": "test_navigation50.cjs",
+    "code": 0,
+    "seconds": 0.104,
+    "output": "PASS 32 navigation, unique placement, independent core screens, role scope and translation checks\n"
+  },
+  {
+    "test": "test_navigation57.cjs",
+    "code": 0,
+    "seconds": 0.135,
+    "output": "PASS 45 employee ordering, boundaries, scope, dirty-form guard and profile navigation checks.\n"
+  },
+  {
+    "test": "test_notice_names142.php",
+    "code": 255,
+    "seconds": 0.041,
+    "output": "\nFatal error: Uncaught Error: Call to undefined function v26_entitlements() in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/benefits.php:5\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/profile.php(48): employee_benefits198(Array)\n#1 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_loading_queries140.php(13): employee_profile33(Array, 1)\n#2 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notice_names142.php(3): require('/workspace/scra...')\n#3 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/hr/app/benefits.php on line 5\n"
+  },
+  {
+    "test": "test_notice_pair169.cjs",
+    "code": 0,
+    "seconds": 0.973,
+    "output": "PASS hidden counterparts, AR/EN source, stale clearing, request input lock and stored display without retranslating.\n"
+  },
+  {
+    "test": "test_notice_pair169.php",
+    "code": 0,
+    "seconds": 0.016,
+    "output": "PASS bidirectional pairing, exact source retention, revision binding, invalid direction and provider failure before dispatch.\nPASS real send ordering: authorization before provider, no dispatch on failure, untrusted hidden target ignored, paired metadata and audit committed.\nHR notice translation failed: hr_translation_unreachable\nHR notice translation failed: hr_translation_unreachable\n"
+  },
+  {
+    "test": "test_notification_header138.cjs",
+    "code": 1,
+    "seconds": 1.061,
+    "output": "ReferenceError: recordPager189 is not defined\n    at noticeRender32 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_header138.cjs:5:4), <anonymous>:41:2)\n    at notificationCenter32 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_header138.cjs:5:4), <anonymous>:26:169)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_header138.cjs:6:10\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_header138.cjs:10:177)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n"
+  },
+  {
+    "test": "test_notification_loading139.cjs",
+    "code": 1,
+    "seconds": 1.352,
+    "output": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(v,m)\n\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_loading139.cjs:2:42)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_loading139.cjs:7:91\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_loading139.cjs:12:141)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "test": "test_notification_locale142.cjs",
+    "code": 1,
+    "seconds": 1.291,
+    "output": "ReferenceError: recordPager189 is not defined\n    at noticeRender32 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_locale142.cjs:2:1408), <anonymous>:294:2)\n    at notificationCenter32 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_locale142.cjs:2:1408), <anonymous>:279:169)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_locale142.cjs:3:10\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_notification_locale142.cjs:11:288)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n"
+  },
+  {
+    "test": "test_other90.cjs",
+    "code": 0,
+    "seconds": 1.056,
+    "output": "PASS 216 five screens, single Other tab and form choice, all legacy/unclassified rows retained, attendance excluded, source rows unchanged and save allowlist\n"
+  },
+  {
+    "test": "test_page195.php",
+    "code": 0,
+    "seconds": 0.021,
+    "output": "PASS 34 backend checks: SQL windows/scopes, categories, statuses, totals, finance balances, notifications and leave cache bounds\n"
+  },
+  {
+    "test": "test_passport_alerts155.php",
+    "code": 0,
+    "seconds": 0.021,
+    "output": "PASS 38 passport reminder integration checks with real notice/audit writers\n"
+  },
+  {
+    "test": "test_payroll_entry126.cjs",
+    "code": 1,
+    "seconds": 0.866,
+    "output": "ReferenceError: head is not defined\n    at navigate (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_payroll_entry126.cjs:3:860), <anonymous>:631:94)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_payroll_history123.php",
+    "code": 0,
+    "seconds": 0.024,
+    "output": "PASS historical independent commission fields, exact source net, full Fridays and commissions, separate debt/lateness, display additions reconciled without duplication and read-only source\n"
+  },
+  {
+    "test": "test_payroll_no_overtime199.php",
+    "code": 0,
+    "seconds": 0.017,
+    "output": "PASS production payroll calculator: 180 late minutes with stale enabled overtime setting create no extra pay; 60 allowances and 25 manual addition retained.\n"
+  },
+  {
+    "test": "test_payroll_reload82.cjs",
+    "code": 0,
+    "seconds": 2.664,
+    "output": "PASS 282 actual payroll/sales/collection renderer assertions over first load, reload and changed edit/export scope in RTL/LTR: action inventory, callbacks, save form, no duplicates, no leftovers; no financial writes or visual claims.\n"
+  },
+  {
+    "test": "test_payroll_roster127.php",
+    "code": 0,
+    "seconds": 0.032,
+    "output": "PASS payroll roster127: four company/section rosters, month service and midmonth termination, fixed-salary flags, no personal access, view/scope/company gates and no writes\n"
+  },
+  {
+    "test": "test_performance119.cjs",
+    "code": 0,
+    "seconds": 0.887,
+    "output": "PASS 495 164 action read coalescing, isolated caller data, no settled cache, navigation boundaries, numeric DOM enhancement baseline 1 -> 0\n"
+  },
+  {
+    "test": "test_performance57.cjs",
+    "code": 0,
+    "seconds": 0.138,
+    "output": "PASS 8 navigation checks: one tab build per route, no redundant preflight on healthy reads, blocked-session gate preserved\n"
+  },
+  {
+    "test": "test_performance_sql119.php",
+    "code": 255,
+    "seconds": 0.059,
+    "output": "PASS 44 production PHP storage/math checks in isolated SQLite: roles by date, save/edit/same id/zero, atomic rollback, retries, stale revision, month move, company exclusion, collection, pending allocation, locks, legacy month end, permissions and existing backup schema\n\nFatal error: Uncaught RuntimeException: assertion failed #45 in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_daily103.php:33\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_performance_sql119.php(5): ok(false)\n#1 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_finance_daily103.php on line 33\n"
+  },
+  {
+    "test": "test_period_refresh98.cjs",
+    "code": 1,
+    "seconds": 1.303,
+    "output": "Error: ENOENT: no such file or directory, open '/workspace/scratch/5705d8b169fb/review98/baseline/hr/assets/debt-statement.js'\n    at Object.readFileSync (node:fs:483:20)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_period_refresh98.cjs:27:18\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/workspace/scratch/5705d8b169fb/review98/baseline/hr/assets/debt-statement.js'\n}\n"
+  },
+  {
+    "test": "test_permission_send196.cjs",
+    "code": 0,
+    "seconds": 1.237,
+    "output": "PASS permission punch single-flight, pending controls, stale geolocation and late-write navigation guards\n"
+  },
+  {
+    "test": "test_permit89.php",
+    "code": 0,
+    "seconds": 0.017,
+    "output": "PASS 21 permit classification and filtering checks\n"
+  },
+  {
+    "test": "test_permit_cascade156.cjs",
+    "code": 0,
+    "seconds": 2.843,
+    "output": "PASS 120 checkbox/status CSS cascade checks RTL/LTR desktop/mobile/coarse tablet; no pixel emulation\n"
+  },
+  {
+    "test": "test_permit_editor148.cjs",
+    "code": 0,
+    "seconds": 2.637,
+    "output": "PASS 187 permit UI and integration checks\n"
+  },
+  {
+    "test": "test_permit_editor148.php",
+    "code": 0,
+    "seconds": 0.031,
+    "output": "PASS 56 permit backend checks\n"
+  },
+  {
+    "test": "test_permit_fields155.cjs",
+    "code": 0,
+    "seconds": 1.12,
+    "output": "PASS 48 permit duration, order and passport UI checks AR/EN\n"
+  },
+  {
+    "test": "test_permit_fields155.php",
+    "code": 0,
+    "seconds": 0.02,
+    "output": "PASS 35 permit duration/passport/birth validation checks\n"
+  },
+  {
+    "test": "test_permit_legacy157.php",
+    "code": 0,
+    "seconds": 0.03,
+    "output": "PASS 22 legacy current correction checks\n"
+  },
+  {
+    "test": "test_permit_navigation85.cjs",
+    "code": 1,
+    "seconds": 1.111,
+    "output": "node:fs:483\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open '/workspace/scratch/5705d8b169fb/review85/baseline/hr/assets/permission-groups.js'\n    at Object.readFileSync (node:fs:483:20)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_permit_navigation85.cjs:21:169)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/workspace/scratch/5705d8b169fb/review85/baseline/hr/assets/permission-groups.js'\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_permit_previous151.cjs",
+    "code": 0,
+    "seconds": 1.861,
+    "output": "PASS 96 previous-permit modal checks AR/EN\n"
+  },
+  {
+    "test": "test_permit_reader89.cjs",
+    "code": 0,
+    "seconds": 1.093,
+    "output": "PASS 11 real permit reader query, search, transfer control and edit permission\n"
+  },
+  {
+    "test": "test_permit_reference149.cjs",
+    "code": 0,
+    "seconds": 6.357,
+    "output": "PASS 1492 CSS cascade reference comparisons, RTL/LTR desktop/mobile/coarse tablet. This does not emulate browser pixels.\n"
+  },
+  {
+    "test": "test_permit_renewal156.php",
+    "code": 0,
+    "seconds": 0.055,
+    "output": "PASS 41 early renewal and real bank/residence projection checks\n"
+  },
+  {
+    "test": "test_permit_source131.php",
+    "code": 0,
+    "seconds": 0.027,
+    "output": "PASS 15 V131 production permit source corrections, unchanged-date provenance, explicit clear, first registration, date/company validation and admin boundary. SQLite, not live HTTP.\n"
+  },
+  {
+    "test": "test_permit_style156.cjs",
+    "code": 0,
+    "seconds": 1.559,
+    "output": "PASS 20 status, modal label and checkbox UI checks AR/EN\n"
+  },
+  {
+    "test": "test_permit_values159.cjs",
+    "code": 0,
+    "seconds": 1.703,
+    "output": "PASS 162 permit value localization, four tabs, current/history/modal, language switch and saved originals checks\n"
+  },
+  {
+    "test": "test_permits89.cjs",
+    "code": 0,
+    "seconds": 1.097,
+    "output": "PASS 63 four permit tabs, search retention, transfer form, original user target, dates, translations and server integration guards\n"
+  },
+  {
+    "test": "test_profile40.cjs",
+    "code": 0,
+    "seconds": 0.237,
+    "output": "PASS 7 actual profile async race, navigation context and permitted-tab checks.\n"
+  },
+  {
+    "test": "test_ready79.cjs",
+    "code": 0,
+    "seconds": 3.622,
+    "output": "PASS 291 early/late DOM, disabled reservations, no duplicate IDs/search, original callbacks, repeat mounts, palettes and stationary controls; not visual acceptance.\n"
+  },
+  {
+    "test": "test_ready_reference94.cjs",
+    "code": 0,
+    "seconds": 2.377,
+    "output": "PASS 101 actual employees/report renderers and navigation, readiness while no loading markup, success/failure, first paint, unchanged handler and epoch guard\n"
+  },
+  {
+    "test": "test_record_links175.cjs",
+    "code": 0,
+    "seconds": 1.314,
+    "output": "PASS 36 real linked-route checks for employee/record targets, scoped selection and permission denial, AR/EN desktop/mobile fixtures\n"
+  },
+  {
+    "test": "test_record_modal175.cjs",
+    "code": 1,
+    "seconds": 1.081,
+    "output": "ReferenceError: RecordFields194 is not defined\n    at recordReviewPolicy188 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_modal175.cjs:6:45), <anonymous>:221:40)\n    at recordDetailBind173 (eval at <anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_modal175.cjs:6:45), <anonymous>:96:15)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_modal175.cjs:17:297\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n"
+  },
+  {
+    "test": "test_record_modes87.cjs",
+    "code": 0,
+    "seconds": 3.298,
+    "output": "PASS 722 five record screens, real async renderer, readiness before list, scoped choices, modes, filters, both layouts/directions\n"
+  },
+  {
+    "test": "test_record_navigation176.cjs",
+    "code": 0,
+    "seconds": 1.171,
+    "output": "PASS 80 real sidebar sync checks, documents hub alias and subsequent screens, AR/EN desktop/mobile fixtures\n"
+  },
+  {
+    "test": "test_record_pairs173.php",
+    "code": 255,
+    "seconds": 0.029,
+    "output": "PASS 155 paired record fields, persisted sidecars, source-language directions, identifiers, replies/reviews, stale record, privacy and failure atomicity checks\n\nFatal error: Uncaught Error: Call to undefined function workflow_review199() in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_pairs173.php(28) : eval()'d code:53\nStack trace:\n#0 /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_pairs173.php(28): eval()\n#1 {main}\n  thrown in /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_pairs173.php(28) : eval()'d code on line 53\nHR paired text translation unavailable\n"
+  },
+  {
+    "test": "test_record_reference175.cjs",
+    "code": 1,
+    "seconds": 3.278,
+    "output": "node:child_process:982\n    throw err;\n    ^\n\nError: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_workspace173.cjs\nTypeError: Cannot read properties of null (reading 'textContent')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_workspace173.cjs:8:679\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_workspace173.cjs:22:199)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:943:11)\n    at Object.execFileSync (node:child_process:979:15)\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_reference175.cjs:9:5)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19) {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    Buffer(0) [Uint8Array] [],\n    Buffer(748) [Uint8Array] [\n       84, 121, 112, 101,  69, 114, 114, 111, 114,  58,  32,  67,\n       97, 110, 110, 111, 116,  32, 114, 101,  97, 100,  32, 112,\n      114, 111, 112, 101, 114, 116, 105, 101, 115,  32, 111, 102,\n       32, 110, 117, 108, 108,  32,  40, 114, 101,  97, 100, 105,\n      110, 103,  32,  39, 116, 101, 120, 116,  67, 111, 110, 116,\n      101, 110, 116,  39,  41,  10,  32,  32,  32,  32,  97, 116,\n       32,  47, 119, 111, 114, 107, 115, 112,  97,  99, 101,  47,\n      115,  99, 114,  97, 116,  99, 104,  47,  53,  55,  48,  53,\n      100,  56,  98,  49,\n      ... 648 more items\n    ]\n  ],\n  pid: 944,\n  stdout: Buffer(0) [Uint8Array] [],\n  stderr: Buffer(748) [Uint8Array] [\n     84, 121, 112, 101,  69, 114, 114, 111, 114,  58,  32,  67,\n     97, 110, 110, 111, 116,  32, 114, 101,  97, 100,  32, 112,\n    114, 111, 112, 101, 114, 116, 105, 101, 115,  32, 111, 102,\n     32, 110, 117, 108, 108,  32,  40, 114, 101,  97, 100, 105,\n    110, 103,  32,  39, 116, 101, 120, 116,  67, 111, 110, 116,\n    101, 110, 116,  39,  41,  10,  32,  32,  32,  32,  97, 116,\n     32,  47, 119, 111, 114, 107, 115, 112,  97,  99, 101,  47,\n    115,  99, 114,  97, 116,  99, 104,  47,  53,  55,  48,  53,\n    100,  56,  98,  49,\n    ... 648 more items\n  ]\n}\n\nNode.js v24.22.1\n"
+  },
+  {
+    "test": "test_record_workspace173.cjs",
+    "code": 1,
+    "seconds": 1.197,
+    "output": "TypeError: Cannot read properties of null (reading 'textContent')\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_workspace173.cjs:8:679\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_record_workspace173.cjs:22:199)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_restore_progress107.php",
+    "code": 0,
+    "seconds": 0.033,
+    "output": "PASS 24 production restore progress, unchanged rollback, commit-before-complete, observer isolation and private receipt constraintsEP restore40 {\"phase\":\"insert\",\"table\":\"ep_settings\",\"row\":1,\"restore_version\":\"109\",\"committed\":false,\"rolled_back\":true,\"safety_backup\":\"safety\",\"sqlstate\":\"23000\",\"driver\":2601}\n"
+  },
+  {
+    "test": "test_restore_recovery122.cjs",
+    "code": 0,
+    "seconds": 3.969,
+    "output": "PASS 78 actual API lost-response recovery: no generic connection lock, no uncertain-save flag, single POST, read-only receipt confirmation, unknown/commit/missing never succeed, explicit server failure, Arabic/English\n"
+  },
+  {
+    "test": "test_review69.cjs",
+    "code": 0,
+    "seconds": 0.597,
+    "output": "PASS 19 shared selection persistence/scope/error, search reuse/handler and history footer checks\n"
+  },
+  {
+    "test": "test_revision80.cjs",
+    "code": 1,
+    "seconds": 3.889,
+    "output": "AssertionError [ERR_ASSERTION]: Real renderer has expected pending reads\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_revision80.cjs:1:206)\n    at scenario (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_revision80.cjs:11:35)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_revision80.cjs:19:128\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "test": "test_runtime_paths.php",
+    "code": 0,
+    "seconds": 0.019,
+    "output": "PASS 452 stable runtime paths, PHP dependencies, page assets and consolidated backup helpers"
+  },
+  {
+    "test": "test_save_style172.cjs",
+    "code": 0,
+    "seconds": 3.873,
+    "output": "PASS 76 actual notice send pending/success/failure style and input-lock checks AR/EN at mobile/desktop widths; synthetic requests only\n"
+  },
+  {
+    "test": "test_scope69.php",
+    "code": 0,
+    "seconds": 0.409,
+    "output": "PASS 5 authorized scope intersection checks\n"
+  },
+  {
+    "test": "test_screen_loading140.cjs",
+    "code": 1,
+    "seconds": 2.831,
+    "output": "AssertionError [ERR_ASSERTION]: sick launched in parallel\n    at ok (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_screen_loading140.cjs:1:199)\n    at /workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_screen_loading140.cjs:4:88\n    at Object.<anonymous> (/workspace/scratch/5705d8b169fb/code-maintenance/SOURCE/tests/test_screen_loading140.cjs:12:214)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n"
+  },
+  {
+    "test": "test_screen_loading197.cjs",
+    "code": 0,
+    "seconds": 2.186,
+    "output": "{\"checks\":27,\"result\":\"PASS\"}\n"
+  },
+  {
+    "test": "test_stack77.cjs",
+    "code": 0,
+    "seconds": 4.998,
+    "output": "PASS 1541 assertions across approved screen/direction scenarios: three cards, compact styles, form ownership, handlers, one search, idempotence, exclusions and measured sticky stack. DOM tests; no visual acceptance claim.\n"
+  },
+  {
+    "test": "test_staff_action83.cjs",
+    "code": 0,
+    "seconds": 1.527,
+    "output": "PASS 29 employee-action first-level placement checks for waiting/ready, RTL/LTR, original callbacks and unaffected other action rows. DOM/source only.\n"
+  },
+  {
+    "test": "test_staff_workspace173.cjs",
+    "code": 0,
+    "seconds": 1.048,
+    "output": "PASS 56 staff workspace integration at AR/EN desktop/mobile widths, policy history, exempt staff, selection integration and unchanged sibling panels\n"
+  },
+  {
+    "test": "test_surface82.cjs",
+    "code": 0,
+    "seconds": 2.615,
+    "output": "PASS 121 review-batch date, search, waiting employee, creation readiness/permissions, orphan cleanup, empty state, level-two position and repeated normalization assertions in Arabic/English. DOM/computed CSS only.\n"
+  },
+  {
+    "test": "test_tabscroll53.cjs",
+    "code": 0,
+    "seconds": 0.101,
+    "output": "PASS 14 tab scroll edges, RTL-independent geometry, overflow-only controls and mobile arrow suppression\n"
+  },
+  {
+    "test": "test_text_pairs170.cjs",
+    "code": 0,
+    "seconds": 1.262,
+    "output": "PASS scoped hidden counterparts, original control locations/count, edited values survive blur/refresh, per-field direction across language changes and counterpart invalidation.\n"
+  },
+  {
+    "test": "test_text_pairs170.php",
+    "code": 0,
+    "seconds": 0.025,
+    "output": "PASS 13 user occurrences / 11 kinds, two permit kinds, bidirectional batching, canonical source, per-record history, no history leakage, no unchanged calls, stale-source rejection, fail-before-write, JSON roundtrip. SQLite/mocked provider, not live SQL Server.\nHR paired text translation unavailable\n"
+  },
+  {
+    "test": "test_workflows196.php",
+    "code": 0,
+    "seconds": 0.043,
+    "output": "PASS 47 production backend checks\nPASS 53 backend workflow and permission paging checks\n"
+  },
+  {
+    "test": "test_workspace195.cjs",
+    "code": 0,
+    "seconds": 1.69,
+    "output": "PASS V195 string IDs, company details, overlapping report requests, choice reuse, default selection isolation, bilingual matching, validity/proof states and stale modal guard\n"
+  }
+]

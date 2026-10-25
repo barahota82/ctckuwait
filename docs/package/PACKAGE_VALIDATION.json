@@ -1,0 +1,81 @@
+{
+  "scope": "Package integrity and rerun of portable local test adapters. No new hosted connection or live database test.",
+  "original_source_files": 476,
+  "missing_original_files": [],
+  "intentional_metadata_changes": [
+    ".gitignore",
+    "AGENTS.md",
+    "README_AR.txt"
+  ],
+  "runtime_source_changes": [],
+  "retained_host_manifest_verified": 232,
+  "host_manifest_mismatches": [],
+  "host_evidence_basis": "Previous full 227-file hosted snapshot plus fresh individual downloads of 2 replaced JSON files and 5 added PNG files. Not a second full server snapshot.",
+  "owner_archive_exact": true,
+  "owner_archive_bytes": 1646546,
+  "owner_archive_sha256": "cb10e666301cb6a0e466d3f02208377b249ed10bdb734bcfe04b312a13ffb8b6",
+  "versioned_runtime_names": [],
+  "forbidden_files": [],
+  "secret_pattern_hits": [],
+  "syntax_files_checked": 400,
+  "syntax_failures": [],
+  "local_test_results": [
+    {
+      "name": "stable-runtime-paths",
+      "exit_code": 0,
+      "seconds": 0.023,
+      "output": "PASS 452 stable runtime paths, PHP dependencies, page assets and consolidated backup helpers"
+    },
+    {
+      "name": "loading-queries-current-dependencies.php",
+      "exit_code": 0,
+      "seconds": 0.044,
+      "output": "PASS 20 exact scoped totals above500, latest6/chunks, metadata privacy, deferred/full profile projections, source dates, denied employee and actual personal/team notice summary equivalence. SQLite, not live SQLServer."
+    },
+    {
+      "name": "notice-names-current-dependencies.php",
+      "exit_code": 0,
+      "seconds": 0.043,
+      "output": "PASS 20 exact scoped totals above500, latest6/chunks, metadata privacy, deferred/full profile projections, source dates, denied employee and actual personal/team notice summary equivalence. SQLite, not live SQLServer.\nPASS explicit subject IDs despite identical Arabic names, record fallback, filtered personal/team results, no bank/unrelated fields, no writes and lightweight unread summary."
+    },
+    {
+      "name": "record-pairs-current-dependencies.php",
+      "exit_code": 0,
+      "seconds": 0.034,
+      "output": "PASS 155 paired record fields, persisted sidecars, source-language directions, identifiers, replies/reviews, stale record, privacy and failure atomicity checks\nPASS 177 total helper and production API writer assertions\nHR paired text translation unavailable"
+    },
+    {
+      "name": "mobile-focus-current-dependencies.cjs",
+      "exit_code": 0,
+      "seconds": 1.781,
+      "output": "PASS 36 mobile/desktop RTL/LTR actual generic and employee/nested dialog focus, direct typing and keyboard-free employee selection. OS keyboard itself is not emulated."
+    },
+    {
+      "name": "full-form-matrix-ar-mobile0",
+      "exit_code": 0,
+      "seconds": 40.109,
+      "output": "{\"language\":\"ar\",\"mobile\":false,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}"
+    },
+    {
+      "name": "full-form-matrix-en-mobile0",
+      "exit_code": 0,
+      "seconds": 45.67,
+      "output": "{\"language\":\"en\",\"mobile\":false,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}"
+    },
+    {
+      "name": "full-form-matrix-ar-mobile1",
+      "exit_code": 0,
+      "seconds": 41.964,
+      "output": "{\"language\":\"ar\",\"mobile\":true,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}"
+    },
+    {
+      "name": "full-form-matrix-en-mobile1",
+      "exit_code": 0,
+      "seconds": 45.042,
+      "output": "{\"language\":\"en\",\"mobile\":true,\"checks\":524,\"forms\":29,\"details\":29,\"searches\":5,\"errors\":[],\"limits\":\"JSDOM full current runtime scripts with in-memory demo transport. Not live SQL Server, browser layout, OS keyboard, camera or GPS.\"}"
+    }
+  ],
+  "test_fixture_notes": "Original tests unchanged. Supplemental adapters preserve assertions; only project-relative paths/output location changed for handoff.",
+  "pass": true,
+  "git_trackable_files_check": "All included project paths checked against supplied .gitignore; no unexpected exclusions."
+}

@@ -1,0 +1,104 @@
+/* V4 preview. Task layouts reuse the original portal controls and design tokens. */
+.workspace[data-group-workspace180]{--hub-height48:0px!important;--screen-gap113:12px}
+.workspace[data-group-workspace180] :is(#portalTabs32,#recordTabs49,.employee-editor-sections134,.portal-tabs32,.tab-scroll53){position:static!important;top:auto!important}
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49){background:var(--ivory,#fff)!important;border:1px solid var(--line)!important;border-radius:14px!important;box-shadow:none!important;padding:20px!important;margin-block:12px 0!important;gap:16px!important;overflow:visible}
+/* One tool area, not three fixed cards: same original controls/form ownership. */
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49)>:is(.header-navigation77,.header-primary77,.header-secondary77){background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;margin:0!important}
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-primary77{border-block-start:1px solid var(--line)!important;padding-block-start:16px!important}
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-secondary77{display:flex!important;flex-wrap:wrap;gap:12px!important;align-items:end}
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-secondary77>label{flex:1 1 155px;max-width:280px}
+.workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-secondary77>.group-period179{flex:1 1 420px;max-width:680px}
+.workspace[data-group-workspace180]:not([data-request-header184]) #portalTabs32 .portal-tabs32{padding:6px!important;margin:0!important;box-shadow:none!important}
+.workspace[data-group-workspace180] #page{padding-block-start:12px!important;--hub-height48:0px!important;min-width:0}
+.workspace[data-group-workspace180] #page>.group-intro180{margin:0 0 12px!important;background:transparent;border:0;padding:0}
+.workspace[data-group-workspace180] #page .group-intro180 h1{font-size:18px;margin:0}
+.workspace[data-group-workspace180] #page .group-intro180 p{margin-block:4px 0}
+.workspace[data-group-workspace180] #page>.card:has(>.group-layout179){background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.workspace[data-group-workspace180] #page :is(.group-layout179,.group-layout179>.card){margin:0!important;min-width:0}
+.group-layout179{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,1fr);gap:0;align-items:stretch;margin-block:0 12px;min-width:0;border:1px solid var(--line);border-radius:14px;background:var(--ivory,#fff);overflow:hidden}
+.group-layout179>.card{background:transparent;border:0;border-radius:0;box-shadow:none;padding:18px;min-width:0}
+.group-list179{overflow:hidden}
+.group-list179 .section-top{gap:12px;align-items:center;margin:0 0 12px}
+.group-list179 h2,.group-detail179 h2{font-size:16px;margin:0;line-height:1.6}
+.group-list179 [data-group-count179]{color:var(--muted);font-variant-numeric:tabular-nums}
+.group-detail179{border-inline-start:1px solid var(--line)!important;background:var(--cream)!important}
+.group-detail-bar180{display:flex;gap:12px;align-items:center;justify-content:space-between;padding-block-end:14px;margin-block-end:14px;border-block-end:1px solid var(--line)}
+.group-detail-bar180 strong{font-size:14px}
+.group-detail-bar180 button{white-space:nowrap}
+.group-selected179{background:var(--cream);box-shadow:inset 3px 0 var(--gold)}
+html[dir=rtl] .group-selected179{box-shadow:inset -3px 0 var(--gold)}
+.group-layout179 .table-wrap{margin:0;overflow:auto;max-height:none;border-radius:0}
+.group-layout179 .table-wrap table{min-width:0;width:100%;margin:0}
+.group-layout179 td,.group-layout179 th{overflow-wrap:anywhere}
+.group-list179 th{position:static;background:var(--cream)}
+.group-detail-content179:empty{display:none}
+.group-detail179 .modal-body{padding:0;max-height:none;overflow:visible}
+.group-detail179 .modal-head{padding:0 0 12px;gap:12px}
+.group-detail179 #modalContent{padding:0}
+.group-detail179 [data-group-source179]{margin:0}
+.group-detail179 [data-group-source179]>summary,.group-calculator179 [data-group-source179]>summary{display:none}
+.group-detail179 [data-group-source179]>.record-details32{padding:0;border:0}
+.group-detail179 [hidden],.group-calculator179 [hidden],.group-list179 [hidden]{display:none!important}
+.group-fields179{display:grid;grid-template-columns:minmax(90px,1fr) minmax(0,2fr);gap:8px 14px;margin:0}
+.group-fields179 dt,.group-fields179 dd{margin:0;overflow-wrap:anywhere}
+.group-detail179 .record-actions32,.group-detail179 .row-actions{display:flex;flex-wrap:wrap;gap:8px}
+.group-source-host179{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.group-selected-title179{margin-block:0 14px;font-size:15px;line-height:1.7}
+.group-summary179{display:flex;flex-wrap:wrap;gap:0;margin:0 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--ivory,#fff)}
+.group-summary179>div{flex:1 1 145px;min-width:0;padding:12px 18px;border-inline-end:1px solid var(--line)}
+.group-summary179>div:last-child{border-inline-end:0}
+.group-summary179 dt{font-size:12px;color:var(--muted)}
+.group-summary179 dd{font-size:20px;margin:4px 0 0;font-variant-numeric:tabular-nums}
+/* Movements: full-width ledger and selected transaction beneath, rather than two cramped cards. */
+.group-finance179,.group-reports179{grid-template-columns:minmax(0,1fr)}
+.group-finance179>.group-detail179,.group-reports179>.group-detail179{border-inline-start:0!important;border-block-start:1px solid var(--line)!important}
+/* Settings: compact selection rail and generous editor/history region. */
+.group-settings179{grid-template-columns:minmax(230px,.7fr) minmax(0,1.8fr)}
+.group-settings179 .group-list179 table,.group-settings179 .group-list179 tbody,.group-settings179 .group-list179 tr,.group-settings179 .group-list179 td{display:block;width:100%;border:0}
+.group-settings179 .group-list179 thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.group-settings179 .group-list179 tr{padding:12px;border:1px solid var(--line);border-radius:10px;margin-block-end:8px;box-sizing:border-box}
+.group-settings179 .group-list179 td{padding:0 0 8px;text-align:start}
+.group-settings179 .group-list179 td:last-child{padding:0}
+.group-settings179 .group-list179 button{width:100%}
+.group-period179{margin:0;min-width:0}
+.group-period-fields179{display:grid;grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) auto;gap:12px;align-items:end;width:100%}
+.group-period-fields179 label{margin:0}
+.group-period-fields179 button{align-self:end}
+.group-calculator179{max-width:none}
+.group-calculator179 .eos-form32{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:16px}
+.group-calculator179 .eos-form32 label{margin:0}
+.group-result-heading179{margin-block:8px 12px;align-items:center}
+.workspace[data-group-workspace180] .group-report-table179 thead,.workspace[data-group-workspace180] .group-report-table179 th{position:static!important}
+.group-request-summary179{margin-block:0 12px}
+@media(max-width:1050px){.group-requests179{grid-template-columns:minmax(0,1fr)}.group-requests179>.group-detail179{border-inline-start:0!important;border-block-start:1px solid var(--line)!important}.group-detail179{scroll-margin-block-start:16px}}
+@media(max-width:760px){
+ .workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49){padding:12px!important;gap:12px!important}
+ .workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-secondary77>label{max-width:none;flex-basis:calc(50% - 12px)}
+ .workspace[data-group-workspace180]:not([data-request-header184]) :is(#portalTabs32,#recordTabs49) .header-secondary77>.group-period179{flex-basis:100%}
+ .group-layout179,.group-settings179{grid-template-columns:minmax(0,1fr)}
+ .group-layout179>.card{padding:12px}
+ .group-layout179>.group-detail179{border-inline-start:0!important;border-block-start:1px solid var(--line)!important}
+ .group-period-fields179{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .group-period-fields179 button{grid-column:1/-1;justify-self:stretch}
+ .group-calculator179 .eos-form32{grid-template-columns:1fr}
+ .group-fields179{grid-template-columns:1fr 1.5fr}
+ .group-summary179>div{flex-basis:40%;padding:10px 12px}
+ .group-settings179 .group-list179 table tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .group-settings179 .group-list179 tr{margin:0}
+ .group-settings179 .group-list179 td::before{display:none}
+ .group-detail-bar180{align-items:start}
+}
+@media(max-width:420px){.group-settings179 .group-list179 table tbody{grid-template-columns:minmax(0,1fr)}}
+/* V9: administrative-request header reuses the original white header-stack77 cards.
+   Only placement differs; card surfaces, controls and category style come from style.css. */
+#page #recordTabs49.request-header184{gap:12px;margin-block:0 12px!important}
+#recordTabs49.request-header184 .header-navigation77>.portal-hub-title32{grid-column:1;grid-row:1}
+#recordTabs49.request-header184 .header-navigation77>.top-actions49{grid-column:2;grid-row:1}
+#recordTabs49.request-header184 .header-navigation77>.tab-scroll53:has(>.portal-tabs32:empty){display:none}
+#recordTabs49.request-header184 .header-navigation77>.top-row49{grid-column:1/-1;grid-row:2;margin:0}
+#recordTabs49.request-header184 .top-row49 .employee-editor-sections134{margin:0;position:static!important}
+/* The legacy portal strip has mobile !important rules; keep the employee reference values here too. */
+#page #recordTabs49.request-header184 .employee-editor-sections134 button{background:var(--black,#171717)!important;color:var(--gold,#c5a66a)!important;border-color:var(--gold,#c5a66a)!important;min-height:40px;padding:8px 14px!important;font-size:13px!important}
+#page #recordTabs49.request-header184 .employee-editor-sections134 button[aria-current=page]{background:var(--gold,#c5a66a)!important;color:var(--black,#171717)!important;border-color:var(--gold,#c5a66a)!important}
+@media(max-width:600px){#page #recordTabs49.request-header184 .employee-editor-sections134 button{font-size:12px!important;padding:8px 10px!important}}
+

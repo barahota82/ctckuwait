@@ -1,0 +1,71 @@
+/* Reuse the approved geometry; all overrides are local to this batch. */
+.evaluation-workspace185 .record-filters173{grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr)}
+.evaluation-workspace185.evaluation-auto182 .record-filters173{display:grid!important}
+.evaluation-workspace185 .evaluation-period182{grid-template-columns:repeat(3,minmax(0,1fr))}
+.request-workspace185 .employee-editor-sections134{background:#fff;position:sticky;top:var(--hub-height48,0px);z-index:25}
+.request-workspace185 .request-selection185{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.request-workspace185 .request-selection185 [data-request-count185]{margin-inline-start:auto;color:var(--muted)}
+.request-workspace185 [data-request-person185]{display:block}
+.request-workspace185 [data-detail185]{padding:3px 10px;min-height:30px;font-size:inherit}
+.request-workspace185 .leave-name32{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.archive-form185 .employee-editor-fields134{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.archive-form185 [data-fields185]{display:contents}
+.archive-form185 [data-span185="1"]{grid-column:span 1}
+.archive-form185 [data-span185="2"]{grid-column:span 2}
+.archive-form185 [data-span185="3"]{grid-column:1/-1}
+.archive-form185 label{margin:0;min-width:0}
+.archive-form185 textarea{min-height:0;height:calc(3 * 1.65em + 20px);resize:vertical;line-height:1.65}
+.archive-form185 .record-attachment174{grid-column:1/-1}
+@media(max-width:760px){
+ .evaluation-workspace185 .record-filters173,.evaluation-workspace185 .evaluation-period182,.archive-form185 .employee-editor-fields134{grid-template-columns:minmax(0,1fr)}
+ .archive-form185 [data-span185]{grid-column:1/-1}
+ .request-workspace185 .leave-name32{flex-wrap:wrap}
+}
+
+/* Keep the restored table inside its white workspace on narrow screens. */
+.request-workspace185 [data-record-list173]{display:block;min-width:0}
+.request-workspace185 [data-record-list173] .table-wrap{max-width:100%;min-width:0}
+
+/* V12: one continuous table layout for the five approved record screens. */
+#page .record-table187 [data-record-list173]{display:block;min-width:0}
+#page .record-table187 .record-heading187{display:block;min-width:0}
+#page .record-table187 .record-heading187 [data-person173]{display:block;margin-top:4px}
+#page .record-table187 .record-filters173:not(:has(>label:nth-child(3))){grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+#page .record-table187 .employee-editor-sections134{background:#fff;position:sticky;top:var(--hub-height48,0px);z-index:25}
+#page .record-table187 :is(.record-selection187,.request-selection185){display:flex;flex-direction:row-reverse;align-items:center;justify-content:space-between;gap:12px;margin-block:12px}
+#page .record-table187 :is([data-record-total187],[data-request-count185]){margin:0;color:var(--muted);font-size:12px;direction:ltr}
+#page .record-table187 :is(#recordAll187,#requestAll185){margin:0;min-height:36px;padding:6px 14px}
+#page .record-table187 .table-wrap{max-width:100%;min-width:0}
+#page .record-table187 table{width:100%;min-width:0;table-layout:fixed;white-space:normal}
+#page .record-table187 :is(th,td){padding:12px 10px;text-align:start;vertical-align:middle;overflow-wrap:anywhere}
+#page .record-table187 th:first-child{width:18%}
+#page .record-table187 :is(th,td):nth-last-child(2){width:11rem;text-align:center}
+#page .record-table187 :is(th,td):last-child{width:6rem;text-align:center;padding-inline:8px}
+#page .record-table187 :is([data-record173],[data-detail185]){min-height:30px!important;padding:3px 10px!important;font-size:inherit;white-space:nowrap!important;width:auto!important;min-width:0!important;max-width:100%}
+#page .record-table187 .record-employee187 small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+#page .record-table187 :is(.badge,.profile-status33){max-width:100%;white-space:normal}
+@media(max-width:760px){
+ #page .record-table187 .record-filters173{grid-template-columns:minmax(0,1fr)!important}
+ #page .record-table187 .record-heading187{display:block!important}
+ #page .record-table187 :is(th,td):nth-last-child(2),#page .record-table187 :is(th,td):last-child{width:auto;text-align:inherit}
+}
+
+/* V14: white table/detail badges. The approved black-card palette is untouched. */
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33){background:#ECEEF1;color:#5B626C;border:0;display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33):is(.approved,.active,.working,.valid){background:#E8F3EC;color:#32765C}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33):is(.rejected,.expired){background:#FAE9E9;color:#B34848}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33).pending{background:#F0EBF7;color:#6F539C}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33):is(.revision,.incomplete,.unconfirmed,.stale){background:#FFF0E2;color:#925518}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33).returned{background:#E8F1F8;color:#32658A}
+:is(#page .record-table187,#modalContent .record-white189) :is(.badge,.profile-status33):is(.future,.closed){background:#ECEEF1;color:#5B626C}
+#page .record-table187 .record-pager189{flex-wrap:wrap;gap:10px}
+#page .record-pager189 .employee-editor-save134{display:flex;align-items:center;gap:10px;width:auto;flex:0 0 auto}
+#page .record-pager189 label{margin:0;white-space:nowrap}
+#page .record-pager189 .search-select32{width:90px;flex:0 0 90px}
+#page .record-pager189 select{width:90px;min-height:40px;margin:0;padding:6px 10px}
+#page .record-pager189 .employee-editor-movement134{display:flex;align-items:center;gap:12px;width:auto;flex-wrap:wrap}
+#page .record-pager189 [data-page-range189]{white-space:nowrap;font-size:12px;color:var(--muted)}
+@media(max-width:600px){
+ #page .record-table187 .record-pager189{flex-wrap:wrap;gap:8px;padding:8px}
+ #page .record-pager189 .employee-editor-movement134{width:100%;justify-content:space-between;gap:6px}
+}

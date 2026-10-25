@@ -1,0 +1,10 @@
+const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert');const {JSDOM}=require(process.env.JSDOM_PATH76),root=path.resolve(__dirname,'../hr/assets');let n=0;const ok=x=>{assert(x);n++};
+(async()=>{for(const dir of ['rtl','ltr'])for(const failure of [false,true]){
+ const dom=new JSDOM('<div id="portalTabs32"></div><div id="page" data-screen-loading94="1"></div><div id="modalContent"></div>'),d=dom.window.document;d.documentElement.dir=dir;let resolve,reject,frames=[];const pending=new Promise((r,j)=>{resolve=r;reject=j});
+ const c={document:d,MutationObserver:dom.window.MutationObserver,requestAnimationFrame:f=>frames.push(f),queueMicrotask,financeIdentity101:'',financePeriods101:new Map(),view:'contract_sales99',navigationEpoch32:1,boot:{user:{id:99,role:'admin'}},hubFor32:()=>['contracts'],uiText:x=>x,esc:x=>String(x),dateNow:()=> '2026-10-18',teamPermission:()=>true,$:s=>d.querySelector(s),loadingMarkup:()=>'<div class="loading"></div>',empty:()=>'<p>None</p>',api:()=>pending,applyInterfaceLanguage(){}};
+ vm.createContext(c);for(const f of ['create-ready.js','finance-daily.js'])vm.runInContext(fs.readFileSync(root+'/'+f,'utf8'),c);
+ const task=c.financeView103(c.view);for(let i=0;i<2;i++){const batch=frames;frames=[];batch.forEach(f=>f());await Promise.resolve();}
+ const add=d.getElementById('financeAdd103');ok(add.disabled);ok(add.hasAttribute('inert'));ok(add.hasAttribute('data-create-wait88'));
+ if(failure){reject(Error('Read failed'));await assert.rejects(task,/Read failed/);n++;d.getElementById('page').dataset.screenFailed94='';}else{resolve({rows:[]});await task;ok(!add.disabled);ok(add.hasAttribute('inert'));}
+ delete d.getElementById('page').dataset.screenLoading94;await Promise.resolve();if(failure){ok(add.disabled);ok(add.hasAttribute('inert'));}else{ok(!add.hasAttribute('inert'));ok(!add.hasAttribute('data-create-wait88'));ok(typeof add.onclick==='function');}dom.window.close();
+}console.log('PASS',n,'actual shared Add readiness gate for new financial screen through pending read, first paint, success and failure in both directions');})().catch(e=>{console.error(e);process.exitCode=1});
