@@ -20,8 +20,9 @@ function payroll_calculate37(array $staff,string $month,array $cfg,?array $old=n
       if(!in_array($d['date'],$paidDates35,true))continue;
       if(!$d['configured']){$flags[]=$d['date'].': دوام غير معتمد';continue;}
       if($d['unclosed_permission'])$flags[]=$d['date'].': إذن غير مغلق';
-      $loss=($d['absence']?1:0)+($d['sick_paid']!==null?1-(float)$d['sick_paid']:0)+$d['penalty_days'];$hours=max(0.01,(float)($d['scheduled_hours']??$cfg['work_hours']));$late=($d['late_minutes']+$d['early_minutes']+$d['penalty_minutes']+($d['permission_deduct_minutes39']??0))/$hours/60;
-      $days+=$loss;$minutes+=$d['late_minutes']+$d['early_minutes']+$d['penalty_minutes']+($d['permission_deduct_minutes39']??0);$lateDays35+=$late+$d['penalty_days'];$daySalary=salary_at($staff,$d['date']);$wage=$daySalary['fixed_salary']?$daySalary['salary']:0;$dayRate=$wage/26;$a=allowance_at($staff,$d['date']);$fraction=$loss+$late;
+      $presenceMinutes200=(float)($d['presence_penalty_minutes']??0);$presenceDays200=(float)($d['presence_penalty_days']??0);
+      $loss=($d['absence']?1:0)+($d['sick_paid']!==null?1-(float)$d['sick_paid']:0)+$d['penalty_days']+$presenceDays200;$hours=max(0.01,(float)($d['scheduled_hours']??$cfg['work_hours']));$late=($d['late_minutes']+$d['early_minutes']+$d['penalty_minutes']+$presenceMinutes200+($d['permission_deduct_minutes39']??0))/$hours/60;
+      $days+=$loss;$minutes+=$d['late_minutes']+$d['early_minutes']+$d['penalty_minutes']+$presenceMinutes200+($d['permission_deduct_minutes39']??0);$lateDays35+=$late+$d['penalty_days']+$presenceDays200;$daySalary=salary_at($staff,$d['date']);$wage=$daySalary['fixed_salary']?$daySalary['salary']:0;$dayRate=$wage/26;$a=allowance_at($staff,$d['date']);$fraction=$loss+$late;
       $basicDeduction+=$fraction*$dayRate;foreach($allowanceDeduction as $k=>$v)$allowanceDeduction[$k]+=$fraction*$a[$k]/26;
       $combinedRate35=($wage+array_sum(array_intersect_key($a,array_flip(array_keys(allowance_keys())))))/26;$absenceLoss35+=($d['absence']?1:0)*$combinedRate35;$sickLoss35+=($d['sick_paid']!==null?1-(float)$d['sick_paid']:0)*$combinedRate35;
       // Remaining after scheduled end creates no automatic additional pay (owner policy V199).

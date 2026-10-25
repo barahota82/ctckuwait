@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/decisions.php';
 require_once __DIR__.'/approval-effects.php';
 require_once __DIR__.'/departure.php';
+require_once __DIR__.'/presence.php';
 // Production contracts for the approved V18 interface. Existing authentication,
 // CSRF, identity and company gates still run before these handlers.
 function workflow_route194(string $action,array $b):?array {
@@ -13,6 +14,9 @@ function workflow_route194(string $action,array $b):?array {
  'delegation_list199'=>['permissions','view'],
  'delegation_save199','delegation_end199'=>['permissions','edit'],
  'departure_grant199','departure_withdraw199'=>['report','view'],
+ 'presence_rule_save'=>['policy_staff','edit'],
+ 'presence_log'=>['report','view'],
+ 'presence_send','presence_ticket'=>['attendance','create'],
  'permissions182','permission_get182'=>['request','view'],
  'permission_request183'=>['request','create'],
  'permission_cancel_request199'=>['request','view'],
@@ -27,7 +31,7 @@ function workflow_route194(string $action,array $b):?array {
  'review193_video_sources','review193_video_download'=>['video_custom','view'],
  default=>null};
 }
-function workflow_reads194():array{return ['permissions182','permission_get182','evaluation_parents185','evaluation_settings182','review193_types','review193_video_sources','review193_video_download','delegation_list199'];}
+function workflow_reads194():array{return ['permissions182','permission_get182','evaluation_parents185','evaluation_settings182','review193_types','review193_video_sources','review193_video_download','delegation_list199','presence_log'];}
 function permission_clock194(string $stamp):DateTimeImmutable {
  if(!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/',$stamp))fail('وقت الإذن غير صالح.');
  $v=strlen($stamp)===16?$stamp.':00':$stamp;$date=DateTimeImmutable::createFromFormat('!Y-m-d\TH:i:s',$v,new DateTimeZone(settings()['timezone']));
@@ -110,6 +114,7 @@ function workflow_action194(string $action,array $actor,array $b):array {
  if(in_array($action,['payroll_undo199','bank_undo199'],true))return financial_approval_undo199($action,$actor,$b);
  if(str_starts_with($action,'delegation_'))return delegation_action199($action,$actor,$b);
  if(in_array($action,['departure_grant199','departure_withdraw199'],true))return departure_action199($action,$actor,$b);
+ if(str_starts_with($action,'presence_'))return presence_action($action,$actor,$b);
  if(in_array($action,['record_undo199','record_cancel199'],true))return decision_action199($action,$actor,$b);
  if(str_starts_with($action,'permission'))return permission_action194($action,$actor,$b);
  if(str_starts_with($action,'evaluation_'))return evaluation_action194($action,$actor,$b);

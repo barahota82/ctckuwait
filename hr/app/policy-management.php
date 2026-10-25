@@ -40,7 +40,7 @@ function policy_staff_list32(array $u):array{
  policy_context_access32($u);if($u['role']!=='admin')permission_require($u,'policy_staff');
  $ids=$u['role']==='admin'?null:permission_scope29($u,'policy_staff');$out=[];
  $staff38=query("SELECT * FROM ep_users WHERE role<>'admin' ORDER BY id")->fetchAll();if($ids!==null)$staff38=array_values(array_filter($staff38,fn($p)=>in_array((int)$p['id'],$ids,true)));service_prefetch($staff38);$general38=[];$own38=[];foreach(query('SELECT * FROM ep_policies ORDER BY effective_from DESC,id DESC')->fetchAll()as $policy38){if(empty($policy38['user_id']))$general38[]=$policy38;else $own38[(int)$policy38['user_id']][]=$policy38;}
- foreach($staff38 as $p){$GLOBALS['REPORT_POLICIES32'][(int)$p['id']]=array_merge($general38,$own38[(int)$p['id']]??[]);$v=array_intersect_key(public_user($p),array_flip(['id','name','employee_code','username','role','profile','staff_type']));$v['profile']=array_intersect_key($v['profile']??[],['name_en'=>1]);$v['service']=array_intersect_key(schedule_service_display38($p,local_time()->format('Y-m-d')),array_flip(['attendance','employed','staff_type','from','to','company_code']));$selected=policy_for((int)$p['id'],local_time()->format('Y-m-d'));$v['effective_policy_id38']=$selected['id'];$v['effective_policy_values38']=$selected['values'];$out[]=$v;}return $out;
+ $presenceRules200=function_exists('presence_rules_map')?presence_rules_map():[];foreach($staff38 as $p){$GLOBALS['REPORT_POLICIES32'][(int)$p['id']]=array_merge($general38,$own38[(int)$p['id']]??[]);$v=array_intersect_key(public_user($p),array_flip(['id','name','employee_code','username','role','profile','staff_type']));$v['profile']=array_intersect_key($v['profile']??[],['name_en'=>1]);$v['service']=array_intersect_key(schedule_service_display38($p,local_time()->format('Y-m-d')),array_flip(['attendance','employed','staff_type','from','to','company_code']));$selected=policy_for((int)$p['id'],local_time()->format('Y-m-d'));$v['effective_policy_id38']=$selected['id'];$v['effective_policy_values38']=$selected['values'];$v['presence_rule']=$presenceRules200[(int)$p['id']]??null;$out[]=$v;}return $out;
 }
 function policy_assert32(array $row,array $b,bool $unused=true):array{
  $impact=policy_impact32($row);if(!hash_equals($impact['fingerprint'],(string)($b['fingerprint']??'')))fail('تغيرت السياسة أو السجلات المرتبطة؛ أعد المعاينة.',409);
@@ -63,7 +63,7 @@ function policy_preview32(array $u,int $id):array{
 
 function policy_validate_weekly32(array $p):void{
  if(isset($p['weekly'])){if(count($p['weekly'])!==7)fail('حدد أيام الأسبوع السبعة');foreach($p['weekly']as $day){if(!empty($day['rest']))continue;foreach(['start','end']as $k)if(!preg_match('/^([01][0-9]|2[0-3]):[0-5][0-9]$/',$day[$k]??''))fail('وقت غير صالح');if($day['end']<=$day['start'])fail('الانصراف يجب أن يكون بعد الحضور');}}
- if(!empty($p['location_id'])&&!array_filter(settings()['locations']??[],fn($l)=>($l['id']??'')===$p['location_id']&&($l['active']??true)))fail('اختر موقعًا مفعلًا');
+ if(!empty($p['location_id'])){$sites200=array_values(array_filter(settings()['locations']??[],fn($l)=>($l['id']??'')===$p['location_id']));if(!$sites200||($sites200[0]['active']??true)===false)fail('اختر موقعًا مفعلًا');if(($sites200[0]['place']??'work')==='court')fail('موقع المحكمة لإثبات التواجد فقط، وليس موقع الدوام.');}
 }
 
 function policy_context_access32(array $u):void{

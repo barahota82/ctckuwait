@@ -80,6 +80,7 @@ window.interfaceAdditions194={
   "نسيان بصمة الانصراف": "Missing checkout punch",
   "نسيان بصمة إذن الخروج": "Missing exit punch",
   "نسيان بصمة العودة من الإذن": "Missing return punch",
+  "نسيان إثبات التواجد": "Missed presence proof",
   "مرات التخلف عن العودة من الإجازة": "Late leave returns",
   "أيام التخلف عن العودة من الإجازة": "Days late from leave",
   "الإنذارات المعتمدة": "Approved warnings",

@@ -150,6 +150,7 @@ function attendance_report(int $uid,string $from,string $to): array {
   $day=punch_apply39($uid,$day,$p,$start->getTimestamp(),$end->getTimestamp(),$punchCounts39,$from,$out,$decisions39[$date]??[]);
   $out[]=$day;
  }
+ if(function_exists('presence_apply_report'))$out=presence_apply_report($uid,$out,$from);
  unset($GLOBALS['REPORT_POLICIES32'][$uid],$GLOBALS['REPORT_LEAVE32'][$uid],$GLOBALS['REPORT_HISTORY32'][$uid]);return array_values(array_filter($out,fn($d)=>$d['date']>=$requestedFrom397));
 }
 
