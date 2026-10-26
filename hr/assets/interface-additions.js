@@ -96,5 +96,7 @@ window.interfaceAdditions194={
   "بصمة الخروج": "Exit punch",
   "بصمة العودة": "Return punch",
   "المدة الفعلية": "Actual duration",
-  "تأخر العودة": "Late return"
+  "تأخر العودة": "Late return",
+  "إثبات التواجد": "Presence verification",
+  "خصم نسيان إثبات التواجد يُحدد من بند إثبات التواجد في نسيان البصمة ضمن سياسة الدوام بتاريخ السريان.": "A missed presence deduction is set on the presence item under missing punches in the dated attendance policy."
 };

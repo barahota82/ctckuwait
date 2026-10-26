@@ -1,14 +1,17 @@
 <?php
 declare(strict_types=1);
 // Incident-specific attendance review. Raw ep_events are never rewritten.
-function punch_types39():array{return ['attendance'=>'حضور','checkout'=>'انصراف','permission_exit'=>'إذن خروج','permission_return'=>'عودة'];}
+function punch_types39():array{return ['attendance'=>'حضور','checkout'=>'انصراف','permission_exit'=>'إذن خروج','permission_return'=>'عودة','presence'=>'إثبات التواجد'];}
 function punch_rules39(array $p):array{
  if(isset($p['punch_rules39']))return $p['punch_rules39'];
- $out=[];foreach(punch_types39()as $type=>$label)$out[$type]=['enabled'=>in_array($type,['attendance','checkout'],true)&&(bool)($p['forget_enabled']??false),'minutes'=>(int)($p['missing_minutes']??120),'escalation'=>(bool)($p['forget_escalation_enabled']??!empty($p['forget_tiers'])),'period'=>$p['forget_period']??'month','mode'=>$p['penalty_mode']??'replace','tiers'=>$p['forget_tiers']??[]];return $out;
+ $out=[];foreach(punch_types39()as $type=>$label){
+  if($type==='presence'){$out[$type]=['enabled'=>false,'minutes'=>0,'escalation'=>false,'period'=>'month','mode'=>'replace','tier_unit'=>'minutes','tiers'=>[]];continue;}
+  $out[$type]=['enabled'=>in_array($type,['attendance','checkout'],true)&&(bool)($p['forget_enabled']??false),'minutes'=>(int)($p['missing_minutes']??120),'escalation'=>(bool)($p['forget_escalation_enabled']??!empty($p['forget_tiers'])),'period'=>$p['forget_period']??'month','mode'=>$p['penalty_mode']??'replace','tiers'=>$p['forget_tiers']??[]];
+ }return $out;
 }
 function punch_validate39(array $p):void{
  if(!isset($p['punch_rules39']))return;
- if(!is_array($p['punch_rules39'])||array_diff(array_keys($p['punch_rules39']),array_keys(punch_types39()))||count($p['punch_rules39'])!==4)fail('قواعد البصمات الأربع غير مكتملة.');
+ if(!is_array($p['punch_rules39']))fail('قواعد البصمات الخمس غير مكتملة.');$punchKeys39=array_keys($p['punch_rules39']);sort($punchKeys39);$punchFour39=['attendance','checkout','permission_exit','permission_return'];$punchFive39=['attendance','checkout','permission_exit','permission_return','presence'];if($punchKeys39!==$punchFour39&&$punchKeys39!==$punchFive39)fail('قواعد البصمات الخمس غير مكتملة.');
  foreach($p['punch_rules39']as $r){
   if(!is_array($r)||!is_bool($r['enabled']??null)||!is_bool($r['escalation']??null)||!is_numeric($r['minutes']??null)||!is_finite((float)$r['minutes'])||$r['minutes']<0||$r['minutes']>1440||(float)$r['minutes']!=floor((float)$r['minutes'])||!in_array($r['period']??'', ['month','year'],true)||!in_array($r['mode']??'', ['add','replace'],true)||!is_array($r['tiers']??null))fail('إعداد جزاء البصمة غير صالح.');
   $unit=$r['tier_unit']??'days';if(!in_array($unit,['minutes','days'],true)||($unit==='minutes'&&$r['mode']!=='replace'))fail('إعداد جزاء البصمة غير صالح.');$valueKey=$unit==='minutes'?'minutes':'days';

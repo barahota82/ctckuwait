@@ -23,7 +23,13 @@ function presence_normalize_rule(array $in): array {
  $capture=(string)($in['capture']??'location');if(!in_array($capture,['location','photo'],true))fail('طريقة الإرسال: موقع فقط أو صورة وموقع.');
  $window=(int)($in['window_minutes']??15);if($window<1||$window>180)fail('مهلة الإرسال بين دقيقة و 180 دقيقة.');
  $times=[];if($mode==='scheduled'){foreach($in['times']??[] as $time){$time=trim((string)$time);if(!preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time))fail('اكتب كل موعد بالشكل 10:00.');$times[]=$time;}$times=array_values(array_unique($times));sort($times);if(!$times||count($times)>8)fail('حدد موعدًا واحدًا على الأقل وبحد 8 مواعيد.');}
- return ['mode'=>$mode,'capture'=>$capture,'window_minutes'=>$window,'times'=>$times,'penalty'=>$mode==='scheduled'?presence_normalize_penalty($in['penalty']??[]):presence_blank_penalty()];
+ $penalty=presence_blank_penalty();if($mode==='scheduled'&&isset($in['penalty'])&&is_array($in['penalty'])&&$in['penalty']!==[])$penalty=presence_normalize_penalty($in['penalty']);
+ return ['mode'=>$mode,'capture'=>$capture,'window_minutes'=>$window,'times'=>$times,'penalty'=>$penalty];
+}
+function presence_dated_penalty(int $uid,string $date,array $rule): array {
+ $values=policy_for($uid,$date)['values']??[];if(function_exists('punch_values_at393'))$values=punch_values_at393($values,$date);
+ $dated=$values['punch_rules39']['presence']??null;if(is_array($dated))return $dated;
+ $fallback=$rule['penalty']??null;return is_array($fallback)?$fallback:presence_blank_penalty();
 }
 function presence_rule_for(int $uid): ?array {
  if(isset($GLOBALS['PRESENCE_RULES'][$uid]))return $GLOBALS['PRESENCE_RULES'][$uid];
@@ -66,9 +72,9 @@ function presence_apply_report(int $uid,array $days,string $reportFrom): array {
   $day['presence_missed']=0;$day['presence_penalty_minutes']=0.0;$day['presence_penalty_days']=0.0;$day['presence_slots']=[];
   $day['presence_sends']=array_map('presence_public_send',array_values(array_filter($sends,fn($row)=>$row['date_from']===$day['date'])));
   if(!$rule||$rule['mode']!=='scheduled'||!presence_slot_day($day)||!empty($day['absence']))continue;
-  $slots=presence_slots($rule,$day['date'],$sends,$now);$day['presence_slots']=$slots;$period=period_start($day['date'],$rule['penalty']['period']);
+  $slots=presence_slots($rule,$day['date'],$sends,$now);$day['presence_slots']=$slots;$charge=presence_dated_penalty($uid,$day['date'],$rule);$period=period_start($day['date'],(string)($charge['period']??'month'));
   if(!isset($counts[$period])){$counts[$period]=0;if($period<$reportFrom&&empty($GLOBALS['PRESENCE_PRIOR'])){$GLOBALS['PRESENCE_PRIOR']=true;try{$prior=attendance_report($uid,$period,(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d'));foreach($prior as $prev)$counts[$period]+=(int)($prev['presence_missed']??0);}finally{unset($GLOBALS['PRESENCE_PRIOR']);}}}
-  foreach($slots as $slot)if($slot['status']==='missed'){$counts[$period]++;[$minutes,$penaltyDays]=presence_charge($rule['penalty'],$counts[$period]);$day['presence_missed']++;$day['presence_penalty_minutes']+=$minutes;$day['presence_penalty_days']+=$penaltyDays;}
+  foreach($slots as $slot)if($slot['status']==='missed'){$counts[$period]++;[$minutes,$penaltyDays]=presence_charge($charge,$counts[$period]);$day['presence_missed']++;$day['presence_penalty_minutes']+=$minutes;$day['presence_penalty_days']+=$penaltyDays;}
  }
  unset($day);return $days;
 }
@@ -111,9 +117,10 @@ function presence_notify_open(array $actor): void {
  foreach($status['slots'] as $slot){if($slot['status']!=='open')continue;$title='presence-open:'.$slot['key'];if(query("SELECT id FROM ep_records WHERE module='presence_notice' AND user_id=? AND title=?",[(int)$actor['id'],$title])->fetch())continue;notice((int)$actor['id'],'وقت إثبات التواجد الآن','أرسل إثبات التواجد قبل '.$slot['closes'].'.',false,['screen'=>'attendance','employee_id'=>(int)$actor['id']]);$id=v26_insert('presence_notice',(int)$actor['id'],substr($slot['key'],0,10),null,['slot'=>$slot['key']],'sent');query('UPDATE ep_records SET title=? WHERE id=?',[$title,$id]);}
 }
 function presence_save_rule(array $actor,array $b): array {
- $target=(int)($b['user_id']??0);presence_edit_access($actor,$target);$rule=presence_normalize_rule(is_array($b['rule']??null)?$b['rule']:[]);
+ $target=(int)($b['user_id']??0);presence_edit_access($actor,$target);$incoming=is_array($b['rule']??null)?$b['rule']:[];$rule=presence_normalize_rule($incoming);
  db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$target]);
  $current=query("SELECT TOP (1) * FROM ep_records WHERE module='presence_rule' AND user_id=? AND status='active' ORDER BY id DESC",[$target])->fetch();
+ if($current&&!array_key_exists('penalty',$incoming)){$old=decode($current['body_json']);if(isset($old['penalty'])&&is_array($old['penalty']))$rule['penalty']=$old['penalty'];}
  if($current){query('UPDATE ep_records SET body_json=?,updated_at=? WHERE id=?',[jencode($rule),utc_now(),$current['id']]);$id=(int)$current['id'];}
  else $id=v26_insert('presence_rule',$target,presence_clock()->format('Y-m-d'),null,$rule,'active');
  query("UPDATE ep_records SET status='replaced' WHERE module='presence_rule' AND user_id=? AND id<>? AND status='active'",[$target,$id]);
