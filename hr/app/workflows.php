@@ -8,6 +8,7 @@ require_once __DIR__.'/presence.php';
 // CSRF, identity and company gates still run before these handlers.
 function workflow_route194(string $action,array $b):?array {
  if(in_array($action,['record_undo199','record_cancel199'],true))return [(string)query('SELECT module FROM ep_records WHERE id=?',[(int)($b['id']??0)])->fetchColumn(),$action==='record_undo199'?'review':'view'];
+ if($action==='presence_form_preview')return [((int)($b['user_id']??0)>0?'policy_staff':'policy_general'),'view'];
  return match($action){
  'payroll_undo199'=>['payroll','review'],
  'bank_undo199'=>['bank','review'],
