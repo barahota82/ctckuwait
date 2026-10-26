@@ -1,9 +1,0 @@
-{
-  "basis": "Current saved source archive versus retained hosted-byte manifest, not a new connection or a new hosted snapshot.",
-  "verified": 232,
-  "mismatches": [],
-  "duplicate_zip_entries": [],
-  "versioned_runtime_names": [],
-  "zip_crc_error": null,
-  "pass": true
-}

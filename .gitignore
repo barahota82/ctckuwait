@@ -33,9 +33,11 @@ _compare*/
 .DS_Store
 Thumbs.db
 
-# Local checks. They stay on this computer and are not part of the site upload.
-tests/test_presence.php
-tests/test_presence_payroll.php
+# Local notes, reviews and checks. They stay on this computer.
+.cursor/
+docs/
+tests/
+tests-v32/
 
 # Development-only dependencies and generated local evidence.
 node_modules/

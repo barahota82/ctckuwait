@@ -1,9 +1,0 @@
-<?php
-require __DIR__.'/test_finance_daily103.php';
-query('DELETE FROM ep_records');query('DELETE FROM ep_payroll');query('DELETE FROM ep_bank_payroll');
-foreach(['receipt_company99'=>100,'receipt_click99'=>200,'receipt_afaq99'=>300] as $key=>$amount)save_day($key,'2026-10-01',[['user_id'=>0,'company_code'=>'CMP-0001','amount'=>$amount]]);
-foreach(['receipt_company99'=>100,'receipt_click99'=>200,'receipt_afaq99'=>300] as $key=>$amount){$d=day($key,'2026-10-01');ok(count($d['values'])===1&&(float)$d['values'][0]['amount']===$amount*1.0);$_GET=['from'=>'2017-01-01','to'=>'2026-10-18','period_from115'=>'2026-10-01'];$r=finance_action103('finance103_info',$u,['key'=>$key]);ok(count($r['rows'])===1);ok((float)$r['rows'][0]['amount']===$amount*1.0);ok((float)$r['online_total115']===500.0);}
-save_day('receipt_click99','2026-10-01',[['user_id'=>0,'company_code'=>'CMP-0001','amount'=>250]]);ok((float)day('receipt_company99','2026-10-01')['values'][0]['amount']===100.0);ok((float)day('receipt_afaq99','2026-10-01')['values'][0]['amount']===300.0);
-$d=day('receipt_click99','2026-10-01');rejected(fn()=>finance_action103('finance103_save',$u,['key'=>'receipt_click99','date'=>'2026-10-01','new_entry115'=>true,'revision'=>$d['revision'],'request_id'=>'00000000-0000-4000-8000-000000000015','rows'=>[['user_id'=>0,'company_code'=>'CMP-0001','amount'=>0]]]));if(db()->inTransaction())db()->rollBack();ok((float)day('receipt_click99','2026-10-01')['values'][0]['amount']===250.0);
-$_GET=['from'=>'2017-01-01','to'=>'2026-10-18','period_from115'=>'2026-10-02'];ok(finance_action103('finance103_info',$u,['key'=>'receipt_click99'])['online_total115']===0);ok((float)(finance_bases103(2,'2026-10')['bases']['collection']??0)===0.0);
-echo 'PASS channels115 distinct save/read/edit, combined online totals by period, new-registration overwrite rejection, no payroll base'.PHP_EOL;
