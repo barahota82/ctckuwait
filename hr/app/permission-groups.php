@@ -35,7 +35,7 @@ function permission_gate29(string $action,array $u,array $b):void{
  [$screen,$op]=permission_route29($action,$b);$GLOBALS['EP_SCREEN']=$screen;$GLOBALS['EP_OPERATION29']=$op;
  if($screen==='dashboard'&&!in_array($action,['dashboard'],true))return;
  if($action==='permission_punch182'&&personal_mode34($u))return;
- if(in_array($action,['presence_send','presence_ticket'],true)&&personal_mode34($u))return;
+ if(in_array($action,['presence_send','presence_ticket'],true)&&personal_mode34($u)){require_once __DIR__.'/presence.php';presence_personal_create($u);return;}
  $target=(int)($action==='user_save'?($b['id']??0):($b['user_id']??$_GET['user_id']??$u['id']));$own=$target===(int)$u['id'];if($action==='dashboard'&&!permission_has($u,'dashboard'))return;
  if($action==='record_review'){$row=query('SELECT user_id FROM ep_records WHERE id=?',[(int)($b['id']??0)])->fetch();if(!$row)fail('السجل غير موجود');$target=(int)$row['user_id'];$own=$target===(int)$u['id'];if($own)fail('لا يمكنك اعتماد طلبك الشخصي.',403);}
  if($own&&($op==='view'||($op==='create'&&($screen==='resumption'||!empty(modules()[$screen]['employee']))))&&($_SESSION['access_mode29']??'personal')==='personal')return;

@@ -10,7 +10,13 @@ function presence_blank_penalty(): array {
  return ['enabled'=>false,'minutes'=>0,'escalation'=>false,'period'=>'month','mode'=>'replace','tier_unit'=>'minutes','tiers'=>[]];
 }
 function presence_blank_setup(): array {
- return ['mode'=>'off','capture'=>'location','window_minutes'=>15,'times'=>[]];
+ return ['mode'=>'off','kind'=>'scheduled','capture'=>'location','window_minutes'=>15,'times'=>[]];
+}
+function presence_stored_kind(array $in,string $mode): string {
+ $kind=in_array($in['kind']??'',['scheduled','court'],true)?(string)$in['kind']:($mode==='court'?'court':'scheduled');
+ if($mode==='court')return 'court';
+ if($mode==='scheduled')return 'scheduled';
+ return $kind;
 }
 function presence_normalize_penalty(array $r): array {
  if(!is_bool($r['enabled']??null)||!is_bool($r['escalation']??null)||!is_numeric($r['minutes']??null)||!is_finite((float)$r['minutes']))fail('إعداد خصم إثبات التواجد غير صالح.');
@@ -25,17 +31,17 @@ function presence_normalize_rule(array $in): array {
  $mode=(string)($in['mode']??'off');if(!in_array($mode,['off','scheduled','court'],true))fail('نوع إثبات التواجد غير صالح.');
  $capture=(string)($in['capture']??'location');if(!in_array($capture,['location','photo'],true))fail('طريقة الإرسال: موقع فقط أو صورة وموقع.');
  $window=(int)($in['window_minutes']??15);if($window<1||$window>180)fail('مهلة الإرسال بين دقيقة و 180 دقيقة.');
- $times=[];if($mode==='scheduled'){foreach($in['times']??[] as $time){$time=trim((string)$time);if(!preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time))fail('اكتب كل موعد بالشكل 10:00.');if(in_array($time,$times,true))fail('لا تكرر نفس الموعد.');$times[]=$time;}sort($times);if(!$times||count($times)>8)fail('حدد موعدًا واحدًا على الأقل وبحد 8 مواعيد.');}
+ $times=[];foreach($in['times']??[] as $time){$time=trim((string)$time);if($time==='')continue;if(!preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time))fail('اكتب كل موعد بالشكل 10:00.');if(in_array($time,$times,true))fail('لا تكرر نفس الموعد.');$times[]=$time;}sort($times);if(count($times)>8||($mode==='scheduled'&&!$times))fail('حدد موعدًا واحدًا على الأقل وبحد 8 مواعيد.');
  $penalty=presence_blank_penalty();if($mode==='scheduled'&&isset($in['penalty'])&&is_array($in['penalty'])&&$in['penalty']!==[])$penalty=presence_normalize_penalty($in['penalty']);
- return ['mode'=>$mode,'capture'=>$capture,'window_minutes'=>$window,'times'=>$times,'penalty'=>$penalty];
+ return ['mode'=>$mode,'kind'=>presence_stored_kind($in,$mode),'capture'=>$capture,'window_minutes'=>$window,'times'=>$times,'penalty'=>$penalty];
 }
 function presence_setup_from(array $values): array {
  $in=$values['presence_setup']??null;if(!is_array($in))return presence_blank_setup();
  $mode=in_array($in['mode']??'off',['off','scheduled','court'],true)?$in['mode']:'off';
  $capture=in_array($in['capture']??'location',['location','photo'],true)?$in['capture']:'location';
  $window=(int)($in['window_minutes']??15);if($window<1||$window>180)$window=15;
- $times=[];if($mode==='scheduled'){foreach($in['times']??[] as $time){$time=trim((string)$time);if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time))$times[]=$time;}$times=array_values(array_unique($times));sort($times);if(count($times)>8)$times=array_slice($times,0,8);}
- return ['mode'=>$mode,'capture'=>$capture,'window_minutes'=>$window,'times'=>$times];
+ $times=[];foreach($in['times']??[] as $time){$time=trim((string)$time);if(preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time))$times[]=$time;}$times=array_values(array_unique($times));sort($times);if(count($times)>8)$times=array_slice($times,0,8);
+ return ['mode'=>$mode,'kind'=>presence_stored_kind($in,$mode),'capture'=>$capture,'window_minutes'=>$window,'times'=>$times];
 }
 function presence_penalty_from(array $values,array $fallback=[]): array {
  $dated=$values['punch_rules39']['presence']??null;if(is_array($dated))return $dated;
@@ -128,7 +134,7 @@ function presence_charge(array $rule,int $sequence): array {
 function presence_slots(array $rule,string $date,array $sends,DateTimeImmutable $now): array {
  if(($rule['mode']??'')!=='scheduled')return [];
  $tz=new DateTimeZone(settings()['timezone']);$out=[];
- foreach($rule['times'] as $time){$start=new DateTimeImmutable($date.' '.$time,$tz);$end=$start->modify('+'.(int)$rule['window_minutes'].' minutes');$key=$date.' '.$time;$sent=null;foreach($sends as $row)if(($row['body']['slot']??'')===$key){$sent=$row;break;}$status=$sent?'sent':($now<$start?'waiting':($now<=$end?'open':'missed'));$out[]=['key'=>$key,'time'=>$time,'date'=>$date,'opens'=>$start->format('H:i'),'closes'=>$end->format('H:i'),'status'=>$status,'send_id'=>$sent?(int)$sent['id']:null];}
+ foreach($rule['times'] as $time){$start=new DateTimeImmutable($date.' '.$time,$tz);$end=$start->modify('+'.(int)$rule['window_minutes'].' minutes');$key=$date.' '.$time;$sent=null;foreach($sends as $row)if(($row['body']['slot']??'')===$key){$sent=$row;break;}$status=$sent?'sent':($now<$start?'waiting':($now<=$end?'open':'missed'));$out[]=['key'=>$key,'time'=>$time,'date'=>$date,'opens'=>$start->format('H:i'),'closes'=>$end->format('H:i'),'opens_at'=>$start->format('Y-m-d H:i:s'),'closes_at'=>$end->format('Y-m-d H:i:s'),'status'=>$status,'send_id'=>$sent?(int)$sent['id']:null];}
  return $out;
 }
 function presence_slot_day(array $day): bool {
@@ -136,15 +142,16 @@ function presence_slot_day(array $day): bool {
  $note=(string)($day['note']??'');return $note===''||(!str_contains($note,'قبل بدء')&&!str_contains($note,'خارج فترة')&&!str_contains($note,'معفى')&&!str_contains($note,'غير معتمد'));
 }
 function presence_apply_report(int $uid,array $days,string $reportFrom): array {
- $sends=presence_send_cache($uid);$now=presence_clock();$counts=[];
- foreach($days as &$day){
+ $sends=presence_send_cache($uid);$now=presence_clock();$prior=[];
+ foreach($days as $presenceIndex200=>&$day){
   $day['presence_missed']=0;$day['presence_penalty_minutes']=0.0;$day['presence_penalty_days']=0.0;$day['presence_slots']=[];
   $day['presence_sends']=array_map('presence_public_send',array_values(array_filter($sends,fn($row)=>$row['date_from']===$day['date'])));
   $at=presence_at($uid,$day['date']);$rule=$at['rule'];
   if(!$at['subject']||($rule['mode']??'')!=='scheduled'||($at['from']&&$day['date']<$at['from'])||!presence_slot_day($day)||!empty($day['absence']))continue;
   $slots=presence_slots($rule,$day['date'],$sends,$now);$day['presence_slots']=$slots;$charge=$at['penalty'];$period=period_start($day['date'],(string)($charge['period']??'month'));
-  if(!isset($counts[$period])){$counts[$period]=0;if($period<$reportFrom&&empty($GLOBALS['PRESENCE_PRIOR'])){$GLOBALS['PRESENCE_PRIOR']=true;try{$prior=attendance_report($uid,$period,(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d'));foreach($prior as $prev)$counts[$period]+=(int)($prev['presence_missed']??0);}finally{unset($GLOBALS['PRESENCE_PRIOR']);}}}
-  foreach($slots as $slot)if($slot['status']==='missed'){$counts[$period]++;[$minutes,$penaltyDays]=presence_charge($charge,$counts[$period]);$day['presence_missed']++;$day['presence_penalty_minutes']+=$minutes;$day['presence_penalty_days']+=$penaltyDays;}
+  $sequence=0;for($presenceEarlier200=0;$presenceEarlier200<$presenceIndex200;$presenceEarlier200++){$earlierDate=(string)($days[$presenceEarlier200]['date']??'');if($earlierDate>=$period&&$earlierDate<$day['date'])$sequence+=(int)($days[$presenceEarlier200]['presence_missed']??0);}
+  if($period<$reportFrom){if(!array_key_exists($period,$prior)){$prior[$period]=0;if(empty($GLOBALS['PRESENCE_PRIOR'])){$GLOBALS['PRESENCE_PRIOR']=true;try{$priorEnd=(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d');if($priorEnd>=$period)foreach(attendance_report($uid,$period,$priorEnd) as $prev)if(($prev['date']??'')>=$period&&($prev['date']??'')<$reportFrom)$prior[$period]+=(int)($prev['presence_missed']??0);}finally{unset($GLOBALS['PRESENCE_PRIOR']);}}}$sequence+=$prior[$period];}
+  foreach($slots as $slot)if($slot['status']==='missed'){$sequence++;[$minutes,$penaltyDays]=presence_charge($charge,$sequence);$day['presence_missed']++;$day['presence_penalty_minutes']+=$minutes;$day['presence_penalty_days']+=$penaltyDays;}
  }
  unset($day);return $days;
 }
@@ -224,7 +231,28 @@ function presence_client_slot_date(string $slotKey): ?string {
 }
 function presence_notify_open(array $actor): void {
  $status=presence_employee_status($actor);if(!$status||!in_array($status['mode']??'',['scheduled','mixed'],true))return;
- foreach($status['slots'] as $slot){if($slot['status']!=='open')continue;$title='presence-open:'.$slot['key'];if(query("SELECT id FROM ep_records WHERE module='presence_notice' AND user_id=? AND title=?",[(int)$actor['id'],$title])->fetch())continue;notice((int)$actor['id'],'وقت إثبات التواجد الآن','أرسل إثبات التواجد قبل '.$slot['closes'].'.',false,['screen'=>'attendance','employee_id'=>(int)$actor['id']]);$id=v26_insert('presence_notice',(int)$actor['id'],substr($slot['key'],0,10),null,['slot'=>$slot['key']],'sent');query('UPDATE ep_records SET title=? WHERE id=?',[$title,$id]);}
+ foreach($status['slots'] as $slot)if(($slot['status']??'')==='open')presence_notify_slot($actor,$slot);
+}
+function presence_notify_slot(array $actor,array $slot): void {
+ $uid=(int)$actor['id'];$title='presence-open:'.$slot['key'];$guard=$uid."\0".$title;
+ if(!isset($GLOBALS['PRESENCE_NOTICE_LOCK'])||!is_array($GLOBALS['PRESENCE_NOTICE_LOCK']))$GLOBALS['PRESENCE_NOTICE_LOCK']=[];
+ if(!empty($GLOBALS['PRESENCE_NOTICE_LOCK'][$guard]))return;
+ $GLOBALS['PRESENCE_NOTICE_LOCK'][$guard]=true;
+ try{
+  if(function_exists('db')){db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$uid])->fetch();}
+  if(query("SELECT id FROM ep_records WHERE module='presence_notice' AND user_id=? AND title=?",[$uid,$title])->fetch()){if(function_exists('db')&&db()->inTransaction())db()->commit();return;}
+  notice($uid,'وقت إثبات التواجد الآن','أرسل إثبات التواجد قبل '.$slot['closes'].'.',false,['screen'=>'attendance','employee_id'=>$uid]);
+  $id=v26_insert('presence_notice',$uid,substr((string)$slot['key'],0,10),null,['slot'=>$slot['key']],'sent');
+  query('UPDATE ep_records SET title=? WHERE id=?',[$title,$id]);
+  if(function_exists('db')&&db()->inTransaction())db()->commit();
+ }catch(Throwable $e){if(function_exists('db')&&db()->inTransaction())db()->rollBack();throw $e;}
+ finally{unset($GLOBALS['PRESENCE_NOTICE_LOCK'][$guard]);}
+}
+function presence_lookup_saved(int $uid,string $rid): array {
+ db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$uid]);presence_forget_cache($uid);
+ foreach(presence_sends($uid) as $row)if((string)($row['body']['request_id']??'')===$rid){db()->commit();return presence_duplicate_result($row);}
+ if(db()->inTransaction())db()->commit();
+ fail('لا يوجد إرسال محفوظ لهذه المحاولة.');
 }
 function presence_save_rule(array $actor,array $b): array {
  $target=(int)($b['user_id']??0);presence_edit_access($actor,$target);
@@ -235,32 +263,66 @@ function presence_log(array $actor,array $b): array {
  $from=valid_date($b['from']??$_GET['from']??null)?:presence_clock()->format('Y-m-01');$to=valid_date($b['to']??$_GET['to']??null)?:presence_clock()->format('Y-m-d');if($to<$from)fail('فترة السجل غير صالحة.');
  return ['rule'=>presence_rule_for($target),'sends'=>array_map('presence_public_send',presence_sends($target,$from,$to))];
 }
-function presence_ticket(array $actor): array {
+function presence_personal_create(array $actor): void {
  if(!personal_mode34($actor))fail('الإرسال من مساحة الموظف فقط.',403);
+ personal_require34($actor,'attendance','create');
+}
+function presence_file_owner(int $id): int {
+ if($id<=0)return 0;
+ $row=query("SELECT TOP (1) user_id FROM ep_records WHERE module='presence_send' AND JSON_VALUE(body_json,'$.photo_id')=?",[(string)$id])->fetch();
+ return $row?(int)$row['user_id']:0;
+}
+function presence_photo_visible(array $actor,int $target): bool {
+ if($target<=0)return false;
+ if(personal_mode34($actor))return (int)$actor['id']===$target&&personal_has34($actor,'report');
+ if(($actor['role']??'')==='admin')return true;
+ $staff=query('SELECT id,manager_id FROM ep_users WHERE id=?',[$target])->fetch();
+ if(!$staff)return false;
+ if((int)($staff['manager_id']??0)===(int)$actor['id'])return true;
+ return permission_has($actor,'report','view')&&in_array($target,permission_scope29($actor,'report','view'),true);
+}
+function presence_duplicate_result(array $row): array {
+ return ['ok'=>true,'id'=>(int)$row['id'],'sent_at'=>$row['body']['sent_at']??$row['created_at'],'duplicate'=>true,'court_name'=>$row['body']['court_name']??'','slot'=>$row['body']['slot']??''];
+}
+function presence_open_slot(array $actor,string $slotKey): ?array {
+ $date=presence_client_slot_date($slotKey);if(!$date)return null;
+ $now=presence_clock();$today=$now->format('Y-m-d');$yesterday=$now->modify('-1 day')->format('Y-m-d');
+ if($date!==$today&&$date!==$yesterday)return null;
+ $uid=(int)$actor['id'];$at=presence_at($uid,$date);
+ if(!$at['subject']||($at['rule']['mode']??'')!=='scheduled'||!presence_workday($uid,$date))return null;
+ foreach(presence_slots($at['rule'],$date,presence_send_cache($uid),$now) as $slot)if($slot['key']===$slotKey&&$slot['status']==='open')return $slot;
+ return null;
+}
+function presence_ticket(array $actor,array $b=[]): array {
+ presence_personal_create($actor);
+ $slotKey=trim((string)($b['slot']??''));$today=presence_clock()->format('Y-m-d');
+ if(presence_client_slot_date($slotKey)===null){if(!presence_subject((int)$actor['id'],$today))fail('هذا الحساب لا يخضع لبصمة الحضور.');}
+ else{if(!presence_open_slot($actor,$slotKey))fail('هذا الحساب لا يخضع لبصمة الحضور.');}
  $ticket=bin2hex(random_bytes(24));$_SESSION['presence_capture']=['token'=>$ticket,'at'=>time(),'user_id'=>(int)$actor['id']];return ['ticket'=>$ticket,'server_time'=>utc_now()];
 }
 function presence_send(array $actor,array $b): array {
- if(!personal_mode34($actor))fail('الإرسال من مساحة الموظف فقط.',403);
- $uid=(int)$actor['id'];$now=presence_clock();$today=$now->format('Y-m-d');$slotKey=trim((string)($b['slot']??''));
+ presence_personal_create($actor);
+ $uid=(int)$actor['id'];$rid=(string)($b['request_id']??'');
+ if((string)($b['presence_lookup200']??'')==='1'){if(!preg_match('/^[a-f0-9-]{36}$/i',$rid))fail('رقم الطلب غير صالح.');return presence_lookup_saved($uid,$rid);}
+ $now=presence_clock();$today=$now->format('Y-m-d');$slotKey=trim((string)($b['slot']??''));
  $slotDate=presence_client_slot_date($slotKey);$workDate=$slotDate??$today;$at=presence_at($uid,$workDate);$rule=$at['rule'];
  if(($rule['mode']??'')==='court'||$slotDate===null){$workDate=$today;$at=presence_at($uid,$today);$rule=$at['rule'];$slotKey='';}
  if(!$at['subject'])fail('هذا الحساب لا يخضع لبصمة الحضور.');
  if(($rule['mode']??'off')==='off')fail('إثبات التواجد غير مفعّل لهذا الحساب.');
  if(empty(service_state(employee_required($uid),$workDate)['employed']))fail('خارج فترة الخدمة.');
  $rid=(string)($b['request_id']??'');if(!preg_match('/^[a-f0-9-]{36}$/i',$rid))fail('رقم الطلب غير صالح.');
- $court=null;
  if($rule['mode']==='scheduled'){if(!preg_match('/^\d{4}-\d{2}-\d{2} (?:[01]\d|2[0-3]):[0-5]\d$/',$slotKey))fail('حدد الموعد المفتوح.');if($at['from']&&$workDate<$at['from'])fail('لا يوجد موعد إثبات في هذا اليوم.');if(!presence_workday($uid,$workDate))fail('لا يوجد موعد إثبات في هذا اليوم.');}
- [$lat,$lon,$accuracy]=validate_location($b,presence_location_bounds($uid,$workDate));
- if($rule['mode']==='court'){$court=presence_court_match($lat,$lon,$accuracy,settings()['locations']??[]);if(!$court)fail('يجب أن تكون داخل نطاق محكمة محفوظة.');}
- $photoId=null;if($rule['capture']==='photo'){if(empty($_FILES['photo'])||!is_array($_FILES['photo']))fail('الصورة مطلوبة مع الموقع.');$bounds=presence_location_bounds($uid,$workDate);$cap=$_SESSION['presence_capture']??[];$age=time()-(int)($b['photo_at']??0);if((int)($cap['user_id']??0)!==$uid||!hash_equals((string)($cap['token']??''),(string)($b['capture_ticket']??''))||time()-(int)($cap['at']??0)>$bounds['photo_max_age']||$age<-30||$age>$bounds['photo_max_age'])fail('التقط صورة جديدة.');$photoId=upload_file($_FILES['photo'],$uid,true);unset($_SESSION['presence_capture']);}
  db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$uid]);presence_forget_cache($uid);$existing=presence_sends($uid);
- foreach($existing as $row)if(($row['body']['request_id']??'')===$rid){db()->commit();return ['ok'=>true,'id'=>(int)$row['id'],'sent_at'=>$row['body']['sent_at']??$row['created_at'],'duplicate'=>true];}
- if($rule['mode']==='scheduled'){$match=null;foreach(presence_slots($rule,$workDate,$existing,$now) as $slot)if($slot['key']===$slotKey)$match=$slot;if(!$match)fail('هذا الموعد غير مسجل لهذا الحساب.');if($match['status']==='sent'){db()->commit();$sentAt='';foreach($existing as $row)if((int)$row['id']===$match['send_id'])$sentAt=$row['body']['sent_at']??$row['created_at'];return ['ok'=>true,'id'=>(int)$match['send_id'],'sent_at'=>$sentAt,'duplicate'=>true];}if($match['status']==='waiting')fail('لم يحن موعد إثبات التواجد.');if($match['status']==='missed')fail('انتهت مهلة إثبات التواجد.');}
+ foreach($existing as $row)if(($row['body']['request_id']??'')===$rid){db()->commit();return presence_duplicate_result($row);}
+ if($rule['mode']==='scheduled'){$match=null;foreach(presence_slots($rule,$workDate,$existing,$now) as $slot)if($slot['key']===$slotKey)$match=$slot;if(!$match)fail('هذا الموعد غير مسجل لهذا الحساب.');if($match['status']==='sent'){$sent=null;foreach($existing as $row)if((int)$row['id']===$match['send_id'])$sent=$row;db()->commit();return $sent?presence_duplicate_result($sent):['ok'=>true,'id'=>(int)$match['send_id'],'sent_at'=>'','duplicate'=>true];}if($match['status']==='waiting')fail('لم يحن موعد إثبات التواجد.');if($match['status']==='missed')fail('انتهت مهلة إثبات التواجد.');}
+ [$lat,$lon,$accuracy]=validate_location($b,presence_location_bounds($uid,$workDate));
+ $court=null;if($rule['mode']==='court'){$court=presence_court_match($lat,$lon,$accuracy,settings()['locations']??[]);if(!$court)fail('يجب أن تكون داخل نطاق محكمة محفوظة.');}
+ $photoId=null;if($rule['capture']==='photo'){if(empty($_FILES['photo'])||!is_array($_FILES['photo']))fail('الصورة مطلوبة مع الموقع.');$bounds=presence_location_bounds($uid,$workDate);$cap=$_SESSION['presence_capture']??[];$age=time()-(int)($b['photo_at']??0);if((int)($cap['user_id']??0)!==$uid||!hash_equals((string)($cap['token']??''),(string)($b['capture_ticket']??''))||time()-(int)($cap['at']??0)>$bounds['photo_max_age']||$age<-30||$age>$bounds['photo_max_age'])fail('التقط صورة جديدة.');$GLOBALS['EDITOR_FILES143']=[];$photoId=upload_file($_FILES['photo'],$uid,true);}
  $body=['kind'=>$rule['mode'],'request_id'=>$rid,'slot'=>$slotKey,'court_id'=>$court['id']??'','court_name'=>$court['name']??'','latitude'=>$lat,'longitude'=>$lon,'accuracy'=>$accuracy,'sent_at'=>utc_now(),'photo_id'=>$photoId];
- $id=v26_insert('presence_send',$uid,$workDate,$workDate,$body,'sent');audit('presence_send','record:'.$id,['kind'=>$rule['mode'],'slot'=>$slotKey,'court'=>$court['name']??'']);db()->commit();presence_forget_cache($uid);
+ $id=v26_insert('presence_send',$uid,$workDate,$workDate,$body,'sent');audit('presence_send','record:'.$id,['kind'=>$rule['mode'],'slot'=>$slotKey,'court'=>$court['name']??'']);db()->commit();unset($_SESSION['presence_capture'],$GLOBALS['EDITOR_FILES143']);presence_forget_cache($uid);
  return ['ok'=>true,'id'=>$id,'sent_at'=>$body['sent_at'],'duplicate'=>false,'court_name'=>$body['court_name'],'slot'=>$slotKey];
 }
 function presence_action(string $action,array $actor,array $b): array {
  if(!in_array($action,['presence_rule_save','presence_log','presence_ticket','presence_send','presence_form_preview'],true))fail('العملية غير موجودة.',404);
- return match($action){'presence_rule_save'=>presence_save_rule($actor,$b),'presence_log'=>presence_log($actor,$b),'presence_ticket'=>presence_ticket($actor),'presence_send'=>presence_send($actor,$b),'presence_form_preview'=>presence_form_preview($actor,$b)};
+ return match($action){'presence_rule_save'=>presence_save_rule($actor,$b),'presence_log'=>presence_log($actor,$b),'presence_ticket'=>presence_ticket($actor,$b),'presence_send'=>presence_send($actor,$b),'presence_form_preview'=>presence_form_preview($actor,$b)};
 }

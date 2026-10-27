@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__.'/app/core.php';
+require_once __DIR__.'/app/presence.php';
 require __DIR__.'/app/cms.php';
 try{
  if(!secure_request())fail('استخدم HTTPS.',403);
@@ -17,6 +18,7 @@ try{
   if($r&&$r['module']==='video_receipt'){if($r['status']==='draft'&&$u['role']!=='admin')fail('الفيديو غير متاح.',403);if(($_GET['download']??'')==='1'&&($u['role']!=='admin'||empty($u['full_supervisor31'])))fail('تنزيل الفيديو للمشرف العام فقط.',403);}
   if($r){$GLOBALS['EP_SCREEN']=$r['module'];if(in_array($r['module'],['company_file','corporate_document','attachment_archive'],true)&&$u['role']==='manager'&&permission_has($u,$r['module'])){$v=decode(query('SELECT body_json FROM ep_records WHERE file_id=?',[$id])->fetchColumn());$allowed=record_company_allowed30($u,$r['module'],['body_json'=>jencode($v)]);}$allowed=$allowed||($r['module']==='video_receipt'?(int)$r['user_id']===(int)$u['id']:can_view($u,(int)$r['user_id']));if((int)$r['user_id']===(int)$u['id']&&$u['role']!=='admin'&&in_array($r['module'],['discipline','adjustment'],true)&&$r['status']!=='approved')$allowed=false;}
   else{$event=query('SELECT user_id FROM ep_events WHERE photo_id=? OR evidence_id=?',[$id,$id])->fetch();$GLOBALS['EP_SCREEN']='report';$allowed=$allowed||($event&&can_view($u,(int)$event['user_id']))||((int)$file['user_id']===(int)$u['id']);}
+  $presenceOwner200=presence_file_owner($id);if($presenceOwner200){$GLOBALS['EP_SCREEN']='report';$GLOBALS['EP_OPERATION29']='view';$allowed=$allowed||presence_photo_visible($u,$presenceOwner200);}
   if($r&&$u['role']!=='admin'&&in_array($r['module'],['company_file','corporate_document','attachment_archive'],true))$allowed=record_company_allowed30($u,$r['module'],['body_json'=>query('SELECT body_json FROM ep_records WHERE file_id=?',[$id])->fetchColumn()]);
   if(!(($_SESSION['access_mode29']??'personal')==='personal'&&((int)($r['user_id']??0)===(int)$u['id']||(int)$file['user_id']===(int)$u['id']))&&permission_denied29($u,$GLOBALS['EP_SCREEN']??'document'))$allowed=false;
   if(!$allowed)fail('ليس لديك صلاحية مشاهدة الملف.',403);

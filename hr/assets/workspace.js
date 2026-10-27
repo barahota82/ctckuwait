@@ -19,6 +19,7 @@ function schedulePayload38(form){
 
 'use strict';
 let policyDefaults32=null;
+let policyRows32=[];
 let policyTab32='staff';
 function orderedStaff32(list){return [...list].filter(u=>u.role!=='admin').sort((a,b)=>String(a.employee_code||a.username||'').localeCompare(String(b.employee_code||b.username||''),'en',{numeric:true}));}
 function staffHeading32(u){return '<summary><bdi class="leave-code32">'+esc(u.employee_code||u.username)+'</bdi><span class="leave-name32" data-name-ar="'+esc(u.name)+'" data-name-en="'+esc(u.profile?.name_en||u.name)+'" data-no-translate>'+esc(displayName31(u))+'</span></summary>';}
@@ -42,7 +43,7 @@ async function policiesUnified32(expectedEpoch371=null){if(typeof resetRecordFil
  if(policyCan32(0,'create'))$('#temporaryPanel38').insertAdjacentHTML('afterbegin','<button id="newTemporary38" class="primary" disabled>'+esc(uiText('إضافة جدول مؤقت'))+'</button>');
  if(typeof mountOperationalChrome68==='function')mountOperationalChrome68();applyInterfaceLanguage();
  const epoch68=navigationEpoch32;
- const [rows,staff,context]=await Promise.all([api('policies'),staffAllowed?api('policy_staff_list'):Promise.resolve([]),api('policy_editor_context')]);if(view!=='policies'||navigationEpoch32!==epoch68||(expectedEpoch371!==null&&navigationEpoch32!==expectedEpoch371))return false;boot.settings.locations=context.locations;globalThis.clickScheduleCompanies38=context.companies||[];policyDefaults32=context.values;if(staffAllowed)users=staff;
+ const [rows,staff,context]=await Promise.all([api('policies'),staffAllowed?api('policy_staff_list'):Promise.resolve([]),api('policy_editor_context')]);if(view!=='policies'||navigationEpoch32!==epoch68||(expectedEpoch371!==null&&navigationEpoch32!==expectedEpoch371))return false;boot.settings.locations=context.locations;globalThis.clickScheduleCompanies38=context.companies||[];policyDefaults32=context.values;policyRows32=rows;if(staffAllowed)users=staff;
 const today=dateNow(),general=rows.filter(r=>!Number(r.user_id)),currentGeneral=activePolicy32(general.filter(r=>scheduleMeta38(r).kind!=='temporary'),today),locations=boot.settings?.locations||[];
 
  const baseGeneral=general.filter(r=>scheduleMeta38(r).kind!=='temporary');

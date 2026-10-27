@@ -110,6 +110,8 @@ window.interfaceAdditions194={
   "بمواعيد": "Scheduled times",
   "مندوب محكمة": "Court representative",
   "موعد إثبات التواجد": "Presence time",
+  "تم حفظ إثبات التواجد، وتعذر تحديث الشاشة.": "The presence proof was saved, and the screen could not be refreshed.",
+  "جزاء التواجد": "Presence penalty",
   "إضافة موعد": "Add time",
   "حذف الموعد": "Remove time",
   "المهلة المسموحة للإرسال بالدقائق": "Allowed send window in minutes",
@@ -124,5 +126,45 @@ window.interfaceAdditions194={
   "انتهت المهلة": "Window ended",
   "سجل الإرسال": "Send log",
   "إعداد التواجد": "Presence setting",
-  "خصم نسيان إثبات التواجد يُحدد من بند إثبات التواجد في نسيان البصمة ضمن سياسة الدوام بتاريخ السريان.": "A missed presence deduction is set on the presence item under missing punches in the dated attendance policy."
+  "البصمة مفعّلة": "Punch on",
+  "البصمة غير مفعّلة": "Punch off",
+  "جزاء مفعّل": "Penalty on",
+  "جزاء غير مفعّل": "Penalty off",
+  "تصعيد": "Escalation",
+  "غير خاضع": "Not subject",
+  "تطبيق الجزاء": "Apply penalty",
+  "الجزاء بالدقائق": "Penalty in minutes",
+  "تصعيد الجزاء عند التكرار": "Escalate the penalty when repeated",
+  "فترة العد": "Counting period",
+  "شهرية": "Monthly",
+  "سنوية": "Yearly",
+  "وحدة شرائح التصعيد": "Escalation tier unit",
+  "دقائق": "Minutes",
+  "أيام": "Days",
+  "شرائح التصعيد — سطر لكل شريحة: بداية العدد، خصم الدقائق": "Escalation tiers — one line each: starting count, deducted minutes",
+  "شرائح التصعيد — سطر لكل شريحة: بداية العدد، خصم الأيام": "Escalation tiers — one line each: starting count, deducted days",
+  "خصم نسيان إثبات التواجد يُحدد من بند إثبات التواجد في نسيان البصمة ضمن سياسة الدوام بتاريخ السريان.": "A missed presence deduction is set on the presence item under missing punches in the dated attendance policy.",
+  "شرائح التصعيد": "Escalation tiers",
+  "صيغة الشريحة: 4, 180": "Tier format: 4, 180",
+  "صيغة الشريحة: 4, 1.5": "Tier format: 4, 1.5",
+  "أدخل قيمة من 1 إلى 180.": "Enter a value from 1 to 180.",
+  "أدخل قيمة من 0 إلى 1440.": "Enter a value from 0 to 1440.",
+  "بلا خصم تلقائي": "No automatic deduction",
+  "الخصم غير مطبّق أثناء توقف البصمة": "The deduction is not applied while the punch is off",
+  "أضف شريحة تصعيد أو أوقف التصعيد لهذه البصمة.": "Add an escalation tier or turn escalation off for this punch.",
+  "شريحة جزاء البصمة غير صالحة.": "The punch penalty tier is not valid.",
+  "حدد موعدًا واحدًا على الأقل وبحد 8 مواعيد.": "Set at least one time and no more than 8.",
+  "أكمل الموعد.": "Complete the time.",
+  "أدخل رقمًا صالحًا.": "Enter a valid number.",
+  "لا تكرر نفس الموعد.": "Do not repeat the same time.",
+  "هذه العملية غير متاحة في ملفك الشخصي.": "This action is not available in your personal file.",
+  "القيمة خارج المدى المسموح.": "The value is outside the allowed range.",
+  "الحقل": "Field"
 };
+function applyInterfaceAdditions200(target){
+ const loc=target?.localization||(typeof boot!=='undefined'?boot?.localization:null);
+ if(!loc)return target;
+ loc.dictionary=loc.dictionary||{};
+ Object.assign(loc.dictionary,window.interfaceAdditions194||{});
+ return target;
+}

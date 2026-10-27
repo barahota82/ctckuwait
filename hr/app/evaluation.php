@@ -10,13 +10,15 @@ function evaluation_reference194(string $prefix,int $year):string {
 }
 function evaluation_counts194(int $uid,array $period):array {
  $values=array_fill_keys(evaluation_metric_keys194(),0);$today=local_time()->format('Y-m-d');$to=min($today,$period['to']);$days=$period['from']<=$to?attendance_report($uid,$period['from'],$to):[];$source=0;
+ $presenceRefresh=null;$zone=new DateTimeZone((string)(settings()['timezone']??'Asia/Kuwait'));$nowStamp=local_time()->getTimestamp();
  foreach($days as $day){if(empty($day['configured'])||empty($day['scheduled'])||!empty($day['leave'])||isset($day['note'])&&str_contains($day['note'],'قبل بدء'))continue;$source++;$events=$day['events'];$types=array_column($events,'event_type');if(in_array('attendance',$types,true))$values['presence']++;if($day['absence'])$values['absence']++;$values['late']+=(float)$day['late_minutes'];$values['early']+=(float)$day['early_minutes'];
   if(($day['missing_raw194']??$day['missing'])>0&&!($day['absence_raw194']??$day['absence'])){if(!in_array('attendance',$types,true))$values['missingAttendance']++;if(!in_array('checkout',$types,true))$values['missingCheckout']++;}$values['missingPresence']+=(int)($day['presence_missed']??0);
+  foreach($day['presence_slots']??[] as $slot){if(in_array($slot['status']??'',['sent','missed'],true)||empty($slot['closes_at']))continue;$stamp=(new DateTimeImmutable((string)$slot['closes_at'],$zone))->getTimestamp()+1;if($stamp>$nowStamp)$presenceRefresh=$presenceRefresh===null?$stamp:min($presenceRefresh,$stamp);}
  }
  foreach(($GLOBALS['EVAL_INPUT195'][$uid]['permissions']??query("SELECT * FROM ep_records WHERE user_id=? AND module='exit_permission194' AND status='approved' AND date_from>=? AND date_from<=?",[$uid,$period['from'],$to])->fetchAll())as $r){$p=decode($r['body_json']);if(!empty($p['cancelled_at']))continue;$values['permissions']++;if(!empty($p['exited_at']))$values['exit']++;if(!empty($p['returned_at'])){$values['return']++;$values['returnLate']+=max(0,(permission_clock194($p['returned_at'])->getTimestamp()-permission_clock194($p['ends_at'])->getTimestamp())/60);}if(permission_clock194($p['ends_at'])->getTimestamp()<time()){if(empty($p['exited_at']))$values['missingExit']++;elseif(empty($p['returned_at']))$values['missingReturn']++;}}
  foreach(($GLOBALS['EVAL_INPUT195'][$uid]['decisions']??query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('request','discipline') AND status='approved' AND date_from>=? AND date_from<=?",[$uid,$period['from'],$to])->fetchAll())as $r){$b=decode($r['body_json']);if($r['module']==='request'&&!empty($b['_punch39']))$values['exceptions']++;if($r['module']==='discipline'){if(($b['record_category49']??'')==='warning')$values['warnings']++;if(($b['record_category49']??'')==='penalty')$values['penalties']++;}}
  foreach(($GLOBALS['EVAL_INPUT195'][$uid]['leaves']??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave' AND status='approved' AND date_to<?",[$uid,$to])->fetchAll())as $r){$b=decode($r['body_json']);$expected=$b['expected_return']??(new DateTimeImmutable($r['date_to']))->modify('+1 day')->format('Y-m-d');$actual=$b['returned_on']??null;if(!$actual&&!empty($b['actual_end']))$actual=(new DateTimeImmutable($b['actual_end']))->modify('+1 day')->format('Y-m-d');$end=$actual?(new DateTimeImmutable($actual))->modify('-1 day')->format('Y-m-d'):$to;if($end<$expected)continue;if($expected>=$period['from']&&$expected<=$to)$values['leaveLateCount']++;$a=max($period['from'],$expected);$z=min($to,$end);if($a<=$z)$values['leaveLateDays']+=(int)(new DateTimeImmutable($a))->diff(new DateTimeImmutable($z))->format('%a')+1;}
- return ['values'=>$values,'source_days'=>$source,'as_of'=>$to,'score'=>null];
+ return ['values'=>$values,'source_days'=>$source,'as_of'=>$to,'score'=>null,'presence_refresh'=>$presenceRefresh];
 }
 function evaluation_system194(array $actor):array {
  $period=evaluation_period194((string)($_GET['kind182']??'monthly'),(int)($_GET['year182']??local_time()->format('Y')),(int)($_GET['part182']??local_time()->format('n')));
@@ -34,8 +36,9 @@ function evaluation_system194(array $actor):array {
  $eventVersion=query('SELECT COUNT_BIG(*) AS n,MAX(id) AS last_id,MAX(received_at) AS changed FROM ep_events')->fetch();
  $historyVersion=query('SELECT COUNT_BIG(*) AS n,MAX(id) AS last_id,MAX(imported_at) AS changed FROM ep_history')->fetch();
  $config=settings();foreach(array_keys($config)as $name)if(str_starts_with($name,'evaluation_sequence194_'))unset($config[$name]);
- $signature=hash('sha256',jencode(['195.0','presence-metric',$period,local_time()->format('Y-m-d'),$revision,$recordVersion,$eventVersion,$historyVersion,$config]));
- $stale=[];foreach($people as $s){$body=isset($existing[(int)$s['id']])?decode($existing[(int)$s['id']]['body_json']):[];if(($body['_inputs195']??'')!==$signature||!isset($body['metrics182'])||!empty($body['_next_refresh195'])&&(int)$body['_next_refresh195']<=time())$stale[]=$s;}
+ $signature=hash('sha256',jencode(['195.0','presence-window-refresh-1',$period,local_time()->format('Y-m-d'),$revision,$recordVersion,$eventVersion,$historyVersion,$config]));
+ $nowStamp=local_time()->getTimestamp();
+ $stale=[];foreach($people as $s){$body=isset($existing[(int)$s['id']])?decode($existing[(int)$s['id']]['body_json']):[];if(($body['_inputs195']??'')!==$signature||!isset($body['metrics182'])||!empty($body['_next_refresh195'])&&(int)$body['_next_refresh195']<=$nowStamp)$stale[]=$s;}
  $to=min(local_time()->format('Y-m-d'),$period['to']);
  if($stale&&$period['from']<=$to)attendance_prefetch113($stale,$period['from'],$to);
  foreach(array_chunk($stale,500)as $chunk){
@@ -47,8 +50,8 @@ function evaluation_system194(array $actor):array {
  foreach($people as $staff){
   $uid=(int)$staff['id'];$r=$existing[$uid]??null;
   if(isset($GLOBALS['EVAL_INPUT195'][$uid])){
-   $metrics=evaluation_counts194($uid,$period);$next=null;
-   foreach($GLOBALS['EVAL_INPUT195'][$uid]['permissions']as $permission){$v=decode($permission['body_json']);if(!empty($v['cancelled_at']))continue;$end=permission_clock194($v['ends_at'])->getTimestamp();if($end>=time())$next=$next===null?$end+1:min($next,$end+1);}
+   $metrics=evaluation_counts194($uid,$period);$presenceNext=$metrics['presence_refresh']??null;unset($metrics['presence_refresh']);$next=$presenceNext?(int)$presenceNext:null;
+   foreach($GLOBALS['EVAL_INPUT195'][$uid]['permissions']as $permission){$v=decode($permission['body_json']);if(!empty($v['cancelled_at']))continue;$end=permission_clock194($v['ends_at'])->getTimestamp();if($end>=$nowStamp)$next=$next===null?$end+1:min($next,$end+1);}
    db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$uid]);
    $old=query("SELECT TOP (1) * FROM ep_records WHERE module='evaluation' AND user_id=? AND JSON_VALUE(body_json,'$.period_key194')=? ORDER BY id",[$uid,$key])->fetch();
    $body=$old?decode($old['body_json']):['_auto182'=>true,'source182'=>'system','record_category49'=>'attendance','period_key194'=>$key,'reference185'=>evaluation_reference194('EV',(int)local_time()->format('Y'))];
