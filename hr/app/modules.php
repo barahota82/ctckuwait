@@ -32,8 +32,16 @@ function sick_year_bounds(string $date,array $user,array $cfg): array {
  }else{$a=new DateTimeImmutable(substr($date,0,4).'-01-01');}
  return [$a->format('Y-m-d'),$a->modify('+1 year')->modify('-1 day')->format('Y-m-d')];
 }
+function leave_effect_pending200(array $r,?array $body=null): bool {
+ if(($r['module']??'')!=='leave'||($r['status']??'')!=='approved')return false;
+ if($body===null)$body=is_string($r['body_json']??null)?decode((string)$r['body_json']):(is_array($r['body_json']??null)?$r['body_json']:[]);
+ return ($body['_start200']['phase']??'')==='awaiting';
+}
+function resumption_leave_ready200(?array $leave): void {
+ if(!$leave||($leave['status']??'')!=='approved'||leave_effect_pending200($leave))fail('أكد بدء الإجازة قبل تسجيل المباشرة.');
+}
 function approved_day(int $uid,string $date): ?array {
- foreach(($GLOBALS['REPORT_LEAVE32'][$uid]??query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('leave','sick') AND status='approved' AND date_from<=? ORDER BY id",[$uid,$date])->fetchAll())as $r){$v=decode($r['body_json']);if($r['date_from']>$date)continue;$end=$r['date_to'];if($r['module']==='leave'){$end=!empty($v['late_open'])?'9999-12-31':($v['actual_end']??$end);if(empty($v['late_open'])&&empty($v['actual_end'])&&!empty($v['returned_on']))$end=(new DateTimeImmutable($v['returned_on']))->modify('-1 day')->format('Y-m-d');}if($end>=$date)return $r;}
+ foreach(($GLOBALS['REPORT_LEAVE32'][$uid]??query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('leave','sick') AND status='approved' AND date_from<=? ORDER BY id",[$uid,$date])->fetchAll())as $r){$v=decode($r['body_json']);if(leave_effect_pending200($r,$v)||$r['date_from']>$date)continue;$end=$r['date_to'];if($r['module']==='leave'){$end=!empty($v['late_open'])?'9999-12-31':($v['actual_end']??$end);if(empty($v['late_open'])&&empty($v['actual_end'])&&!empty($v['returned_on']))$end=(new DateTimeImmutable($v['returned_on']))->modify('-1 day')->format('Y-m-d');}if($end>=$date)return $r;}
  foreach(($GLOBALS['REPORT_HISTORY32'][$uid]['leave_history']??historical_for($uid,'leave_history','0000-01-01','9999-12-31'))as $h){$v=decode($h['body_json']);if($v['from']<=$date&&$v['to']>=$date)return ['module'=>'leave','body_json'=>'{}','historical'=>true];}return null;
 }
 function original_leave_balance(int $uid,array $cfg,?string $reference=null): array {
@@ -42,6 +50,7 @@ function original_leave_balance(int $uid,array $cfg,?string $reference=null): ar
  [$from,$to]=sick_year_bounds($reference??local_time()->format('Y-m-d'),$u,$copy);
  $window=leave_service_window($u,$reference??local_time()->format('Y-m-d'));if($window['id'])$from=max($from,$window['from']);$used=0;$pending=0;
  foreach(query("SELECT * FROM ep_records WHERE module='leave' AND user_id=? AND date_to>=? AND date_from<=? AND status IN ('approved','pending','revision')",[$uid,$from,$to])->fetchAll()as $r){
+  if(leave_effect_pending200($r))continue;
   foreach(days_between($r['date_from'],$r['date_to'])as $d)if($d>=$from&&$d<=$to){if($r['status']==='approved')$used++;else$pending++;}
  }
  foreach(historical_for($uid,'leave_history','0000-01-01','9999-12-31')as $h){$v=decode($h['body_json']);foreach(days_between($v['from'],$v['to'])as $date)if($date>=$from&&$date<=$to)$used++;}
@@ -56,7 +65,7 @@ function leave_balance_days(int $uid,array $cfg,?string $reference=null):array {
  $window=leave_service_window($u,$reference);if($h&&$window['id']&&$h['period_key']<$window['from'])$h=false;
  if(!$h){if(($cfg['leave_accrual_mode']??'annual')==='daily'&&$base['entitlement']!==null&&$window['from']){$base['entitlement']=$profile['leave_entitlement']??$cfg['annual_leave_days'];$days=eligible_leave_days($u,(new DateTimeImmutable(max($window['from'],$base['year_from'])))->modify('-1 day')->format('Y-m-d'),$reference,$cfg);$earned=$days*(float)$base['entitlement']/max(1,(float)$cfg['leave_accrual_divisor']);$base['remaining']=max(0,round($earned-$base['used'],3));return $base+['cash_days'=>null,'opening_as_of'=>null,'accrued'=>round($earned,3)];}return $base+['cash_days'=>null,'opening_as_of'=>null,'accrued'=>0];}
  $b=decode($h['body_json']);$opening=$b['as_of'];$used=0;$pending=0;
- foreach(query("SELECT * FROM ep_records WHERE module='leave' AND user_id=? AND date_to>? AND date_from<=? AND status IN ('approved','pending','revision')",[$uid,$opening,$reference])->fetchAll()as $rec)foreach(days_between($rec['date_from'],$rec['date_to'])as $date)if($date>$opening&&$date<=$reference){if($rec['status']==='approved')$used++;else $pending++;}
+ foreach(query("SELECT * FROM ep_records WHERE module='leave' AND user_id=? AND date_to>? AND date_from<=? AND status IN ('approved','pending','revision')",[$uid,$opening,$reference])->fetchAll()as $rec){if(leave_effect_pending200($rec))continue;foreach(days_between($rec['date_from'],$rec['date_to'])as $date)if($date>$opening&&$date<=$reference){if($rec['status']==='approved')$used++;else $pending++;}}
  $entitlement=$b['annual_entitlement']!==''?(float)$b['annual_entitlement']:($profile['leave_entitlement']??$cfg['annual_leave_days']);$accrued=0.0;
  if(($cfg['leave_accrual_mode']??'annual')==='daily'&&$entitlement!==null){$n=eligible_leave_days($u,$opening,$reference,$cfg);$accrued=$n*(float)$entitlement/max(1,(float)($cfg['leave_accrual_divisor']??365));}
  foreach(historical_for($uid,'leave_history','0000-01-01','9999-12-31')as $rec){$v=decode($rec['body_json']);foreach(days_between($v['from'],$v['to'])as $date)if($date>$opening&&$date<=$reference)$used++;}

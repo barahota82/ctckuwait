@@ -8,6 +8,9 @@ function permission_catalog(): array {
  $screens['bank_details']=['label'=>'بيانات الحساب البنكي','actions'=>['view']];
  $screens['commissions']=['label'=>'العمولات','actions'=>['view','create','edit','export']];$screens['work_permit']=['label'=>'أذونات العمل','actions'=>['view','create','edit']];$screens['addition']=['label'=>'الإضافات الشهرية','actions'=>['view','create']];$screens['workforce']=['label'=>'فترات الخدمة','actions'=>['view','create','edit']];$screens['companies']=['label'=>'الشركات','actions'=>['view','create','edit']];$screens['allowances']=['label'=>'الإضافات المؤرخة والجمعات','actions'=>['view','create']];$screens['payroll']=['label'=>'إعداد الرواتب','actions'=>['view','create','submit','export']];$screens['resumption']=['label'=>'مباشرة العمل','actions'=>['view','create','review']];$screens['analytics']=['label'=>'التقارير الشاملة','actions'=>['view','export']];
  foreach(modules() as $key=>$m)$screens[$key]=['label'=>$m['label'],'actions'=>['view','create','review']];
+ if(isset($screens['loan']))$screens['loan']['actions']=array_values(array_unique([...$screens['loan']['actions'],'disburse']));
+ if(isset($screens['leave_cash']))$screens['leave_cash']['actions']=array_values(array_unique([...$screens['leave_cash']['actions'],'pay']));
+ $screens['eos']=['label'=>'تسوية نهاية الخدمة','actions'=>['view','create','review','pay']];
  $screens['batch_addition29']=['label'=>'إدخال الإضافات جماعيًا','actions'=>['view','create']];$screens['batch_friday29']=['label'=>'إدخال الجمعات جماعيًا','actions'=>['view','create']];
  foreach(['policy_general'=>'السياسة العامة','policy_staff'=>'جداول الموظفين']as $key=>$label)$screens[$key]=['label'=>$label,'actions'=>['view','create','edit','delete']];
  $screens['collection37']=['label'=>'عمولة التحصيل','actions'=>['view','create','export']];$screens['vouchers37']=['label'=>'سندات الصرف','actions'=>['view','export']];

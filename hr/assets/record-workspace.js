@@ -177,14 +177,27 @@ function recordReviewPolicy188(record){return RecordFields194.reviewPolicy(recor
 function recordStatus188(record){return recordReviewPolicy188(record).state;}
 function recordForReview188(record){const status=recordStatus188(record);return status===record.status?record:{...record,status};}
 function recordStatusHidden186(record){const body=JSON.parse(record.body_json||'{}'),status=recordStatus188(record);return (!status||status==='active')&&!record.state148&&!body._auto182&&!body._punch39&&['document','request','loan','discipline','evaluation'].includes(record.module);}
+function phaseLabel200(record){
+ if(!record||record.status!=='approved')return '';
+ let body={};
+ try{body=typeof record.body_json==='string'?JSON.parse(record.body_json||'{}'):(record.body_json||{});}catch(error){body={};}
+ if(record.module==='leave'&&(body.returned_on||body.actual_end))return '';
+ if(record.phase_label200)return record.phase_label200;
+ if(record.module==='leave'&&body._start200?.phase==='awaiting')return 'معتمدة — لم تبدأ';
+ if(record.module==='leave'&&body._start200?.phase==='confirmed')return 'إجازة جارية';
+ if(record.module==='loan'&&body._disburse200?.phase==='awaiting')return 'معتمدة — بانتظار الصرف';
+ if(record.module==='loan'&&body._disburse200?.phase==='confirmed')return 'تم الصرف';
+ return '';
+}
 function recordBadge181(record,className=''){
  record=recordForReview188(record);
  if(recordStatusHidden186(record))return '';
  if(record.module==='document')return documentBadges182(record,className);
  if(JSON.parse(record.body_json||'{}')._auto182)return '<span class="profile-status33">'+esc(t182('بانتظار اعتماد النقاط','Scoring rules pending'))+'</span>';
  const b=JSON.parse(record.body_json||'{}'),state=record.module==='custody'?custodyState181(b):record.state148||record.status;
- const title=record.module==='custody'?(state==='returned'?'مستردة':'سارية'):record.state148?(typeof permitLabel148==='function'?permitLabel148(state):state):labels[state]||state;
- return '<span class="badge '+esc(className)+' '+esc(state||'')+'">'+esc(uiText(title||'—'))+'</span>';
+ const phase=phaseLabel200(record);
+ const title=record.module==='custody'?(state==='returned'?'مستردة':'سارية'):record.state148?(typeof permitLabel148==='function'?permitLabel148(state):state):phase||labels[state]||state;
+ return '<span class="badge '+esc(className)+' '+esc(phase?record.status:state||'')+'">'+esc(uiText(title||'—'))+'</span>';
 }
 function recordForm181(module,date){
  if(!['custody','discipline'].includes(module))return '';

@@ -23,7 +23,7 @@ function work_location_access40(array $u,string $op='view'):void{
 function v28_action(string $action,array $u,array $b):array{
  if($action==='v28_my_debt'){if($u['role']==='admin')fail('المشرف العام ليس موظفًا',403);if(personal_mode34($u))personal_require34($u,'loan','view');else permission_require($u,'loan','view');return v28_debt_ledger((int)$u['id']);}
  if($action==='v28_debt_deduction'){
-  v26_permission($u,'payroll','create');db()->beginTransaction();$r=query('SELECT * FROM ep_payroll WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[(int)$b['id']])->fetch();if(!$r||!in_array($r['status'],['draft','returned'],true))fail('الكشف غير قابل للتعديل');$GLOBALS['EP_SCREEN']='payroll';if(!in_array((int)$r['user_id'],scope_ids($u),true))fail('خارج النطاق',403);query('SELECT id FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$r['user_id']]);$c=decode($r['calculation_json']);$old=(float)($c['debt_deduction']??0);$available=round((float)$r['net_amount']+$old,3);$balance=v28_debt_balance((int)$r['user_id'],$r['month_key'].'-31');$amount=round((float)($b['amount']??0),3);if($amount<0||$amount>$balance||$amount>max(0,$available))fail('الخصم يتجاوز المديونية أو الصافي المتاح');v26_payroll_version($r,$u,'debt_deduction','تحديد خصم المديونية');$c['debt_deduction']=$amount;$c['debt_balance_snapshot']=$balance;$c['deduction']=round((float)$c['deduction']-$old+$amount,3);query('UPDATE ep_payroll SET calculation_json=?,net_amount=? WHERE id=?',[jencode($c),$available-$amount,$r['id']]);audit('debt_deduction_draft','payroll:'.$r['id'],['before'=>$old,'after'=>$amount]);db()->commit();return ['ok'=>true];
+  v26_permission($u,'payroll','create');db()->beginTransaction();$r=query('SELECT * FROM ep_payroll WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[(int)$b['id']])->fetch();if(!$r||!in_array($r['status'],['draft','returned'],true))fail('الكشف غير قابل للتعديل');$GLOBALS['EP_SCREEN']='payroll';if(!in_array((int)$r['user_id'],scope_ids($u),true))fail('خارج النطاق',403);query('SELECT id FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$r['user_id']]);$c=decode($r['calculation_json']);$old=(float)($c['debt_deduction']??0);$available=round((float)$r['net_amount']+$old,3);$balance=v28_debt_balance((int)$r['user_id'],$r['month_key'].'-31');$amount=round((float)($b['amount']??0),3);loan_deduction_guard200((int)$r['user_id'],(string)$r['month_key'],$amount);if($amount<0||$amount>$balance||$amount>max(0,$available))fail('الخصم يتجاوز المديونية أو الصافي المتاح');v26_payroll_version($r,$u,'debt_deduction','تحديد خصم المديونية');$c['debt_deduction']=$amount;$c['debt_balance_snapshot']=$balance;$c['deduction']=round((float)$c['deduction']-$old+$amount,3);query('UPDATE ep_payroll SET calculation_json=?,net_amount=? WHERE id=?',[jencode($c),$available-$amount,$r['id']]);audit('debt_deduction_draft','payroll:'.$r['id'],['before'=>$old,'after'=>$amount]);db()->commit();return ['ok'=>true];
  }
  if($action==='v28_location_save'||($action==='v28_info'&&($b['kind']??$_GET['kind']??'')==='locations')){work_location_access40($u,$action==='v28_info'?'view':(empty($b['location']['id'])?'create':'edit'));}
  if($u['role']!=='admin'&&!in_array($action,['v28_schedule_get','v28_schedule_save','v28_location_save'],true)&&!($action==='v28_info'&&($b['kind']??$_GET['kind']??'')==='locations')){if(!in_array($action,['v28_info','v28_record_save'],true))fail('هذه العملية للمشرف العام.',403);$screen=(string)($b['kind']??$_GET['kind']??'');if(!in_array($screen,['company_file','corporate_document','attachment_archive'],true))fail('القسم غير مسموح.',403);permission_require($u,$screen,$action==='v28_info'?'view':'create');}
@@ -72,6 +72,35 @@ function v28_action(string $action,array $u,array $b):array{
   $kind=(string)($b['kind']??'');if(!in_array($kind,['company_file','corporate_document','attachment_archive','debt_advance'],true))fail('قسم غير صالح');$body=$b['values']??[];if(is_string($body))$body=decode($body);if(!is_array($body))fail('بيانات غير صالحة');$target=(int)($b['user_id']??$body['linked_user_id']??0);if($target){employee_required($target);if($u['role']!=='admin'&&!can_view($u,$target))fail('الموظف خارج النطاق',403);}$body['linked_user_id']=$target?:null;company_document_validate194($kind,$body,$b,$u);if($kind==='company_file')$body['active']=!empty($body['active']);$from=valid_date($b['from']??null)??local_time()->format('Y-m-d');$to=valid_date($b['to']??null);if($to&&$to<$from)fail('التواريخ غير صحيحة');if(empty($body['name']))fail('اسم المرفق/المستند مطلوب');$amount=round((float)($b['amount']??0),3);if($kind==='debt_advance'&&(!$target||$amount<=0||empty($body['reference'])))fail('الموظف ومبلغ السلفة ومرجع الصرف مطلوبون');$fid=!empty($_FILES['file']['tmp_name'])?upload_file($_FILES['file'],(int)$u['id'],false,$kind==='attachment_archive'):null;if($kind==='attachment_archive'&&!$fid)fail('ارفع الملف');if(!empty($body['company_code'])&&!company_by_code($body['company_code']))fail('الشركة غير صالحة');$prev=(int)($b['previous_id']??0);if($prev){$r=query('SELECT * FROM ep_records WHERE id=? AND module=?',[$prev,$kind])->fetch();if(!$r)fail('النسخة السابقة غير موجودة');if($u['role']!=='admin'&&!record_company_allowed30($u,$kind,$r))fail('النسخة السابقة خارج النطاق',403);if($u['role']!=='admin'){$prior=decode($r['body_json']);if(!empty($prior['linked_user_id'])&&!can_view($u,(int)$prior['linked_user_id']))fail('النسخة السابقة خارج النطاق',403);}$body['previous_id']=$prev;}$id=v26_insert($kind,$target?: (int)$u['id'],$from,$to,$body,'approved',$amount);if($fid)query('UPDATE ep_records SET file_id=? WHERE id=?',[$fid,$id]);audit('archive_record_create',$kind.':'.$id,['values'=>$body,'previous_id'=>$prev,'amount'=>$amount]);db()->commit();return ['id'=>$id];
  }
  fail('عملية غير موجودة',404);
+}
+function loan_deduction_cap200(int $uid,string $month):?float{
+ if(!preg_match('/^\d{4}-(0[1-9]|1[0-2])$/',$month))return null;
+ $asOf=(new DateTimeImmutable($month.'-01'))->format('Y-m-t');
+ $linked=false;$other=0.0;$loans=[];
+ foreach(query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('debt_opening','debt_advance') AND status='approved'",[$uid])->fetchAll() as $row){
+  if((string)($row['date_from']??'')>$asOf)continue;
+  $body=decode($row['body_json']);
+  if($row['module']==='debt_advance'&&!empty($body['loan_id'])){$linked=true;$loans[]=['id'=>(int)$row['id'],'installment'=>round((float)($body['installment']??0),3),'start'=>(string)($body['deduction_month']??''),'remaining'=>round((float)$row['amount'],3)];}
+  else $other+=round((float)$row['amount'],3);
+ }
+ if(!$linked)return null;
+ usort($loans,fn($a,$b)=>[$a['start'],$a['id']]<=>[$b['start'],$b['id']]);
+ foreach(query("SELECT month_key,calculation_json FROM ep_payroll WHERE user_id=? AND status='approved' AND month_key<? ORDER BY month_key",[$uid,$month])->fetchAll() as $sheet){
+  $left=round((float)(decode($sheet['calculation_json'])['debt_deduction']??0),3);
+  for($i=0;$left>0.0005&&$i<count($loans);$i++){
+   $loan=$loans[$i];
+   if($loan['start']===''||$loan['start']>$sheet['month_key']||$loan['remaining']<=0||$loan['installment']<=0)continue;
+   $take=min($left,$loan['remaining'],$loan['installment']);
+   $loans[$i]['remaining']=round($loan['remaining']-$take,3);$left=round($left-$take,3);
+  }
+  if($left>0.0005)$other=round(max(0,$other-$left),3);
+ }
+ $cap=max(0,$other);
+ foreach($loans as $loan)if($loan['start']!==''&&$loan['start']<=$month&&$loan['remaining']>0)$cap+=min($loan['installment'],$loan['remaining']);
+ return round($cap,3);
+}
+function loan_deduction_guard200(int $uid,string $month,float $amount):void{
+ $cap=loan_deduction_cap200($uid,$month);if($cap!==null&&$amount>$cap+0.0005)fail('الاستقطاع يتجاوز القسط المعتمد للسلفة المصروفة في هذا الشهر.');
 }
 function v28_debt_balance(int $uid,string $asOf,?int $except=null):float{
  $sum=0.0;foreach(query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('debt_opening','debt_advance') AND status='approved' AND date_from<=?",[$uid,$asOf])->fetchAll()as $r)$sum+=(float)$r['amount'];

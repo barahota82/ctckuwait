@@ -141,17 +141,35 @@ function presence_slot_day(array $day): bool {
  if(empty($day['scheduled'])||!empty($day['leave'])||empty($day['configured'])||!empty($day['historical']))return false;
  $note=(string)($day['note']??'');return $note===''||(!str_contains($note,'قبل بدء')&&!str_contains($note,'خارج فترة')&&!str_contains($note,'معفى')&&!str_contains($note,'غير معتمد'));
 }
+function presence_display200(array $day,array $at,array $slots,bool $counted): array {
+ $mode=(string)($at['rule']['mode']??'');$note=(string)($day['note']??'');
+ $before=(!empty($at['from'])&&($day['date']??'')<$at['from'])||str_contains($note,'قبل بدء');
+ if(empty($at['subject'])||$before||!empty($day['leave'])||!empty($day['absence'])||empty($day['scheduled']))return ['presence_mark'=>'na','presence_required'=>null,'presence_sent'=>0];
+ if($mode==='court')return ['presence_mark'=>'court','presence_required'=>null,'presence_sent'=>count($day['presence_sends']??[])];
+ if($counted){$sent=0;foreach($slots as $slot)if(($slot['status']??'')==='sent')$sent++;return ['presence_mark'=>'ratio','presence_required'=>count($slots),'presence_sent'=>$sent];}
+ return ['presence_mark'=>'na','presence_required'=>null,'presence_sent'=>0];
+}
+function presence_admin_attendance200(array $actor): array {
+ $target=(int)($_GET['user_id']??0);
+ if($target<=0)return ['administration'=>true,'choose_employee'=>true,'read_only'=>true,'server_time'=>utc_now(),'presence'=>null,'state'=>'none','service_attendance'=>false,'attendance_available35'=>false,'personal_permissions34'=>[],'policy'=>['values'=>['configured'=>false]],'user_id'=>0];
+ $staff=query("SELECT * FROM ep_users WHERE id=? AND role<>'admin'",[$target])->fetch();
+ if(!$staff)fail('اختر موظفًا؛ المشرف العام حساب إدارة فقط.');
+ $date=local_time()->format('Y-m-d');$state=service_state($staff,$date);
+ return ['administration'=>true,'choose_employee'=>false,'read_only'=>true,'user_id'=>(int)$staff['id'],'staff_name'=>$staff['name'],'employee_code'=>employee_key($staff),'staff_type'=>$state['staff_type']??$staff['staff_type'],'service_attendance'=>(bool)$state['attendance'],'personal_permissions34'=>[],'server_time'=>utc_now(),'attendance_available35'=>false,'policy'=>policy_for((int)$staff['id'],$date),'state'=>event_state(query('SELECT event_type FROM ep_events WHERE user_id=? AND work_date=? ORDER BY received_at,id',[$staff['id'],$date])->fetchAll()),'presence'=>presence_employee_status($staff)];
+}
 function presence_apply_report(int $uid,array $days,string $reportFrom): array {
  $sends=presence_send_cache($uid);$now=presence_clock();$prior=[];
  foreach($days as $presenceIndex200=>&$day){
   $day['presence_missed']=0;$day['presence_penalty_minutes']=0.0;$day['presence_penalty_days']=0.0;$day['presence_slots']=[];
   $day['presence_sends']=array_map('presence_public_send',array_values(array_filter($sends,fn($row)=>$row['date_from']===$day['date'])));
-  $at=presence_at($uid,$day['date']);$rule=$at['rule'];
-  if(!$at['subject']||($rule['mode']??'')!=='scheduled'||($at['from']&&$day['date']<$at['from'])||!presence_slot_day($day)||!empty($day['absence']))continue;
+  $at=presence_at($uid,$day['date']);$rule=$at['rule'];$slots=[];$presenceCounted200=false;
+  if($at['subject']&&($rule['mode']??'')==='scheduled'&&!($at['from']&&$day['date']<$at['from'])&&presence_slot_day($day)&&empty($day['absence'])){$presenceCounted200=true;
   $slots=presence_slots($rule,$day['date'],$sends,$now);$day['presence_slots']=$slots;$charge=$at['penalty'];$period=period_start($day['date'],(string)($charge['period']??'month'));
   $sequence=0;for($presenceEarlier200=0;$presenceEarlier200<$presenceIndex200;$presenceEarlier200++){$earlierDate=(string)($days[$presenceEarlier200]['date']??'');if($earlierDate>=$period&&$earlierDate<$day['date'])$sequence+=(int)($days[$presenceEarlier200]['presence_missed']??0);}
   if($period<$reportFrom){if(!array_key_exists($period,$prior)){$prior[$period]=0;if(empty($GLOBALS['PRESENCE_PRIOR'])){$GLOBALS['PRESENCE_PRIOR']=true;try{$priorEnd=(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d');if($priorEnd>=$period)foreach(attendance_report($uid,$period,$priorEnd) as $prev)if(($prev['date']??'')>=$period&&($prev['date']??'')<$reportFrom)$prior[$period]+=(int)($prev['presence_missed']??0);}finally{unset($GLOBALS['PRESENCE_PRIOR']);}}}$sequence+=$prior[$period];}
   foreach($slots as $slot)if($slot['status']==='missed'){$sequence++;[$minutes,$penaltyDays]=presence_charge($charge,$sequence);$day['presence_missed']++;$day['presence_penalty_minutes']+=$minutes;$day['presence_penalty_days']+=$penaltyDays;}
+  }
+  foreach(presence_display200($day,$at,$slots,$presenceCounted200) as $presenceKey200=>$presenceValue200)$day[$presenceKey200]=$presenceValue200;
  }
  unset($day);return $days;
 }

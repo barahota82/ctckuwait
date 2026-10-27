@@ -25,6 +25,12 @@ function workflow_route194(string $action,array $b):?array {
  'permission_punch182'=>['attendance','create'],
  'evaluation_parents185'=>['evaluation','view'],
  'evaluation_followup185'=>['evaluation','create'],
+ 'leave_start200'=>['leave','review'],
+ 'leave_schedule200'=>['leave','review'],
+ 'leave_cancel200'=>['leave','review'],
+ 'loan_terms200'=>['loan','review'],
+ 'loan_disburse200'=>['loan','disburse'],
+ 'loan_cancel200'=>['loan','review'],
  'evaluation_settings182'=>['evaluation_settings182','view'],
  'evaluation_draft182'=>['evaluation_settings182','create'],
  'review193_types'=>['corporate_document','view'],
@@ -117,6 +123,7 @@ function workflow_action194(string $action,array $actor,array $b):array {
  if(in_array($action,['departure_grant199','departure_withdraw199'],true))return departure_action199($action,$actor,$b);
  if(str_starts_with($action,'presence_'))return presence_action($action,$actor,$b);
  if(in_array($action,['record_undo199','record_cancel199'],true))return decision_action199($action,$actor,$b);
+ if(in_array($action,['leave_start200','leave_schedule200','leave_cancel200','loan_terms200','loan_disburse200','loan_cancel200'],true))return execution_action200($action,$actor,$b);
  if(str_starts_with($action,'permission'))return permission_action194($action,$actor,$b);
  if(str_starts_with($action,'evaluation_'))return evaluation_action194($action,$actor,$b);
  if(in_array($action,['review193_types','review193_type_save','review193_type_delete'],true))return company_types_action194($action,$actor,$b);

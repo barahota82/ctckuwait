@@ -102,6 +102,7 @@ const detail185=recordDetail;recordDetail=function(r){
    form.onsubmit=async e=>{e.preventDefault();const unlock=recordLock173(root);try{await api('evaluation_followup185',{id:r.id,result:employeeDataOriginal137(form.elements.followup_result),_edit170:recordMeta173(form)});toast(uiText('تم حفظ نتيجة المتابعة'));$('#modal').close();await navigate('evaluation');}catch(error){toast(error.message);}finally{unlock();}};
   }
  }
+ if(typeof executionForms200==='function')executionForms200(r,root);
  applyInterfaceLanguage();
 };
 const send185=recordSend173;recordSend173=async function(action,r,data){if(!['request','loan'].includes(r.module)||batch185.body(r)._punch39)return send185(action,r,data);const root=$('#modalContent');if(root.dataset.saving173)return false;root.dataset.saving173='1';const unlock=recordLock173(root);try{return await api(action,data);}finally{unlock();delete root.dataset.saving173;}};

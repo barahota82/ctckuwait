@@ -6,7 +6,25 @@ function evaluation_period194(string $kind,int $year,int $part):array {
 function evaluation_metric_keys194():array {return ['presence','absence','late','early','permissions','exit','return','returnLate','missingAttendance','missingCheckout','missingExit','missingReturn','missingPresence','leaveLateCount','leaveLateDays','exceptions','warnings','penalties'];}
 function evaluation_reference194(string $prefix,int $year):string {
  // Called inside the record transaction. The row is serialized across all writers.
- $key='evaluation_sequence194_'.$prefix.'_'.$year;query('MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES (?, ?)) AS source (setting_key,value_json) ON target.setting_key=source.setting_key WHEN NOT MATCHED THEN INSERT(setting_key,value_json) VALUES(source.setting_key,source.value_json);',[$key,'0']);$n=(int)query('SELECT value_json FROM ep_settings WITH (UPDLOCK,HOLDLOCK) WHERE setting_key=?',[$key])->fetchColumn()+1;query('UPDATE ep_settings SET value_json=? WHERE setting_key=?',[(string)$n,$key]);return $prefix.'-'.$year.'-'.str_pad((string)$n,6,'0',STR_PAD_LEFT);
+ $key='evaluation_sequence194_'.$prefix.'_'.$year;query('MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES (?, ?)) AS source (setting_key,value_json) ON target.setting_key=source.setting_key WHEN NOT MATCHED THEN INSERT(setting_key,value_json) VALUES(source.setting_key,source.value_json);',[$key,'0']);$n=(int)query('SELECT value_json FROM ep_settings WITH (UPDLOCK,HOLDLOCK) WHERE setting_key=?',[$key])->fetchColumn()+1;query('UPDATE ep_settings SET value_json=? WHERE setting_key=?',[(string)$n,$key]); return $prefix.'-'.$year.'-'.str_pad((string)$n,6,'0',STR_PAD_LEFT);
+}
+function evaluation_create_missing194(array $people,string $key,array $period): void {
+ if(!$people)return;
+ usort($people,fn($a,$b)=>strnatcasecmp(employee_key($a),employee_key($b))?:((int)$a['id']<=>(int)$b['id']));
+ db()->beginTransaction();
+ query("MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES ('evaluation_batch194','{}')) AS source (setting_key,value_json) ON target.setting_key=source.setting_key WHEN NOT MATCHED THEN INSERT (setting_key,value_json) VALUES (source.setting_key,source.value_json);");
+ query("SELECT value_json FROM ep_settings WITH (UPDLOCK, HOLDLOCK) WHERE setting_key=?",['evaluation_batch194'])->fetch();
+ foreach($people as $staff){
+  $uid=(int)$staff['id'];
+  query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$uid]);
+  $old=query("SELECT TOP (1) * FROM ep_records WHERE module='evaluation' AND user_id=? AND JSON_VALUE(body_json,'$.period_key194')=? ORDER BY id",[$uid,$key])->fetch();
+  if($old)continue;
+  $body=['_auto182'=>true,'source182'=>'system','record_category49'=>'attendance','period_key194'=>$key,'reference185'=>evaluation_reference194('EV',(int)local_time()->format('Y'))];
+  $id=v26_insert('evaluation',$uid,$period['from'],$period['to'],$body,'awaiting_rules182');
+  query('UPDATE ep_records SET title=? WHERE id=?',['تقييم الالتزام بالدوام',$id]);
+  audit('evaluation_period_created','evaluation:'.$id,['period'=>$period]);
+ }
+ db()->commit();
 }
 function evaluation_counts194(int $uid,array $period):array {
  $values=array_fill_keys(evaluation_metric_keys194(),0);$today=local_time()->format('Y-m-d');$to=min($today,$period['to']);$days=$period['from']<=$to?attendance_report($uid,$period['from'],$to):[];$source=0;
@@ -17,17 +35,18 @@ function evaluation_counts194(int $uid,array $period):array {
  }
  foreach(($GLOBALS['EVAL_INPUT195'][$uid]['permissions']??query("SELECT * FROM ep_records WHERE user_id=? AND module='exit_permission194' AND status='approved' AND date_from>=? AND date_from<=?",[$uid,$period['from'],$to])->fetchAll())as $r){$p=decode($r['body_json']);if(!empty($p['cancelled_at']))continue;$values['permissions']++;if(!empty($p['exited_at']))$values['exit']++;if(!empty($p['returned_at'])){$values['return']++;$values['returnLate']+=max(0,(permission_clock194($p['returned_at'])->getTimestamp()-permission_clock194($p['ends_at'])->getTimestamp())/60);}if(permission_clock194($p['ends_at'])->getTimestamp()<time()){if(empty($p['exited_at']))$values['missingExit']++;elseif(empty($p['returned_at']))$values['missingReturn']++;}}
  foreach(($GLOBALS['EVAL_INPUT195'][$uid]['decisions']??query("SELECT * FROM ep_records WHERE user_id=? AND module IN ('request','discipline') AND status='approved' AND date_from>=? AND date_from<=?",[$uid,$period['from'],$to])->fetchAll())as $r){$b=decode($r['body_json']);if($r['module']==='request'&&!empty($b['_punch39']))$values['exceptions']++;if($r['module']==='discipline'){if(($b['record_category49']??'')==='warning')$values['warnings']++;if(($b['record_category49']??'')==='penalty')$values['penalties']++;}}
- foreach(($GLOBALS['EVAL_INPUT195'][$uid]['leaves']??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave' AND status='approved' AND date_to<?",[$uid,$to])->fetchAll())as $r){$b=decode($r['body_json']);$expected=$b['expected_return']??(new DateTimeImmutable($r['date_to']))->modify('+1 day')->format('Y-m-d');$actual=$b['returned_on']??null;if(!$actual&&!empty($b['actual_end']))$actual=(new DateTimeImmutable($b['actual_end']))->modify('+1 day')->format('Y-m-d');$end=$actual?(new DateTimeImmutable($actual))->modify('-1 day')->format('Y-m-d'):$to;if($end<$expected)continue;if($expected>=$period['from']&&$expected<=$to)$values['leaveLateCount']++;$a=max($period['from'],$expected);$z=min($to,$end);if($a<=$z)$values['leaveLateDays']+=(int)(new DateTimeImmutable($a))->diff(new DateTimeImmutable($z))->format('%a')+1;}
+ foreach(($GLOBALS['EVAL_INPUT195'][$uid]['leaves']??query("SELECT * FROM ep_records WHERE user_id=? AND module='leave' AND status='approved' AND date_to<?",[$uid,$to])->fetchAll())as $r){if(function_exists('leave_effect_pending200')&&leave_effect_pending200($r))continue;$b=decode($r['body_json']);$expected=$b['expected_return']??(new DateTimeImmutable($r['date_to']))->modify('+1 day')->format('Y-m-d');$actual=$b['returned_on']??null;if(!$actual&&!empty($b['actual_end']))$actual=(new DateTimeImmutable($b['actual_end']))->modify('+1 day')->format('Y-m-d');$end=$actual?(new DateTimeImmutable($actual))->modify('-1 day')->format('Y-m-d'):$to;if($end<$expected)continue;if($expected>=$period['from']&&$expected<=$to)$values['leaveLateCount']++;$a=max($period['from'],$expected);$z=min($to,$end);if($a<=$z)$values['leaveLateDays']+=(int)(new DateTimeImmutable($a))->diff(new DateTimeImmutable($z))->format('%a')+1;}
  return ['values'=>$values,'source_days'=>$source,'as_of'=>$to,'score'=>null,'presence_refresh'=>$presenceRefresh];
 }
 function evaluation_system194(array $actor):array {
  $period=evaluation_period194((string)($_GET['kind182']??'monthly'),(int)($_GET['year182']??local_time()->format('Y')),(int)($_GET['part182']??local_time()->format('n')));
- $ids=employee_scope69(scope_ids($actor),max(0,(int)($_GET['employee69']??0)));$people=scoped_people195($ids);$key=$period['kind'].'|'.$period['year'].'|'.$period['part'];$existing=[];
+ $ids=employee_scope69(scope_ids($actor),max(0,(int)($_GET['employee69']??0)));$people=scoped_people195($ids);$roster=$people;$key=$period['kind'].'|'.$period['year'].'|'.$period['part'];$existing=[];
  foreach(array_chunk($ids,500)as $chunk){$marks=implode(',',array_fill(0,count($chunk),'?'));foreach(query("SELECT * FROM ep_records WHERE module='evaluation' AND user_id IN ($marks) AND JSON_VALUE(body_json,'$.period_key194')=? ORDER BY id",[...$chunk,$key])->fetchAll()as $r)$existing[(int)$r['user_id']]??=$r;}
  if($p=page_request195()){
   $all=count($people);$people=array_values(array_filter($people,function($s)use($existing,$period,$p){$r=$existing[(int)$s['id']]??['user_id'=>$s['id'],'module'=>'evaluation','title'=>'تقييم الالتزام بالدوام','status'=>'awaiting_rules182','date_from'=>$period['from'],'date_to'=>$period['to'],'body_json'=>'{"_auto182":true}'];$r['employee_name']=$s['name'];$r['employee_code']=employee_key($s);$r['name_en']=decode($s['profile_json'])['name_en']??'';return page_matches195($r,$p['filters']);}));
   $window=page_rows195($people,$p,$all);$people=$window['rows195'];$GLOBALS['PAGE195_READY']=$window['page195'];
  }
+ evaluation_create_missing194($roster,$key,$period);
  if(!$people)return [];
  // Existing API writes are audited. Include append-only sources and non-evaluation
  // record changes as well. Reuse snapshots only within this source revision/day.

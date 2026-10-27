@@ -1,6 +1,6 @@
 'use strict';
-const operationLabels30={view:'عرض',create:'إضافة / إرسال',edit:'تعديل',review:'مراجعة / اعتماد',submit:'إرسال للمراجعة',export:'تصدير',transfer:'تحويل الحالة',delete:'حذف'};
-const operationOrder30=['view','create','edit','review','submit','export','transfer','delete'];
+const operationLabels30={view:'عرض',create:'إضافة / إرسال',edit:'تعديل',review:'مراجعة / اعتماد',disburse:'تأكيد صرف السلف',pay:'تأكيد الصرف',submit:'إرسال للمراجعة',export:'تصدير',transfer:'تحويل الحالة',delete:'حذف'};
+const operationOrder30=['view','create','edit','review','disburse','pay','submit','export','transfer','delete'];
 window.addEventListener('beforeunload',e=>{if(accessDirty30){e.preventDefault();e.returnValue='';}});
 let accessTab30='groups',accessSelected30='',accessDirty30=false;
 function accessText30(v){return esc(uiText(v));}

@@ -270,7 +270,27 @@ async function dashboard(){
  ]);
 }
 
+let attendanceAdminId200=0,attendanceAdminTicket200=0;
+async function attendanceAdmin200(){
+ const ticket=++attendanceAdminTicket200,requested=attendanceAdminId200,epoch=navigationEpoch32;
+ let info;
+ try{info=await api('punch127_info',null,requested?{user_id:requested}:{});}
+ catch(error){if(ticket!==attendanceAdminTicket200||epoch!==navigationEpoch32||error?.stale32)return;toast(error.message||uiText('تعذر الاتصال بالخادم'));return;}
+ if(ticket!==attendanceAdminTicket200||epoch!==navigationEpoch32||requested!==attendanceAdminId200)return;
+ let list;
+ try{list=await api('users');}
+ catch(error){if(ticket!==attendanceAdminTicket200||epoch!==navigationEpoch32||error?.stale32)return;toast(error.message||uiText('تعذر الاتصال بالخادم'));return;}
+ if(ticket!==attendanceAdminTicket200||epoch!==navigationEpoch32||requested!==attendanceAdminId200)return;
+ users=list.filter(u=>u.role!=='admin');
+ const selected=Number(info.user_id)||0;
+ const options=[...users].sort((a,b)=>String(a.employee_code||a.username||'').localeCompare(String(b.employee_code||b.username||''),'en',{numeric:true})).map(u=>employeeOption143(u.id,u.name,u.employee_code||u.username||'',selected===Number(u.id),u)).join('');
+ const chosen=info.user_id&&!info.choose_employee;
+ $('#page').innerHTML=head('بصمة الدوام',chosen?'عرض حالة الموظف. لا بصمة شخصية ولا إرسال بالنيابة.':'حساب إدارة. اختر موظفًا لعرض حالته. لا إرسال من هذا الحساب.')+'<section class="card"><label>'+esc(uiText('الموظف'))+'<select id="attendanceAdmin200"><option value="">'+esc(uiText('اختر موظفًا'))+'</option>'+options+'</select></label>'+(chosen?'<div class="status-line"><span>'+esc(info.staff_name||'')+'</span>'+badge(info.state)+'</div><p>'+esc(uiText('عرض فقط'))+'</p>':'<p class="tiny muted">'+esc(uiText('المشرف العام حساب إدارة فقط'))+'</p>')+'</section>';
+ const select=$('#attendanceAdmin200');if(typeof enhanceSelect32==='function')enhanceSelect32(select);if(chosen)select.value=String(info.user_id);
+ select.onchange=()=>{attendanceAdminId200=Number(select.value)||0;attendance().catch(error=>{if(!error?.stale32)toast(error.message);});};
+}
 async function attendance(){
+ if(boot.user.role==='admin')return attendanceAdmin200();
  const attendanceEpoch127=navigationEpoch32;if(attendanceReady127)attendanceReady127=false;else{const fresh127=await api('punch127_info');if(attendanceEpoch127!==navigationEpoch32)return;boot={...boot,state:fresh127.state,policy:fresh127.policy,departure199:fresh127.departure199,presence:fresh127.presence||null,attendance_available35:fresh127.attendance_available35,personal_permissions34:fresh127.personal_permissions34,user:{...boot.user,staff_type:fresh127.staff_type,service:{...boot.user.service,attendance:fresh127.service_attendance}}};serverOffset=new Date(fresh127.server_time.replace(' ','T')+'Z').getTime()-Date.now();anchorPortalClock32(Date.now()+serverOffset);}
  const state=boot.state,p=boot.policy.values;
  const executable33=canRegisterAttendance34();
@@ -452,8 +472,8 @@ async function reportView(){if(typeof resetRecordFilters75==='function')resetRec
  if(!users.length){$('#reportData').innerHTML=empty('لا يوجد موظفون متاحون لعرض التقرير.');return;}
  $('#reportUser').disabled=$('#runReport').disabled=$('#exportReport').disabled=false;
  let rows=[],reportRequest68=0;const reportHost68=$('#reportData');
- const load=async()=>{const ticket=++reportRequest68,result=await api('report',null,{user_id:$('#reportUser').value,from:$('#reportFrom').value,to:$('#reportTo').value});if(ticket!==reportRequest68||epoch68!==navigationEpoch32||!reportHost68.isConnected)return;rows=result;reportHost68.innerHTML=table(['اليوم','الحضور','الانصراف','التأخير','المبكر','الأذونات','نسيان','جزاء دقائق / أيام','الحالة','التفاصيل'],rows.map((r,i)=>[
- esc(r.date),esc(localDisplay(r.events.find(e=>e.event_type==='attendance')?.received_at)),esc(localDisplay(r.events.find(e=>e.event_type==='checkout')?.received_at)),r.late_minutes,r.early_minutes,r.permission_minutes+(r.unclosed_permission?' · غير مغلق':''),(typeof reportPresenceCells193==='function'?reportPresenceCells193(r).missing:r.missing),(typeof reportPresenceCells193==='function'?reportPresenceCells193(r).penalty:r.penalty_minutes+' دقيقة / '+r.penalty_days+' يوم'),esc(r.note??(r.absence?'غياب':r.leave??(r.scheduled?'دوام':'راحة'))),'<button data-day="'+i+'">فتح</button>']));
+ const load=async()=>{const ticket=++reportRequest68,result=await api('report',null,{user_id:$('#reportUser').value,from:$('#reportFrom').value,to:$('#reportTo').value});if(ticket!==reportRequest68||epoch68!==navigationEpoch32||!reportHost68.isConnected)return;rows=result;reportHost68.innerHTML=table(['اليوم','الحضور','الانصراف','التأخير','المبكر','الأذونات','نسيان','جزاء دقائق / أيام','بصمة التواجد','الحالة','التفاصيل'],rows.map((r,i)=>[
+ esc(r.date),esc(localDisplay(r.events.find(e=>e.event_type==='attendance')?.received_at)),esc(localDisplay(r.events.find(e=>e.event_type==='checkout')?.received_at)),r.late_minutes,r.early_minutes,r.permission_minutes+(r.unclosed_permission?' · غير مغلق':''),(typeof reportPresenceCells193==='function'?reportPresenceCells193(r).missing:r.missing),(typeof reportPresenceCells193==='function'?reportPresenceCells193(r).penalty:r.penalty_minutes+' دقيقة / '+r.penalty_days+' يوم'),(typeof reportPresenceCells193==='function'?reportPresenceCells193(r).presence:'—'),esc(r.note??(r.absence?'غياب':r.leave??(r.scheduled?'دوام':'راحة'))),'<button data-day="'+i+'">فتح</button>']));
  document.querySelectorAll('[data-day]').forEach(btn=>btn.onclick=()=>{const d=rows[btn.dataset.day];modal('تفاصيل '+d.date,table(['الحركة','وقت الخادم','دقة الموقع','المرفقات'],d.events.map(e=>[esc(labels[e.event_type]),esc(localDisplay(e.received_at)),(e.accuracy===null?'الموقع غير موجود بالسجل القديم':esc(e.accuracy)+' متر · <a target="_blank" rel="noopener" href="https://www.google.com/maps?q='+encodeURIComponent(e.latitude+','+e.longitude)+'">الموقع</a>'),(e.photo_id?'<a href="file.php?id='+e.photo_id+'" target="_blank" rel="noopener">الصورة</a>':'—')+(e.evidence_id?' · <a href="file.php?id='+e.evidence_id+'" target="_blank" rel="noopener">السند</a>':'')]))+punchDetails39(d)+(typeof presenceDayDetails200==='function'?presenceDayDetails200(d):''));});};
  if(typeof mountOperationalChrome68==='function')mountOperationalChrome68();
  $('#runReport').onclick=()=>load().catch(e=>toast(e.message));
