@@ -7,10 +7,13 @@
 #page .review-filters193 .review-query193{flex:3 1 220px}
 #page .review-filters193 input,#page .review-filters193 select{width:100%;min-width:0}
 #page .review-filters193>button{min-height:44px;flex:0 0 80px}
+#page .review-workspace193 .review-filters193 label.check{flex:1 1 auto;min-width:0;min-height:44px}
+#page .review-workspace193 .review-filters193 label.check input{width:auto;margin:0}
+
 #page .review-selection193{display:flex;justify-content:flex-end;margin-bottom:12px}
 #page .review-selection193:has(button[hidden]){display:none}
 #page .review-workspace193 .review-table193 [data-column191="employee"]{width:1%;min-width:240px}
-#page .review-workspace193 .review-table193 :is([data-column191="date"],[data-column191="number"],[data-column191="time"],[data-column191="month"],[data-column191="days"],[data-column191="detail"],[data-column191="status"]){width:1%;white-space:nowrap}
+ #page .review-workspace193 .review-table193 :is([data-column191="date"],[data-column191="number"],[data-column191="time"],[data-column191="month"],[data-column191="days"],[data-column191="detail"],[data-column191="status"],[data-column191="permission"],[data-column191="presence"]){width:1%;white-space:nowrap}
 #page .review-workspace193 .review-table193 [data-column191="name"]{min-width:170px;max-width:300px;text-align:start}
 #page .review-workspace193 .review-table193 [data-column191="company"]{min-width:145px;text-align:start}
 #page .review-workspace193 .review-table193 :is([data-column191="legal"],[data-column191="location"]){min-width:150px;max-width:260px;text-align:start}

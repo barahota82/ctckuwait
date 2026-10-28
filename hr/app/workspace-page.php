@@ -65,6 +65,7 @@ function page_totals195(array $rows):array {
 }
 function workspace_page195(string $action,array $result):array {
  $p=page_request195();if(!$p)return $result;
+ if($action==='attendance_today200')return $result;
  if(isset($GLOBALS['PAGE195_READY']))return ['rows195'=>$result,'page195'=>$GLOBALS['PAGE195_READY'],'totals195'=>$GLOBALS['PAGE195_TOTALS']??[]];
  $f=$p['filters'];$route=(string)($f['route']??'');$family=(string)($f['family']??'');
  if(isset($result['page195'])&&($action==='permissions182'||($action==='v28_info'&&($_GET['kind']??'')==='debt_advance')))return $result;

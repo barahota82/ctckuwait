@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 function display_names143(string $action,mixed $result):mixed {
- $reads=['bootstrap','users','user_choices29','policy_staff_list','policy_editor_context','policy_manage_preview','dashboard','list','report','policies','workforce_list','commission_info','allowance_info','leave_overview','sick_overview','locations','audit','payroll_list','bank_list','v26_info','v28_info','v26_audit','v26_historical','v26_payments','v26_report','v26_report_detail','v26_video_list','v26_video_detail','pay35_info','pay37_sheet','pay37_vouchers','sales36_report','finance103_info','finance103_day','payroll_entry127','incentive114_info','profile29','groups29_list','permissions_list','customer_departments','customer_case_detail'];
+ $reads=['bootstrap','users','user_choices29','policy_staff_list','policy_editor_context','policy_manage_preview','dashboard','list','report','attendance_today200','policies','workforce_list','commission_info','allowance_info','leave_overview','sick_overview','locations','audit','payroll_list','bank_list','v26_info','v28_info','v26_audit','v26_historical','v26_payments','v26_report','v26_report_detail','v26_video_list','v26_video_detail','pay35_info','pay37_sheet','pay37_vouchers','sales36_report','finance103_info','finance103_day','payroll_entry127','incentive114_info','profile29','groups29_list','permissions_list','customer_departments','customer_case_detail'];
  if(!in_array($action,$reads,true)||!is_array($result))return $result;
  $direct=in_array($action,['users','user_choices29','policy_staff_list','leave_overview','sick_overview','locations'],true);$needed=[];
  $identity=function(array $row,string $key,bool $root)use($action,$direct):?array {

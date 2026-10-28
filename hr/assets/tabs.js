@@ -36,8 +36,9 @@ function hubFor32(key){
  if(key==='request'&&requestMode50==='attendance')key='request_attendance50';
  return activeHubs50().find(h=>h[0]===key||h[2].includes(key));
 }
-function tabTitle32(key){
+ function tabTitle32(key){
  const direct182={delegation_managers199:'تفويض المديرين',policy_general182:'القواعد والدوام الافتراضي',policy_staff182:'دوام الموظفين',policy_temporary182:'الجداول المؤقتة',evaluation_settings182:'إعدادات التقييم'};if(direct182[key])return direct182[key];
+ if(key==='attendance'&&boot.user?.role==='admin')return 'متابعة دوام اليوم';
  if(key==='dashboard'&&personalNavigation50())return 'ملخصي';
  const named={eos:'تسوية نهاية الخدمة',leave_cash:'تسوية الإجازات النقدية',exit_permissions183:'أذونات الخروج',payroll_entry_click126:'شركة كليك',payroll_entry_afaq126:'شركة آفاق',contract_sales99:'مسؤولو المبيعات',contract_staff99:'موظفو الشركة',contract_agents99:'المناديب',receipt_company99:'تحصيل الشركة',receipt_click99:'تحصيل أونلاين كليك',receipt_afaq99:'تحصيل أونلاين آفاق',receipt_agents99:'تحصيل المناديب',debt_statement95:'كشف حساب السلف',attendance:'بصمة الدوام',request:'الطلبات الإدارية',request_attendance50:'وقائع الحضور',addition:'الإضافات الشهرية',allowances:'البدلات والجمعات',personal_history:'تاريخ بياناتي السابقة'};
  if(named[key])return named[key];

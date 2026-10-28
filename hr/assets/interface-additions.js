@@ -206,7 +206,20 @@ window.interfaceAdditions194={
   "إرسال محفوظ": "Saved send",
   "التسويات المعتمدة": "Approved settlements",
   "لا توجد تسوية معتمدة في هذا النطاق.": "There is no approved settlement in this scope.",
-  "حساب نهاية الخدمة": "End of service calculation"
+  "حساب نهاية الخدمة": "End of service calculation",
+  "متابعة دوام اليوم": "Today's attendance follow-up",
+  "المطلوب حضورهم": "Required today",
+  "حضروا": "Checked in",
+  "لم يسجلوا حضورًا": "Did not check in",
+  "انصرفوا": "Left",
+  "انصرف": "Left",
+  "إظهار غير المطلوب حضورهم اليوم": "Show people not required today",
+  "خارج بإذن حتى": "Away with permission until",
+  "إذن الخروج": "Exit permission",
+  "بصمة التواجد": "Presence proof",
+  "عرض كل الموظفين": "Show all employees",
+  "مرضية": "Sick leave",
+  "الحالة الحالية": "Current status"
 };
 function applyInterfaceAdditions200(target){
  const loc=target?.localization||(typeof boot!=='undefined'?boot?.localization:null);

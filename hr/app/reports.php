@@ -16,3 +16,128 @@ function v26_reports_action(string $action,array $u,array $b):array {
 }
 
 function v26_report_labels():array{return ['bank_opening'=>'رصيد التحويل الافتتاحي د.ك','recovery_opening'=>'رصيد الاسترداد الافتتاحي د.ك','financial_accounts_unreconciled'=>'حسابات مالية غير محسومة','user_id'=>'معرف السجل','code'=>'كود الموظف','name'=>'الموظف','department'=>'القسم','company'=>'شركة العمل','residence_company'=>'شركة الإقامة','service_days'=>'أيام الخدمة','unconfigured_days'=>'أيام بدون جدول دوام معتمد','scheduled_days'=>'أيام الدوام المجدولة','presence_days'=>'أيام الحضور المثبت','absence_days'=>'أيام الغياب المثبت','sick_days'=>'أيام المرضية','late_minutes'=>'دقائق التأخير','early_minutes'=>'دقائق الانصراف المبكر','permission_minutes'=>'دقائق الأذونات','permission_deduct_minutes39'=>'دقائق الخروج المخصومة','permission_exempt_minutes39'=>'دقائق الخروج المعفاة','missing_punches'=>'البصمات المنسية','leave_days'=>'أيام الإجازات الفعلية','remaining_days'=>'رصيد أيام الإجازة','cash_days'=>'المتاح للصرف أيام','cash_total_days'=>'الرصيد المالي الكلي أيام','cash_reserved_days'=>'المحجوز للصرف أيام','cash_value'=>'قيمة الرصيد المالي د.ك','excess_days'=>'أيام الزيادة عن الرصيد','late_return_days'=>'أيام التخلف عن العودة','salary_net_approved'=>'صافي الرواتب المعتمدة د.ك','bank_approved'=>'التحويلات المعتمدة د.ك','recovery_due'=>'فرق التحويل المطلوب استرداده د.ك','payments_recorded'=>'المدفوعات المثبتة د.ك','cash_shortfall'=>'صرف تاريخي يحتاج مراجعة بالأيام','unconfirmed_bank'=>'طريقة استلام غير محددة','recovery_received'=>'الفرق المسترد فعليًا د.ك','bank_paid'=>'التحويل المنفذ فعليًا د.ك','leave_cash_paid'=>'صرف الإجازات المنفذ د.ك','historic_cash_days'=>'أيام الرصيد المالي المصروفة تاريخيًا','historic_cash_amount'=>'مبالغ الإجازات المصروفة تاريخيًا د.ك','recovery_outstanding'=>'فرق تحويل لم يسترد د.ك','bank_outstanding'=>'تحويل معتمد غير مثبت دفعه د.ك','monthly_presence_average'=>'متوسط أيام الحضور المثبت شهريًا','alert'=>'تنبيه رصيد الإجازات','evidence_note'=>'دلالة بيانات الحضور'];}
+
+function attendance_today_required200(array $day): bool {
+ $note=(string)($day['note']??'');
+ if(str_contains($note,'خارج فترة')||str_contains($note,'معفى')||str_contains($note,'غير خاضع')||str_contains($note,'قبل بدء'))return false;
+ if(empty($day['configured'])||str_contains($note,'غير معتمد'))return false;
+ if(!empty($day['leave']))return false;
+ return !empty($day['scheduled']);
+}
+function attendance_today_status200(array $day): string {
+ $note=(string)($day['note']??'');$state=event_state($day['events']??[]);
+ if($state==='working'||$state==='away')return $state;
+ if($state==='closed')return 'left';
+ $leave=(string)($day['leave']??'');
+ if($leave==='sick'||$leave==='مرضي')return 'sick';
+ if($leave!=='')return 'leave';
+ if(str_contains($note,'خارج فترة'))return 'service';
+ if(str_contains($note,'معفى')||str_contains($note,'غير خاضع'))return 'exempt';
+ if(str_contains($note,'قبل بدء'))return 'before';
+ if(empty($day['configured'])||str_contains($note,'غير معتمد'))return 'unconfigured';
+ if(empty($day['scheduled']))return 'rest';
+ return 'missing';
+}
+function attendance_today_exit_clock200(string $stamp): ?DateTimeImmutable {
+ if(!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/',$stamp))return null;
+ $value=strlen($stamp)===16?$stamp.':00':$stamp;
+ $date=DateTimeImmutable::createFromFormat('!Y-m-d\TH:i:s',$value,new DateTimeZone(settings()['timezone']));
+ return $date&&$date->format('Y-m-d\TH:i:s')===$value?$date:null;
+}
+function attendance_today_open_exit200(int $uid,array $day): ?array {
+ if(event_state($day['events']??[])!=='away')return null;
+ $open=null;
+ foreach($day['events']??[] as $event){
+  $type=(string)($event['event_type']??'');
+  if($type==='permission_exit')$open=$event;
+  elseif($type==='permission_return')$open=null;
+ }
+ if(!$open||(string)($open['event_type']??'')!=='permission_exit')return null;
+ if(isset($open['user_id'])&&(int)$open['user_id']!==$uid)return null;
+ $date=(string)($day['date']??'');
+ if($date!==''&&isset($open['work_date'])&&(string)$open['work_date']!==$date)return null;
+ return $open;
+}
+function attendance_today_same_exit200(?DateTimeImmutable $exit,array $event): bool {
+ if(!$exit||empty($event['received_at']))return false;
+ $local=(new DateTimeImmutable((string)$event['received_at'],new DateTimeZone('UTC')))->setTimezone(new DateTimeZone(settings()['timezone']));
+ return $exit->format('Y-m-d\TH:i')===$local->format('Y-m-d\TH:i');
+}
+function attendance_today_permission_agree200(array $rows): ?array {
+ if(!$rows)return null;
+ $until=null;
+ foreach($rows as $body){
+  $stamp=(string)($body['ends_at']??'');
+  if($until===null)$until=$stamp;
+  elseif($until!==$stamp)return null;
+ }
+ return $rows[0];
+}
+function attendance_today_permission_for200(int $uid,array $day,array $candidates): ?array {
+ $open=attendance_today_open_exit200($uid,$day);if(!$open)return null;
+ $eventId=(int)($open['id']??0);$linked=[];$timed=[];
+ foreach($candidates as $body){
+  if(!empty($body['cancelled_at'])||empty($body['exited_at'])||!empty($body['returned_at'])||($body['decision']??'approved')==='rejected')continue;
+  if(isset($body['user_id'])&&(int)$body['user_id']!==$uid)continue;
+  $id=(int)($body['exit_event_id']??0);
+  if($id>0){if($eventId>0&&$id===$eventId)$linked[]=$body;continue;}
+  if(attendance_today_same_exit200(attendance_today_exit_clock200((string)$body['exited_at']),$open))$timed[]=$body;
+ }
+ if($linked)return attendance_today_permission_agree200($linked);
+ return attendance_today_permission_agree200($timed);
+}
+function attendance_today_permission200(array $day,?array $permission): array {
+ if(event_state($day['events']??[])!=='away')return ['open'=>false,'until'=>''];
+ $until='';
+ if($permission&&empty($permission['returned_at'])&&empty($permission['cancelled_at'])&&!empty($permission['exited_at'])){
+  if(preg_match('/T(\d{2}:\d{2})/',(string)($permission['ends_at']??''),$match))$until=$match[1];
+ }
+ return ['open'=>true,'until'=>$until];
+}
+function attendance_today200(array $actor): array {
+ admin_only($actor);
+ if(personal_mode34($actor))fail('هذه العملية تخص مساحة العمل.',403);
+ $now=local_time();$today=$now->format('Y-m-d');
+ $people=query("SELECT * FROM ep_users WHERE role<>'admin' ORDER BY id")->fetchAll();
+ service_prefetch($people);departure_prefetch199($people,$now);
+ try{
+ $byDate=[];
+ foreach($people as $person)$byDate[departure_context199($person,$now)['work_date']][]=$person;
+ $days=[];
+ foreach($byDate as $date=>$group){
+  attendance_prefetch113($group,$date,$date);
+  foreach($group as $person){
+   $report=attendance_report((int)$person['id'],$date,$date);
+   $days[(int)$person['id']]=$report[0]??['date'=>$date,'events'=>[],'configured'=>false,'scheduled'=>false,'note'=>'جدول الدوام غير معتمد'];
+  }
+ }
+ $candidates=[];
+ $ids=array_map(fn($person)=>(int)$person['id'],$people);
+ foreach(array_chunk($ids,500) as $chunk){
+  if(!$chunk)continue;
+  $marks=implode(',',array_fill(0,count($chunk),'?'));
+  foreach(query("SELECT user_id,body_json FROM ep_records WHERE module='exit_permission194' AND status='approved' AND user_id IN ($marks)",$chunk)->fetchAll() as $row){
+   $body=decode($row['body_json']);
+   if(!empty($body['cancelled_at'])||empty($body['exited_at'])||!empty($body['returned_at'])||($body['decision']??'approved')==='rejected')continue;
+   $candidates[(int)$row['user_id']][]=$body;
+  }
+ }
+ $rows=[];
+ foreach($people as $person){
+  $id=(int)$person['id'];$day=$days[$id];$profile=decode($person['profile_json']??'{}');
+  $permission=attendance_today_permission200($day,attendance_today_permission_for200($id,$day,$candidates[$id]??[]));
+  $english=trim((string)($profile['name_en']??''));
+  $rows[]=['user_id'=>$id,'id'=>$id,'name'=>$person['name'],'employee_name'=>$person['name'],'name_en'=>$english,'profile'=>['name_en'=>$english],'employee_code'=>employee_key($person),'staff_type'=>$person['staff_type']??'office','manager_id'=>(int)($person['manager_id']??0),'required'=>attendance_today_required200($day),'attended'=>(bool)array_filter($day['events']??[],fn($event)=>($event['event_type']??'')==='attendance'),'status_key'=>attendance_today_status200($day),'permission_open'=>$permission['open'],'permission_until'=>$permission['until'],'work_date'=>$day['date']??$today,'day'=>$day];
+ }
+ usort($rows,fn($a,$b)=>strnatcasecmp($a['employee_code'],$b['employee_code'])?:($a['user_id']<=>$b['user_id']));
+ $requiredRows=array_values(array_filter($rows,fn($row)=>!empty($row['required'])));
+ $count=fn($predicate)=>count(array_filter($requiredRows,$predicate));
+ $summary=['required'=>count($requiredRows),'present'=>$count(fn($row)=>!empty($row['attended'])),'missing'=>$count(fn($row)=>empty($row['attended'])),'working'=>$count(fn($row)=>$row['status_key']==='working'),'away'=>$count(fn($row)=>$row['status_key']==='away'),'left'=>$count(fn($row)=>$row['status_key']==='left')];
+ $request=page_request195()??['size'=>'50','page'=>0,'filters'=>[]];
+ $filters=$request['filters'];$employee=(int)($filters['employee']??0);$others=(string)($filters['others']??'')==='1';
+ $visible=array_values(array_filter($rows,fn($row)=>$employee>0?(int)$row['user_id']===$employee:($others||!empty($row['required']))));
+ $window=page_rows195($visible,$request);
+ $peopleOut=array_map(fn($row)=>['id'=>$row['user_id'],'user_id'=>$row['user_id'],'name'=>$row['name'],'name_en'=>$row['name_en'],'employee_code'=>$row['employee_code'],'profile'=>['name_en'=>$row['name_en']]],$rows);
+ return ['date'=>$today,'server_time'=>utc_now(),'summary'=>$summary,'people'=>$peopleOut,'rows'=>$window['rows195'],'page195'=>$window['page195']];
+ }finally{unset($GLOBALS['DEPARTURE_INPUT199']);foreach($people as $person)unset($GLOBALS['REPORT_POLICIES32'][(int)$person['id']]);}
+}
