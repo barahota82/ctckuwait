@@ -17,6 +17,34 @@ function v26_reports_action(string $action,array $u,array $b):array {
 
 function v26_report_labels():array{return ['bank_opening'=>'رصيد التحويل الافتتاحي د.ك','recovery_opening'=>'رصيد الاسترداد الافتتاحي د.ك','financial_accounts_unreconciled'=>'حسابات مالية غير محسومة','user_id'=>'معرف السجل','code'=>'كود الموظف','name'=>'الموظف','department'=>'القسم','company'=>'شركة العمل','residence_company'=>'شركة الإقامة','service_days'=>'أيام الخدمة','unconfigured_days'=>'أيام بدون جدول دوام معتمد','scheduled_days'=>'أيام الدوام المجدولة','presence_days'=>'أيام الحضور المثبت','absence_days'=>'أيام الغياب المثبت','sick_days'=>'أيام المرضية','late_minutes'=>'دقائق التأخير','early_minutes'=>'دقائق الانصراف المبكر','permission_minutes'=>'دقائق الأذونات','permission_deduct_minutes39'=>'دقائق الخروج المخصومة','permission_exempt_minutes39'=>'دقائق الخروج المعفاة','missing_punches'=>'البصمات المنسية','leave_days'=>'أيام الإجازات الفعلية','remaining_days'=>'رصيد أيام الإجازة','cash_days'=>'المتاح للصرف أيام','cash_total_days'=>'الرصيد المالي الكلي أيام','cash_reserved_days'=>'المحجوز للصرف أيام','cash_value'=>'قيمة الرصيد المالي د.ك','excess_days'=>'أيام الزيادة عن الرصيد','late_return_days'=>'أيام التخلف عن العودة','salary_net_approved'=>'صافي الرواتب المعتمدة د.ك','bank_approved'=>'التحويلات المعتمدة د.ك','recovery_due'=>'فرق التحويل المطلوب استرداده د.ك','payments_recorded'=>'المدفوعات المثبتة د.ك','cash_shortfall'=>'صرف تاريخي يحتاج مراجعة بالأيام','unconfirmed_bank'=>'طريقة استلام غير محددة','recovery_received'=>'الفرق المسترد فعليًا د.ك','bank_paid'=>'التحويل المنفذ فعليًا د.ك','leave_cash_paid'=>'صرف الإجازات المنفذ د.ك','historic_cash_days'=>'أيام الرصيد المالي المصروفة تاريخيًا','historic_cash_amount'=>'مبالغ الإجازات المصروفة تاريخيًا د.ك','recovery_outstanding'=>'فرق تحويل لم يسترد د.ك','bank_outstanding'=>'تحويل معتمد غير مثبت دفعه د.ك','monthly_presence_average'=>'متوسط أيام الحضور المثبت شهريًا','alert'=>'تنبيه رصيد الإجازات','evidence_note'=>'دلالة بيانات الحضور'];}
 
+function attendance_today_bind200(int $uid,string $date): bool {
+ $input=$GLOBALS['ATTENDANCE_INPUT113'][$uid.'|'.substr($date,0,7).'-01|'.$date]??null;if($input===null)return false;
+ $history=$input['history']??[];if(!isset($history['leave_history']))$history['leave_history']=[];
+ $GLOBALS['REPORT_POLICIES32'][$uid]=$input['policies']??[];$GLOBALS['REPORT_LEAVE32'][$uid]=$input['leave']??[];$GLOBALS['REPORT_HISTORY32'][$uid]=$history;return true;
+}
+function attendance_today_release200(int $uid): void {unset($GLOBALS['REPORT_POLICIES32'][$uid],$GLOBALS['REPORT_LEAVE32'][$uid],$GLOBALS['REPORT_HISTORY32'][$uid]);}
+function attendance_today_leave_status200(int $uid,string $date): ?string {
+ $leave=approved_day($uid,$date);if(!$leave)return null;$module=(string)($leave['module']??'');
+ return $module==='sick'||$module==='مرضي'?'sick':($module!==''?'leave':null);
+}
+function attendance_today_place200(array $person,array $day): array {
+ $note=(string)($day['note']??'');
+ if(!str_contains($note,'قبل بدء'))return ['required'=>attendance_today_required200($day),'status'=>attendance_today_status200($day)];
+ $date=(string)($day['date']??'');$uid=(int)$person['id'];
+ if($date===''||!attendance_today_bind200($uid,$date))return ['required'=>false,'status'=>'before'];
+ $service=service_state($person,$date);
+ if(!$service['employed']){attendance_today_release200($uid);return ['required'=>false,'status'=>'service'];}
+ if(!$service['attendance']){$status=attendance_today_leave_status200($uid,$date)??'exempt';attendance_today_release200($uid);return ['required'=>false,'status'=>$status];}
+ $values=policy_for($uid,$date)['values'];
+ if(empty($values['configured'])){attendance_today_release200($uid);return ['required'=>false,'status'=>'unconfigured'];}
+ $scheduled=in_array((int)(new DateTimeImmutable($date))->format('w'),array_map('intval',$values['weekdays']??[]),true);
+ if(!empty($person['hired_on'])&&$date<$person['hired_on'])$scheduled=false;
+ if(in_array($date,$values['holiday_dates']??[],true))$scheduled=false;
+ $status=attendance_today_leave_status200($uid,$date);attendance_today_release200($uid);
+ if($status)return ['required'=>false,'status'=>$status];
+ if(!$scheduled)return ['required'=>false,'status'=>'rest'];
+ return ['required'=>true,'status'=>'before'];
+}
 function attendance_today_required200(array $day): bool {
  $note=(string)($day['note']??'');
  if(str_contains($note,'خارج فترة')||str_contains($note,'معفى')||str_contains($note,'غير خاضع')||str_contains($note,'قبل بدء'))return false;
@@ -126,13 +154,14 @@ function attendance_today200(array $actor): array {
  foreach($people as $person){
   $id=(int)$person['id'];$day=$days[$id];$profile=decode($person['profile_json']??'{}');
   $permission=attendance_today_permission200($day,attendance_today_permission_for200($id,$day,$candidates[$id]??[]));
+  $place=attendance_today_place200($person,$day);
   $english=trim((string)($profile['name_en']??''));
-  $rows[]=['user_id'=>$id,'id'=>$id,'name'=>$person['name'],'employee_name'=>$person['name'],'name_en'=>$english,'profile'=>['name_en'=>$english],'employee_code'=>employee_key($person),'staff_type'=>$person['staff_type']??'office','manager_id'=>(int)($person['manager_id']??0),'required'=>attendance_today_required200($day),'attended'=>(bool)array_filter($day['events']??[],fn($event)=>($event['event_type']??'')==='attendance'),'status_key'=>attendance_today_status200($day),'permission_open'=>$permission['open'],'permission_until'=>$permission['until'],'work_date'=>$day['date']??$today,'day'=>$day];
+  $rows[]=['user_id'=>$id,'id'=>$id,'name'=>$person['name'],'employee_name'=>$person['name'],'name_en'=>$english,'profile'=>['name_en'=>$english],'employee_code'=>employee_key($person),'staff_type'=>$person['staff_type']??'office','manager_id'=>(int)($person['manager_id']??0),'required'=>$place['required'],'attended'=>(bool)array_filter($day['events']??[],fn($event)=>($event['event_type']??'')==='attendance'),'status_key'=>$place['status'],'permission_open'=>$permission['open'],'permission_until'=>$permission['until'],'work_date'=>$day['date']??$today,'day'=>$day];
  }
  usort($rows,fn($a,$b)=>strnatcasecmp($a['employee_code'],$b['employee_code'])?:($a['user_id']<=>$b['user_id']));
  $requiredRows=array_values(array_filter($rows,fn($row)=>!empty($row['required'])));
  $count=fn($predicate)=>count(array_filter($requiredRows,$predicate));
- $summary=['required'=>count($requiredRows),'present'=>$count(fn($row)=>!empty($row['attended'])),'missing'=>$count(fn($row)=>empty($row['attended'])),'working'=>$count(fn($row)=>$row['status_key']==='working'),'away'=>$count(fn($row)=>$row['status_key']==='away'),'left'=>$count(fn($row)=>$row['status_key']==='left')];
+ $summary=['required'=>count($requiredRows),'present'=>$count(fn($row)=>!empty($row['attended'])),'missing'=>$count(fn($row)=>$row['status_key']==='missing'),'working'=>$count(fn($row)=>$row['status_key']==='working'),'away'=>$count(fn($row)=>$row['status_key']==='away'),'left'=>$count(fn($row)=>$row['status_key']==='left'),'before'=>$count(fn($row)=>$row['status_key']==='before')>0];
  $request=page_request195()??['size'=>'50','page'=>0,'filters'=>[]];
  $filters=$request['filters'];$employee=(int)($filters['employee']??0);$others=(string)($filters['others']??'')==='1';
  $visible=array_values(array_filter($rows,fn($row)=>$employee>0?(int)$row['user_id']===$employee:($others||!empty($row['required']))));

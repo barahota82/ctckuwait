@@ -219,7 +219,8 @@ window.interfaceAdditions194={
   "بصمة التواجد": "Presence proof",
   "عرض كل الموظفين": "Show all employees",
   "مرضية": "Sick leave",
-  "الحالة الحالية": "Current status"
+  "الحالة الحالية": "Current status",
+  "قبل بدء التسجيل الفعلي": "Before live recording starts"
 };
 function applyInterfaceAdditions200(target){
  const loc=target?.localization||(typeof boot!=='undefined'?boot?.localization:null);

@@ -31,6 +31,8 @@
 .review-summary193{padding:12px 0;border-block:1px solid #e5e5e5;margin-bottom:16px;background:transparent}
 .review-summary193>summary{cursor:pointer;font-weight:600;padding:8px}
 .review-totals193{display:flex;gap:24px;flex-wrap:wrap;margin:0 0 16px}
+[data-today200] [data-summary200]{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px}
+[data-today200] [data-phase200]{margin:0 0 16px}
 .review-totals193>div{display:flex;gap:8px;align-items:center}
 .review-totals193 dd{margin:0;font-weight:600}
 .review-map193{min-height:220px;border:1px solid #ddd;border-radius:10px;background:repeating-linear-gradient(0deg,#f5f5f5,#f5f5f5 31px,#e6e6e6 32px);display:grid;place-content:center;text-align:center;gap:14px}
