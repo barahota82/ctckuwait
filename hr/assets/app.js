@@ -160,6 +160,7 @@ function loadingMarkup(){return '<div class="loading">'+esc(uiText('جارٍ ا�
 function empty(t='لا توجد نتائج'){t=uiText(t);return '<div class="empty">'+esc(t)+'</div>';}
 function table(headers,rows){const actionCols=headers.map(h=>/^(الإجراءات|الاجراءات|Actions|Action)$/i.test(String(h).trim()));if(typeof formatTableCell32==='function')rows=rows.map(r=>r.map((c,i)=>formatTableCell32(headers[i]??'',c)));headers=headers.map((h,i)=>actionCols[i]?'':uiText(h));return '<div class="table-wrap"><table><thead><tr>'+headers.map((h,i)=>'<th'+(actionCols[i]?' data-actions32="1"':'')+'>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(actionCols[i]?' data-actions32="1"':'')+' data-label="'+esc(headers[i]??'')+'">'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
 function userOptions(selected=boot.user.id,all=false){return (all?'<option value="0">كل الموظفين / السياسة العامة</option>':'')+[...users].sort((a,b)=>String(a.employee_code??a.username).localeCompare(String(b.employee_code??b.username),'en',{numeric:true})).map(u=>employeeOption143(u.id,u.name,'',Number(selected)===Number(u.id),u)).join('');}
+function scrollNavigationTop201(){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;document.querySelectorAll('#page .record-scroll191,#page .paygrid-scroll37,#page .table-wrap').forEach(node=>{node.scrollTop=0;});}
 async function navigate(key,linkTarget32={}){
  if(typeof resolveSystem182==='function')key=resolveSystem182(key);
  if(key==='v28_schedule')key='policies';
@@ -170,8 +171,9 @@ async function navigate(key,linkTarget32={}){
  if(view==='users'&&typeof employeeTransitionAllowed40==='function'&&document.querySelector('.profile-tabs29,#employeeEditorForm134')&&!employeeTransitionAllowed40($('#page')))return;
  if(typeof connection32!=='undefined'&&connection32.blocked)await connection32.ensure();
  if(view==='permissions'&&key!=='permissions'&&typeof accessDirty30!=='undefined'&&accessDirty30){if(!confirm(uiText('توجد تعديلات غير محفوظة. هل تريد تركها؟')))return;accessDirty30=false;}
+ if(typeof payrollEntryDirty201==='function'&&payrollEntryDirty201()){if(!confirm(uiText('توجد تعديلات غير محفوظة. هل تريد تركها؟')))return;payrollEntryClear201();}
  if(typeof resetRecordFilters75==='function')resetRecordFilters75();
- const epoch32=++navigationEpoch32;if(typeof screenLoading197!=='undefined')screenLoading197.cancel();for(const req of pendingReads32)req.abort();pendingReads32.clear();
+ const epoch32=++navigationEpoch32;scrollNavigationTop201();if(typeof screenLoading197!=='undefined')screenLoading197.cancel();for(const req of pendingReads32)req.abort();pendingReads32.clear();
  if(typeof receiptRecorder26!=='undefined'&&receiptRecorder26?.state==='recording'){receiptRecorder26.onstop=null;receiptRecorder26.stop();}closeCamera();
  if(key==='attendance'&&!screenAllowed(key)&&typeof presenceSync200==='function'){try{await presenceSync200();}catch(e){}}
  if(!screenAllowed(key)){key=navigation30.flatMap(g=>g[1]).map(x=>x[0]).find(screenAllowed);if(!key){view='';$('#page').innerHTML=head('ملفي الشخصي','')+empty('لا توجد شاشات مسموحة لهذا العرض.');$('#portalTabs32').hidden=true;return;}}view=key;
@@ -239,7 +241,7 @@ async function navigate(key,linkTarget32={}){
   else if(key==='payroll_settlement35')await payrollSettlement35();
   else if(boot.modules[key])await records(key);
   installScreenActions50();if(typeof mountOperationalChrome68==='function')mountOperationalChrome68();applyInterfaceLanguage();
- }catch(e){if(epoch32!==navigationEpoch32||e.stale32)return;page94.dataset.screenFailed94='';$('#page').innerHTML=head('تعذر عرض الشاشة')+'<div class="error">'+esc(uiText(e.message))+'</div><button class="primary" data-view="'+esc(key)+'">'+esc(boot.localization.language==='en'?'Try again':'إعادة المحاولة')+'</button>'; }finally{if(epoch32===navigationEpoch32){delete page94.dataset.screenLoading94;try{if(typeof mountPeriodRefresh98==='function'){const root98=typeof recordFilterHost75==='function'?recordFilterHost75():null;if(root98)mountPeriodRefresh98(root98);}}finally{if(typeof screenLoading197!=='undefined')screenLoading197.end(epoch32);}}}
+ }catch(e){if(epoch32!==navigationEpoch32||e.stale32)return;page94.dataset.screenFailed94='';$('#page').innerHTML=head('تعذر عرض الشاشة')+'<div class="error">'+esc(uiText(e.message))+'</div><button class="primary" data-view="'+esc(key)+'">'+esc(boot.localization.language==='en'?'Try again':'إعادة المحاولة')+'</button>'; }finally{if(epoch32===navigationEpoch32){scrollNavigationTop201();delete page94.dataset.screenLoading94;try{if(typeof mountPeriodRefresh98==='function'){const root98=typeof recordFilterHost75==='function'?recordFilterHost75():null;if(root98)mountPeriodRefresh98(root98);}}finally{if(typeof screenLoading197!=='undefined')screenLoading197.end(epoch32);}}}
 }
 function stat(label,value,note,icon){if(typeof formatTableCell32==='function')value=formatTableCell32(label,value);label=uiText(label);note=uiText(note);return '<div class="card stat"><small>'+esc(label)+'</small><span class="accent">'+icon+'</span><strong>'+esc(value)+'</strong><p>'+esc(note)+'</p></div>';}
 async function dashboard(){

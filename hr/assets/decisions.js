@@ -10,5 +10,5 @@ function decisionButtons199(r){
 
 function financialDecisionButton199(r,kind){
  if(!r.approval199?.can_undo)return;const root=document.querySelector('#modalContent .modal-body')||document.getElementById('modalContent');if(!root)return;
- const button=document.createElement('button');button.type='button';button.textContent=uiText('التراجع عن الاعتماد');button.onclick=()=>modal(uiText('التراجع عن الاعتماد'),'<form id="modalForm"><label>'+uiText('سبب التراجع')+'<textarea name="note" required maxlength="5000"></textarea></label>'+saveButton()+'</form>',f=>api(kind+'_undo199',{id:r.id,revision199:r.approval199.revision,note:f.elements.note.value}));root.append(button);
+ const button=document.createElement('button');button.type='button';button.textContent=uiText('التراجع عن الاعتماد');button.onclick=()=>modal(uiText('التراجع عن الاعتماد'),(kind==='payroll'?'<p>'+esc(uiText('التراجع يعكس اعتماد كشف الشركة لهذا الشهر كاملًا.'))+'</p>':'')+'<form id="modalForm"><label>'+uiText('سبب التراجع')+'<textarea name="note" required maxlength="5000"></textarea></label>'+saveButton()+'</form>',f=>api(kind+'_undo199',{id:r.id,revision199:r.approval199.revision,note:f.elements.note.value}));root.append(button);
 }

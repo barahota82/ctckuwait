@@ -60,7 +60,7 @@ const portalAreas32=[
  ['الشؤون المالية',['hub_debt','hub_contracts99','hub_receipts99','hub_payroll_entry126','hub_payroll35','hub_payment50','leave_cash','eos']],
  ['الإقرارات',['hub_video']],['الشركات',['hub_companies']],
  ['التقارير',['hub_reports50']],['الموقع التعريفي',['hub_content']],
- ['خدمة العملاء',['hub_customers']],['النظام',['policy_general182','policy_staff182','policy_temporary182','v28_locations','permissions','delegation_managers199','settings','backups','evaluation_settings182','hub_import']]
+ ['خدمة العملاء',['hub_customers']],['النظام',['policy_general182','policy_temporary182','policy_staff182','v28_locations','delegation_managers199','evaluation_settings182','settings','permissions','backups','hub_import']]
 ];
 function tabMenu32(){
  const areas=personalNavigation50()?[['الرئيسية',['dashboard','notifications','attendance']],...personalHubs50.map(h=>[h[1],[h[0]]]).concat([['أذونات الخروج',['exit_permissions183']],['عهدي',['custody']],['طلباتي الإدارية',['request']]])]:portalAreas32;

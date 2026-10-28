@@ -83,6 +83,8 @@ function permission_route29(string $action,array $b):array{
  if($action==='v26_permit_transfer')return ['work_permit','edit'];
  if($action==='punch39_choices')return ['request','create'];
  if(str_starts_with($action,'pay37_'))return [$action==='pay37_vouchers'?'vouchers37':pay37_screen((string)($b['table']??$_GET['table']??'payroll')),$action==='pay37_save'?'create':'view'];
+ if($action==='payroll_entry_save201')return [(string)($b['key']??''),'create'];
+ if($action==='payroll_statement201')return ['payroll',($b['statement']??'')==='submit'?'submit':'review'];
  if($action==='v28_location_save')return ['v28_locations',empty($b['location']['id'])?'create':'edit'];
  if($action==='v28_info'&&($b['kind']??$_GET['kind']??'')==='locations')return ['v28_locations','view'];
  if(in_array($action,['v26_info','v26_save'],true)&&($b['kind']??$_GET['kind']??'')==='eos_settlement')return ['eos','view'];
