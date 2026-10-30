@@ -163,11 +163,15 @@ function upload_file(array $file,int $uid,bool $image_only=false,bool $archive=f
  if($archive)$allowed=[...$allowed,'text/plain','application/zip','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];if(!in_array($mime,$allowed,true))fail('نوع المرفق غير مسموح.');
  if(str_starts_with($mime,'image/') && !getimagesize($file['tmp_name']))fail('الصورة غير صالحة.');
  $name=bin2hex(random_bytes(24)).'.bin';
- if(!move_uploaded_file($file['tmp_name'],EP_ROOT.'/private/files/'.$name))fail('تعذر حفظ المرفق؛ راجع صلاحية الكتابة.');
- if(isset($GLOBALS['EDITOR_FILES143']))$GLOBALS['EDITOR_FILES143'][]=EP_ROOT.'/private/files/'.$name;
- query('INSERT INTO ep_files(user_id,disk_name,original_name,mime,size_bytes,sha256,created_at) VALUES(?,?,?,?,?,?,?)',
- [$uid,$name,mb_substr(basename($file['name']),0,180),$mime,$file['size'],hash_file('sha256',EP_ROOT.'/private/files/'.$name),utc_now()]);
+ $path143=EP_ROOT.'/private/files/'.$name;if(!move_uploaded_file($file['tmp_name'],$path143))fail('تعذر حفظ المرفق؛ راجع صلاحية الكتابة.');
+ $GLOBALS['EDITOR_FILES143'][]=$path143;
+ try{query('INSERT INTO ep_files(user_id,disk_name,original_name,mime,size_bytes,sha256,created_at) VALUES(?,?,?,?,?,?,?)',
+ [$uid,$name,mb_substr(basename($file['name']),0,180),$mime,$file['size'],hash_file('sha256',$path143),utc_now()]);}catch(Throwable $e){if(is_file($path143))@unlink($path143);throw $e;}
  return (int)db()->lastInsertId();
+}
+function editor_files_release143(): void {
+ foreach($GLOBALS['EDITOR_FILES143']??[] as $path143){if(!is_file($path143))continue;$keep143=true;try{$keep143=(bool)query('SELECT id FROM ep_files WHERE disk_name=?',[basename((string)$path143)])->fetch();}catch(Throwable $ignored143){}if(!$keep143&&is_file($path143))@unlink($path143);}
+ unset($GLOBALS['EDITOR_FILES143']);
 }
 function notice(int $uid,string $title,string $body,bool $ack=false,array $meta=[]): void {
  query('INSERT INTO ep_notifications(user_id,title,body,require_ack,created_at) VALUES(?,?,?,?,?)',[$uid,$title,$body,$ack?1:0,utc_now()]);

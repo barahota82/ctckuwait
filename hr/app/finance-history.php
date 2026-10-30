@@ -11,8 +11,8 @@ function finance_history_save114(array $u,string $key,string $date,array $day,ar
    $daily=array_values(array_filter($day['values'],fn($v)=>(int)$v['user_id']===$uid));if(count($daily)>1)fail('تسجيل يومي متداخل.');$previous=$daily[0]??null;$zero=!$delivered&&!$amount&&!array_sum($returns);if(!$previous&&$zero)continue;
    $op=$previous?'edit':'create';if(!in_array($uid,finance_scope103($u,$key,$op),true)||!in_array($uid,array_column($day['people'],'user_id'),true))fail('الموظف خارج صلاحية التسجيل.',403);
    $staff=employee_required($uid);$company=(string)(service_state($staff,$date)['company_code']??'');if(!company_allowed30($u,$key,$company,$op))fail('الشركة خارج الصلاحية.',403);
-   pay35_lock($uid,$month);if(finance_legacy103([$uid],$key,$month.'-01',pay35_month($month)))fail('يوجد مصدر شهري سابق للموظف؛ لا تضف مصدرًا مكررًا.');
-   $values=['key'=>$key,'kind'=>$kind,'company_code'=>$company,'delivered'=>$kind==='collection'?0:$delivered,'returns'=>$kind==='collection'?[]:$returns,'amount'=>$kind==='collection'?$amount:0];if($previous&&array_intersect_key($previous,$values)==$values)continue;financial_invalidate($uid,$month.'-01');
+   pay35_lock($uid,$month,payroll_source_name201((string)$key));if(finance_legacy103([$uid],$key,$month.'-01',pay35_month($month)))fail('يوجد مصدر شهري سابق للموظف؛ لا تضف مصدرًا مكررًا.');
+   $values=['key'=>$key,'kind'=>$kind,'company_code'=>$company,'delivered'=>$kind==='collection'?0:$delivered,'returns'=>$kind==='collection'?[]:$returns,'amount'=>$kind==='collection'?$amount:0];if($previous&&array_intersect_key($previous,$values)==$values)continue;financial_invalidate($uid,$month.'-01',payroll_source_name201((string)$key));
    if($previous){query('UPDATE ep_records SET body_json=?,amount=?,status=?,updated_at=? WHERE id=?',[jencode($values),$values['amount'],$zero?'cancelled':'approved',utc_now(),$previous['id']]);$id=$previous['id'];$before[]=$previous;}else $id=v26_insert('finance_daily103',$uid,$date,null,$values,'approved',$values['amount']);$after[]=['id'=>$id,'body'=>$values];continue;
   }
   if(count($old)!==1)fail('توجد عدة مصادر تاريخية لهذا الموظف؛ يلزم تصحيح كل مصدر دون دمج صامت.');$old=$old[0];
@@ -36,7 +36,7 @@ function finance_history_save114(array $u,string $key,string $date,array $day,ar
    query('UPDATE ep_history SET body_json=? WHERE id=?',[jencode($hv),$h['id']]);
   }unset($line);
   if(!$matched)fail('نوع العمولة غير موجود بالمصدر.');$v['total']=round((float)$v['total']+$grossDelta,3);$v['net']=round((float)$v['net']+$netDelta,3);$v['unpaid_amount']=max(0,round((float)$v['net']-(float)($v['paid_amount']??0),3));$v['overpaid_amount']=max(0,round((float)($v['paid_amount']??0)-(float)$v['net'],3));$v['paid']=abs((float)$v['net']-(float)($v['paid_amount']??0))<0.0005;$v['payment_status']=$v['paid']?'paid_in_full':($v['overpaid_amount']>0?'overpaid':'partial');
-  query('UPDATE ep_records SET body_json=?,amount=?,updated_at=? WHERE id=?',[jencode($v),$v['total'],utc_now(),$record['id']]);financial_invalidate($uid,$month.'-01');$before[]=$record;$after[]=['id'=>$record['id'],'body'=>$v];
+  query('UPDATE ep_records SET body_json=?,amount=?,updated_at=? WHERE id=?',[jencode($v),$v['total'],utc_now(),$record['id']]);financial_invalidate($uid,$month.'-01',payroll_source_name201((string)$key));$before[]=$record;$after[]=['id'=>$record['id'],'body'=>$v];
  }
  foreach([...$day['legacy'],...$day['values']]as $old)if(!isset($seen[(int)$old['user_id']]))fail('صف سابق مفقود؛ أعد الاستعلام.');
  if($after)audit('finance_history_correct114',$key.':'.$date,['before'=>$before,'after'=>$after]);return ['ok'=>true,'changed'=>count($after)];

@@ -148,7 +148,7 @@ session_init();
     if(!empty($b['password'])&&isset($b['id'])){if(!empty($b['password']))v28_password((string)$b['password'],$role);query('UPDATE ep_users SET password_hash=? WHERE id=?',[password_hash($b['password'],PASSWORD_DEFAULT),$id]);}
 
     if(isset($previous))employee_job134($u,$previous,$bankStaff);
-    employee_commission_save130($id,$previousProfile,$b['profile']);
+    employee_commission_save130($id,$previousProfile,$b['profile'],is_string($b['profile']['commission_effective130']??null)?$b['profile']['commission_effective130']:null);
     contract_save119($id,isset($previous)?decode($previous['profile_json']):[],$b['profile']);
     if(array_key_exists('editor134',$b)){require_once __DIR__.'/app/employee-editor.php';employee_editor_extras134($u,$id,$b['editor134'],empty($b['id']));}
     $beforeExempt150=isset($previous)?(bool)(decode($previous['profile_json'])['permit_exempt150']??false):false;if($beforeExempt150!==$b['profile']['permit_exempt150'])audit('work_permit_exemption','user:'.$id,['before'=>$beforeExempt150,'after'=>$b['profile']['permit_exempt150']]);
@@ -177,8 +177,10 @@ session_init();
     if(isset($values['public_default_language'])&&!in_array($values['public_default_language'],$cfg['public_languages'],true))fail('اللغة غير صالحة.');
     foreach(['public_hours','public_address','public_slogan','public_site_title','public_portal_label','public_footer','public_ui']as $k)if(isset($values[$k])&&!is_array($values[$k]))fail('حقول اللغات غير صالحة.');
     if($cfg['translation_enabled'])foreach(language_setting_keys()as $key)if(isset($values[$key]['ar'])&&($cfg[$key]['ar']??null)!==$values[$key]['ar'])foreach($cfg['public_languages']as $target)if($target!=='ar')unset($values[$key][$target]);
+    $leavePolicyFrom201=null;if(array_key_exists('annual_leave_days',$values)&&(float)$values['annual_leave_days']!==(float)($cfg['annual_leave_days']??30)){$leavePolicyFrom201=valid_date($values['leave_policy_from201']??null);if(!$leavePolicyFrom201)fail('حدد تاريخ سريان استحقاق الإجازة.');}unset($values['leave_policy_from201']);
     db()->beginTransaction();
     foreach($values as $k=>$v)if(array_key_exists($k,default_settings()))query('MERGE INTO ep_settings WITH (HOLDLOCK) AS target USING (VALUES (?, ?)) AS source (setting_key, value_json) ON target.setting_key=source.setting_key WHEN MATCHED THEN UPDATE SET value_json=source.value_json WHEN NOT MATCHED THEN INSERT (setting_key, value_json) VALUES (source.setting_key, source.value_json);',[$k,jencode($v)]);
+    if($leavePolicyFrom201){require_once __DIR__.'/app/leave-engine.php';v26_insert('leave_policy201',(int)$u['id'],$leavePolicyFrom201,null,['before'=>['annual_leave_days'=>(float)($cfg['annual_leave_days']??30),'leave_accrual_divisor'=>(float)($cfg['leave_accrual_divisor']??365)],'after'=>['annual_leave_days'=>(float)$values['annual_leave_days'],'leave_accrual_divisor'=>(float)($values['leave_accrual_divisor']??($cfg['leave_accrual_divisor']??365))]],'approved');}
     foreach(['public_site_title','public_slogan','public_hours','public_address']as $key)if(array_key_exists($key,$values)&&$values[$key]!==$cfg[$key]){public_languages_invalidate(['site']);break;}translation_settings_enqueue($values);audit('settings_save','settings',['keys'=>array_keys($values)]);db()->commit();$result=['ok'=>true];break;
    case 'logo_upload':
     admin_only($u);$fid=upload_file($_FILES['file']??[],$uid,true);
@@ -352,7 +354,7 @@ session_init();
     if(!in_array($r['status'],['pending','revision','active'],true))fail('القرار سبق اعتماده؛ لا تعدل التاريخ بصمت.');
     if(!isset(modules()[$r['module']]))fail('راجع السجل من شاشته المخصصة.',403);
     if(modules()[$r['module']]['approval']&&$status==='closed')fail('حدد موافقة أو رفض أو تعديل.');
-    $body=record_attach173(decode($r['body_json']),$recordPair173);$intermediate199=workflow_review199($actor29,$r,$body,$status,(string)($b['note']??''),isset($b['revision199'])?(string)$b['revision199']:null);punch_review39($actor29,$r,$body,$status,(string)($b['note']??''));
+    $body=record_attach173(decode($r['body_json']),$recordPair173);if($r['module']==='adjustment'&&($body['source198']??'')==='payroll_entry')fail('إضافة التسجيل تُعتمد مع كشف الشهر.');$intermediate199=workflow_review199($actor29,$r,$body,$status,(string)($b['note']??''),isset($b['revision199'])?(string)$b['revision199']:null);punch_review39($actor29,$r,$body,$status,(string)($b['note']??''));
     if($status==='approved'&&in_array($r['module'],['leave','sick'],true)){
      $target=query('SELECT * FROM ep_users WITH (UPDLOCK, HOLDLOCK) WHERE id=?',[$r['user_id']])->fetch();foreach(days_between($r['date_from'],$r['date_to'])as $day)if(!service_state($target,$day)['employed'])fail('الفترة خارج خدمة الموظف.');
      if(query("SELECT TOP (1) id FROM ep_records WHERE id<>? AND user_id=? AND module IN ('leave','sick') AND status='approved' AND date_from<=? AND date_to>=?",[$id,$r['user_id'],$r['date_to'],$r['date_from']])->fetch())fail('الفترة تتداخل مع إجازة معتمدة.');
@@ -367,7 +369,7 @@ session_init();
     if($status==='approved'&&$r['module']==='adjustment')v28_addition_check((int)$r['user_id'],(string)($body['payroll_month']??''),(float)$r['amount'],(string)($body['reason']??''),'addition');
     if($status==='approved'&&$r['module']==='external'&&$r['date_from']<local_time()->format('Y-m-d'))fail('لا اعتماد بأثر رجعي للانصراف الخارجي.');
     if($status==='approved'&&in_array($r['module'],['leave','sick','discipline','adjustment','leave_cash'],true))financial_invalidate((int)$r['user_id'],in_array($r['module'],['leave','sick'],true)?$r['date_from']:(($r['module']==='leave_cash'&&($body['payment_method']??'')!=='bank_salary')?$r['date_from']:($body['payroll_month'].'-01')));
-    query('UPDATE ep_records SET status=?,body_json=?,reviewed_by=?,review_note=?,updated_at=? WHERE id=?',[$status,jencode($body),$uid,mb_substr((string)($b['note']??''),0,5000),utc_now(),$id]);
+    query('UPDATE ep_records SET status=?,body_json=?,reviewed_by=?,review_note=?,updated_at=? WHERE id=?',[$status,jencode($body),$uid,mb_substr((string)($b['note']??''),0,5000),utc_now(),$id]);if($status==='approved'&&$r['module']==='sick'&&function_exists('sick_resequence199'))sick_resequence199((int)$r['user_id'],(string)$r['date_from'],(string)($r['date_to']?:$r['date_from']));
     punch_refresh_payroll39($r,$body,$status,$actor29);
     if($status==='approved'&&$r['module']==='leave_cash'){v26_cash_integrity((int)$r['user_id']);}notice((int)$r['user_id'],'قرار: '.modules()[$r['module']]['label'],$r['title'].' — '.$status.' — '.($b['note']??''),in_array($r['module'],['discipline','external'],true),['screen'=>$r['module'],'record_id'=>(int)$r['id']]);
     if($intermediate199)workflow_notify199(array_replace($r,['body_json'=>jencode($body)]),'طلب بانتظار مراجعة المشرف العام');
@@ -474,9 +476,9 @@ session_init();
  echo jencode(['data'=>$result]+($hrLocale160!==null?['hr_localization160'=>$hrLocale160]:[]));
  if(isset($u)&&$u&&!in_array($action,['translation161_tick','login','logout','backup_restore_commit'],true)&&!str_starts_with($action,'backup_')&&!str_starts_with($action,'translation31_'))data_translation_after_response161();
 }catch(Throwable $e){
- foreach($GLOBALS['EDITOR_FILES143']??[]as $path143)if(is_file($path143))@unlink($path143);unset($GLOBALS['EDITOR_FILES143']);
  if(isset($pdo)&&$pdo instanceof PDO&&$pdo->inTransaction())$pdo->rollBack();
  try{if(app_installed()&&db()->inTransaction())db()->rollBack();}catch(Throwable $ignored){}
+ if(function_exists('editor_files_release143'))editor_files_release143();
  if(http_response_code()<400)http_response_code(500);
  $safe=$e instanceof RuntimeException && !($e instanceof PDOException);
  if(!$safe)security_log($e);

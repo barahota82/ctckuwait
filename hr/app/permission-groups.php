@@ -75,7 +75,7 @@ function groups_action29(string $action,array $u,array $b):array{
 }
 function permission_denied29(array $u,string $screen,string $op='view'):bool{if($u['role']==='admin')return false;foreach(permission_rules29($u,$screen)as $r)if(in_array('view',$r['deny'],true)||in_array($op,$r['deny'],true))return true;return false;}
 function permission_route29(string $action,array $b):array{
- if($action==='payroll_addition198_save')return [(string)($b['key']??''),'view'];
+ if($action==='payroll_addition198_save')return [(string)($b['key']??''),'create'];
  if(function_exists('workflow_route194')&&($route=workflow_route194($action,$b)))return $route;
  if(str_starts_with($action,'permit148_'))return ['work_permit',$action==='permit148_save'?(in_array(($b['mode']??''),['correct','transfer'],true)?'edit':'create'):'view'];
  if(str_starts_with($action,'incentive114_'))return ['payroll',$action==='incentive114_info'?'view':'create'];

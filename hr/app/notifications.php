@@ -39,7 +39,7 @@ function notice_people32(array $u):array {
 }
 function notice_options32(array $u):array {
  $people=notice_people32($u);$ids=array_column($people,'id');$config=groups_config29();$groups=[];
- foreach($config['groups']??[] as $key=>$group){if(!($group['active']??true))continue;$members=[];foreach($config['members']??[] as $id=>$assigned)if(in_array($key,$assigned,true)&&in_array((int)$id,$ids,true))$members[]=(int)$id;if($members)$groups[]=['id'=>$key,'name'=>$group['name'],'members'=>$members];}
+ foreach($config['groups']??[] as $key=>$group){if(!($group['active']??true))continue;$members=[];if(!empty($group['manual_team'])){foreach((array)($group['team_users']??[])as $id)if(in_array((int)$id,$ids,true))$members[]=(int)$id;}else foreach($config['members']??[] as $id=>$assigned)if(in_array($key,$assigned,true)&&in_array((int)$id,$ids,true))$members[]=(int)$id;$members=array_values(array_unique($members));if($members)$groups[]=['id'=>$key,'name'=>$group['name'],'members'=>$members];}
  return ['people'=>$people,'groups'=>$groups,'companies'=>company_choices30($u,'notifications')];
 }
 function notice_list32(array $u):array {

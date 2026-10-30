@@ -18,7 +18,7 @@ function permission_catalog(): array {
  $screens['v28_locations']=['label'=>'مواقع العمل المشتركة','actions'=>['view','create','edit']];
  $screens['location_capture40']=['label'=>'استخدام الموقع الحالي لإعداد الدوام','actions'=>['view']];
  foreach(['contract_sales99'=>'تسجيل عقود مسؤولي المبيعات','contract_staff99'=>'تسجيل عقود موظفي الشركة','contract_agents99'=>'تسجيل عقود المناديب','receipt_company99'=>'تسجيل تحصيل الشركة','receipt_click99'=>'تسجيل تحصيل أونلاين كليك','receipt_afaq99'=>'تسجيل تحصيل أونلاين آفاق','receipt_agents99'=>'تسجيل تحصيل المناديب']as $key=>$label)$screens[$key]=['label'=>$label,'actions'=>['view','create','edit']];
- foreach(['payroll_entry_click126'=>'تسجيل لإعداد الرواتب — شركة كليك','payroll_entry_afaq126'=>'تسجيل لإعداد الرواتب — شركة آفاق']as $key=>$label)$screens[$key]=['label'=>$label,'actions'=>['view']];
+ foreach(['payroll_entry_click126'=>'تسجيل لإعداد الرواتب — شركة كليك','payroll_entry_afaq126'=>'تسجيل لإعداد الرواتب — شركة آفاق']as $key=>$label)$screens[$key]=['label'=>$label,'actions'=>['view','create']];
  return $screens;
 }
 function permission_has(array $u,string $screen,string $action='view'): bool {

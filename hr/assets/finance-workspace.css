@@ -81,3 +81,6 @@
  #page .entry-cell201{min-width:100px}
  #page .entry-cell201 input:not([type=checkbox]){width:5.5rem;min-width:5.5rem;max-width:5.5rem}
 }
+#page .paygrid-table37 .paygrid-person37,#page .paygrid-table37 .paygrid-person37>bdi,#page .paygrid-table37 .paygrid-person37>span{white-space:nowrap;max-width:none;overflow:visible;text-overflow:clip}
+#page .paygrid-table37 .paygrid-person37>bdi,#page .paygrid-table37 .paygrid-person37>span{display:inline}
+#page .paygrid-table37 .paygrid-person37>span{margin-inline-start:6px;margin-top:0}

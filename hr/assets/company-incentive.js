@@ -9,11 +9,11 @@ async function incentiveTerms114(user){
 }
 function incentiveDetails114(r){
  const admin=boot.user.role==='admin';modal('حافز شهري من شركة أخرى','<p>'+esc(r.code+' — '+r.name+' — '+r.company_name)+'</p>'+detail26({month:r.month,amount:r.amount,status:r.status})+(r.deduction123?'<p>'+esc(uiText('إجمالي الخصومات'))+': '+money26(r.deduction123)+' · '+esc(uiText('الصافي'))+': '+money26(r.net_amount123)+'</p>':'')+'<p>'+esc(uiText(r.paid?'تم الصرف':'لم يتم الصرف'))+'</p>'+(r.payment_date?'<p>'+esc(dateDisplay32(r.payment_date))+' — '+esc(r.reference)+'</p>':'')+'<p>'+esc(uiText('لا يدخل في قيمة الإجازات أو نهاية الخدمة'))+'</p>'+(admin&&!r.record_id?'<button type="button" class="primary" id="approveIncentive114">'+esc(uiText('اعتماد نهائي'))+'</button>':'')+(admin&&r.record_id&&!r.paid?'<form id="modalForm">'+input('payment_date','تاريخ الصرف',dateNow(),'date','required')+input('reference','مرجع الصرف','','text','required')+'<div class="modal-foot"><button type="submit" class="primary">'+esc(uiText('تسجيل الصرف'))+'</button></div></form>':''),admin&&r.record_id&&!r.paid?f=>api('incentive114_pay',{user_id:r.user_id,company_code:r.company_code,month:r.month,payment_date:f.elements.namedItem('payment_date').value,reference:f.elements.namedItem('reference').value}):null);
- const button=document.getElementById('approveIncentive114');if(button)button.onclick=async()=>{button.disabled=true;try{await api('incentive114_approve',{user_id:r.user_id,company_code:r.company_code,month:r.month});document.getElementById('modal').close();await payrollGrid37('payroll');}catch(e){button.disabled=false;toast(e.message);}};
+ const button=document.getElementById('approveIncentive114');if(button)button.onclick=async()=>{button.disabled=true;try{await api('incentive114_approve',{user_id:r.user_id,company_code:r.company_code,month:r.month});document.getElementById('modal').close();await payrollGrid37('payroll',globalThis.payrollCompanyLock41||'');}catch(e){button.disabled=false;toast(e.message);}};
 }
 const incentivePayroll114=payrollGrid37;
-payrollGrid37=async function(table='payroll'){
- await incentivePayroll114(table);if(table!=='payroll'||view!=='payroll')return;
+payrollGrid37=async function(table='payroll',lockedCompany41=''){
+ await incentivePayroll114(table,lockedCompany41);if(table!=='payroll'||view!=='payroll')return;
  document.querySelectorAll('[data-incentive114]').forEach(b=>b.onclick=async()=>{const epoch=navigationEpoch32;b.disabled=true;try{const x=await api('incentive114_info',null,{month:payMonthValue35()});if(epoch!==navigationEpoch32||view!=='payroll'||!b.isConnected)return;const r=x.rows.find(r=>r.user_id===Number(b.dataset.incentive114)&&r.company_code===b.dataset.company114);if(r)incentiveDetails114(r);}catch(e){toast(e.message);}finally{b.disabled=false;}});
 };
 const incentivePersonal114=v26Payroll;

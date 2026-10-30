@@ -77,7 +77,7 @@ function cms_action(string $action,array $u,array $b): array{
   query("DELETE FROM $table WHERE id=?",[$id]);audit('cms_delete',$entity.':'.$id);db()->commit();return ['ok'=>true];
  }
  if($action!=='cms_save')fail('العملية غير موجودة.',404);
- $content=cms_clean($b['content']??[]);if(($b['card_type']??'')==='offer')foreach($content as &$language){if($language['details']===''&&$language['body']!=='')$language['details']=$language['body'];$language['body']='';}unset($language);if(settings()['translation_enabled']){$old=$id?decode(query("SELECT content_json FROM $table WHERE id=?",[$id])->fetchColumn()):[];if((cms_clean($old)['ar']??[])!==$content['ar'])foreach(settings()['public_languages'] as $target)if($target!=='ar')$content[$target]=[];}$order=(int)($b['sort_order']??0);$visible=empty($b['visible'])?0:1;
+ $content=cms_clean($b['content']??[]);if(($b['card_type']??'')==='offer')foreach($content as &$language){if($language['details']===''&&$language['body']!=='')$language['details']=$language['body'];$language['body']='';}unset($language);$order=(int)($b['sort_order']??0);$visible=empty($b['visible'])?0:1;
  if($entity==='page'){
   $slug=trim((string)($b['slug']??''));if($id){$original=query('SELECT slug FROM ep_cms_pages WHERE id=?',[$id])->fetchColumn();if(in_array($original,['home','about','leadership','how-it-works','offers','contact','ratings','privacy'],true)&&$slug!==$original)fail('عنوان الرابط ثابت لهذه الصفحة؛ عدّل اسمها في القائمة.');}if(!preg_match('/^[a-z0-9-]{1,80}$/',$slug))fail('رمز الصفحة أحرف إنجليزية وأرقام وشرطة.');
   if($id&&query('SELECT slug FROM ep_cms_pages WHERE id=?',[$id])->fetchColumn()==='home'&&$slug!=='home')fail('رمز الصفحة الرئيسية يجب أن يبقى home.');

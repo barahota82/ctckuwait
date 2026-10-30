@@ -76,7 +76,7 @@ function decision_action199(string $action,array $actor,array $b):array {
  $id=(int)($b['id']??0);$r=query('SELECT * FROM ep_records WHERE id=?',[$id])->fetch();if(!$r||!decision_module199($r['module']))fail('السجل غير موجود.',404);
  db()->beginTransaction();query('SELECT id FROM ep_users WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$r['user_id']]);$r=query('SELECT * FROM ep_records WITH (UPDLOCK,HOLDLOCK) WHERE id=?',[$id])->fetch();
  if(empty($b['revision199'])||!hash_equals(record_revision173($r),(string)$b['revision199']))fail('تغير السجل؛ أعد فتحه قبل اتخاذ القرار.',409);
- $body=decode($r['body_json']);$note=trim((string)($b['note']??''));$status=$r['status'];$reviewed=$r['reviewed_by']??null;$reviewNote=$r['review_note']??null;$amount=$r['amount'];
+ $body=decode($r['body_json']);if($r['module']==='adjustment'&&($body['source198']??'')==='payroll_entry')fail('إضافة التسجيل تتبع كشف الشهر.');$note=trim((string)($b['note']??''));$status=$r['status'];$reviewed=$r['reviewed_by']??null;$reviewNote=$r['review_note']??null;$amount=$r['amount'];
  if($action==='record_undo199'){
   if($r['module']==='loan'&&!empty($body['_disburse200']['debt_id']))fail('الصرف مسجل؛ تغيير الحالة لا يمسح القيد المالي.');
   if($r['module']==='leave'&&($body['_start200']['phase']??'')==='confirmed')fail('الإجازة بدأت؛ التراجع عن الاعتماد لا يلغي التنفيذ.');
@@ -94,7 +94,7 @@ function decision_action199(string $action,array $actor,array $b):array {
   if(!decision_can_cancel199($r,$actor))fail('إلغاء الطلب بعد أول اعتماد للمشرف العام فقط.',403);
   $body['_cancellation199']=['at'=>utc_now(),'actor'=>(int)$actor['id'],'previous_status'=>$status];$status='cancelled';
  }
- query('UPDATE ep_records SET status=?,body_json=?,reviewed_by=?,review_note=?,amount=?,updated_at=? WHERE id=?',[$status,jencode($body),$reviewed,$reviewNote,$amount,utc_now(),$id]);
+ query('UPDATE ep_records SET status=?,body_json=?,reviewed_by=?,review_note=?,amount=?,updated_at=? WHERE id=?',[$status,jencode($body),$reviewed,$reviewNote,$amount,utc_now(),$id]);if($r['module']==='sick'&&function_exists('sick_resequence199'))sick_resequence199((int)$r['user_id'],(string)$r['date_from'],(string)($r['date_to']?:$r['date_from']));
  $updated=array_replace($r,['status'=>$status,'body_json'=>jencode($body)]);audit($action,'record:'.$id,['before_status'=>$r['status'],'status'=>$status,'note'=>$note]);
  notice((int)$r['user_id'],$action==='record_undo199'?'تراجع عن الاعتماد':'إلغاء الطلب',$r['title'].($note!==''?' — '.$note:''),false,['screen'=>$r['module'],'record_id'=>$id]);
  if(in_array($status,['pending','revision'],true))workflow_notify199($updated,'طلب بانتظار المراجعة بعد التراجع');

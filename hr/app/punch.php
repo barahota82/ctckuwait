@@ -62,10 +62,10 @@ function punch_apply39(int $uid,array $day,array $p,int $start,int $end,array &$
  if(!isset($p['punch_rules39'])){
   foreach($day['punch_incidents39']as &$legacy)if(in_array($legacy['type'],['attendance','checkout'],true)){$legacy['original_minutes']=$day['penalty_minutes'];$legacy['original_days']=$day['penalty_days'];if($legacy['exemption_id']){$day['penalty_minutes']=0;$day['penalty_days']=0;}else{$legacy['penalty_minutes']=$day['penalty_minutes'];$legacy['penalty_days']=$day['penalty_days'];}}unset($legacy);return $day;
  }
- $day['penalty_minutes']=0.0;$day['penalty_days']=0.0;if(!$day['absence'])$day['missing']=count($day['punch_incidents39']);
- foreach($day['punch_incidents39']as &$i){$rule=$p['punch_rules39'][$i['type']];$period=period_start($day['date'],$rule['period']);$k=$i['type'].':'.$period;
-  if(!isset($counts[$k])){$counts[$k]=0;foreach($previousDays as $previous)if($previous['date']>=$period)foreach($previous['punch_incidents39']??[]as $prev)if($prev['type']===$i['type'])$counts[$k]++;if($period<$reportFrom)foreach(attendance_report($uid,$period,(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d'))as $previous)foreach($previous['punch_incidents39']??[]as $prev)if($prev['type']===$i['type'])$counts[$k]++;}
-  $i['sequence']=++$counts[$k];[$minutes,$days]=punch_charge39($rule,$i['sequence']);$i['original_minutes']=$minutes;$i['original_days']=$days;
+ $day['penalty_minutes']=0.0;$day['penalty_days']=0.0;if(!$day['absence'])$day['missing']=count($day['punch_incidents39']);$seen39=[];
+ foreach($day['punch_incidents39']as &$i){$rule=$p['punch_rules39'][$i['type']];$period=period_start($day['date'],$rule['period']);
+  $prefixKey=$uid.'|'.$i['type'].'|'.$period.'|'.$reportFrom.'|'.(string)($day['policy_id']??'');if(!isset($GLOBALS['PUNCH_PREFIX39'][$prefixKey])){$GLOBALS['PUNCH_PREFIX39'][$prefixKey]=0;if($period<$reportFrom)foreach(attendance_report($uid,$period,(new DateTimeImmutable($reportFrom))->modify('-1 day')->format('Y-m-d'))as $previous)foreach($previous['punch_incidents39']??[]as $prev)if(($prev['type']??'')===$i['type'])$GLOBALS['PUNCH_PREFIX39'][$prefixKey]++;}
+  $n=(int)$GLOBALS['PUNCH_PREFIX39'][$prefixKey]+(int)($seen39[$i['type']]??0);foreach($previousDays as $previous)if(($previous['date']??'')>=$period&&($previous['date']??'')<$day['date'])foreach($previous['punch_incidents39']??[]as $prev)if(($prev['type']??'')===$i['type'])$n++;$seen39[$i['type']]=($seen39[$i['type']]??0)+1;$i['sequence']=$n+1;$counts[$i['type'].':'.$period]=$i['sequence'];[$minutes,$days]=punch_charge39($rule,$i['sequence']);$i['original_minutes']=$minutes;$i['original_days']=$days;
   if(!$i['exemption_id']){$i['penalty_minutes']=$minutes;$i['penalty_days']=$days;$day['penalty_minutes']+=$minutes;$day['penalty_days']+=$days;}
  }unset($i);return $day;
 }

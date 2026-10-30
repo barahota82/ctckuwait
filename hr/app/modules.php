@@ -72,14 +72,15 @@ function leave_balance_days(int $uid,array $cfg,?string $reference=null):array {
  $cashUsed=0.0;foreach(query("SELECT body_json FROM ep_records WHERE module='leave_cash' AND status='approved' AND user_id=? AND date_from>? AND date_from<=?",[$uid,$opening,$reference])->fetchAll()as $rec)$cashUsed+=(float)(decode($rec['body_json'])['days']??0);foreach(historical_for($uid,'leave_settlement',$opening,$reference)as $settlement)if($settlement['period_key']>$opening)$cashUsed+=(float)decode($settlement['body_json'])['days'];
  return ['year_from'=>$base['year_from'],'year_to'=>$base['year_to'],'entitlement'=>$entitlement,'used'=>$used,'pending'=>$pending,'remaining'=>round((float)$b['days']+$accrued-$used,3),'cash_days'=>round((float)$b['cash_days']+$accrued-$cashUsed,3),'opening_as_of'=>$opening,'accrued'=>round($accrued,3),'opening_days'=>(float)$b['days']];
 }
-function sick_snapshot(array $record,array $user,array $cfg): array {
+function sick_resequence199(int $uid,string $from,?string $to=null):void {if(!function_exists('employee_required'))return;$staff=employee_required($uid);$cfg=settings();if(($cfg['sick_full_days']??null)===null||($cfg['sick_half_days']??null)===null)return;$to=$to?:$from;if($to<$from){$swap=$from;$from=$to;$to=$swap;}$years=[];foreach(days_between($from,$to)as $d){[$yearFrom,$yearTo]=sick_year_bounds($d,$staff,$cfg);$years[$yearFrom]=$yearTo;}if(!$years)return;$rows=[];foreach($years as $yearFrom=>$yearTo)foreach(query("SELECT * FROM ep_records WHERE user_id=? AND module='sick' AND status='approved' AND date_to>=? AND date_from<=? ORDER BY date_from,id",[$uid,$yearFrom,$yearTo])->fetchAll()as $row)$rows[(int)$row['id']]=$row;$days=[];foreach($rows as $row)foreach(days_between($row['date_from'],$row['date_to'])as $d){[$yearFrom,$yearTo]=sick_year_bounds($d,$staff,$cfg);if(!isset($years[$yearFrom]))continue;$days[]=['date'=>$d,'record'=>(int)$row['id'],'year_from'=>$yearFrom,'year_to'=>$yearTo];}usort($days,fn($a,$b)=>[$a['date'],$a['record']]<=>[$b['date'],$b['record']]);$used=[];$slices=[];foreach($days as $day){$key=$day['year_from'];if(!isset($used[$key])){$used[$key]=0;foreach(historical_for($uid,'sick_summary',substr($day['year_from'],0,4),substr($day['year_from'],0,4))as $h){$v=decode($h['body_json']);$used[$key]+=(int)($v['full']??0)+(int)($v['half']??0)+(int)($v['unpaid']??0);}}$n=$used[$key];$paid=$n<(int)$cfg['sick_full_days']?1.0:($n<(int)$cfg['sick_full_days']+(int)$cfg['sick_half_days']?0.5:0.0);$slices[$day['record']][]=['date'=>$day['date'],'paid'=>$paid,'year_from'=>$day['year_from'],'year_to'=>$day['year_to'],'sequence'=>$n+1];$used[$key]++;}foreach($rows as $row){$body=decode($row['body_json']);$fresh=$slices[(int)$row['id']]??[];$freshDates=array_column($fresh,'date');$kept=[];foreach($body['_sick_days']??[]as $old){$oldDate=(string)($old['date']??'');if(in_array($oldDate,$freshDates,true))continue;[$oldYear]=sick_year_bounds($oldDate,$staff,$cfg);if(isset($years[$oldYear]))continue;$kept[]=$old;}$body['_sick_days']=array_merge($kept,$fresh);usort($body['_sick_days'],fn($a,$b)=>($a['date']??'')<=>($b['date']??''));query('UPDATE ep_records SET body_json=? WHERE id=?',[jencode($body),$row['id']]);}}
+function sick_snapshot(array $record,array $user,array $cfg,int $exceptId=0): array {
  if($cfg['sick_full_days']===null||$cfg['sick_half_days']===null)fail('حدد شرائح المرضيات السنوية قبل الاعتماد.');
  $out=[];
  foreach(days_between($record['date_from'],$record['date_to']) as $d){
   [$from,$to]=sick_year_bounds($d,$user,$cfg);
   $used=0;
   foreach(historical_for((int)$user['id'],'sick_summary',substr($from,0,4),substr($from,0,4))as $h){$v=decode($h['body_json']);$used+=(int)$v['full']+(int)$v['half']+(int)$v['unpaid'];}
-  foreach(query("SELECT body_json FROM ep_records WHERE user_id=? AND module='sick' AND status='approved' AND date_to>=? AND date_from<=?",[$user['id'],$from,$to])->fetchAll() as $r)
+  foreach(query("SELECT id,body_json FROM ep_records WHERE user_id=? AND module='sick' AND status='approved' AND date_to>=? AND date_from<=? AND id<>?",[$user['id'],$from,$to,$exceptId])->fetchAll() as $r)
    foreach((decode($r['body_json'])['_sick_days']??[])as $day)if($day['date']>=$from&&$day['date']<=$to)$used++;
   foreach($out as $day)if($day['date']>=$from&&$day['date']<=$to)$used++;
   $paid=$used<(int)$cfg['sick_full_days']?1.0:($used<(int)$cfg['sick_full_days']+(int)$cfg['sick_half_days']?0.5:0.0);
@@ -137,13 +138,12 @@ function attendance_report(int $uid,string $from,string $to): array {
    else $day['missing']=($in?0:1)+($exit?0:1);
    if(!isset($p['punch_rules39'])&&$day['missing']&&!$day['absence']&&$p['forget_enabled']){
     $period=period_start($date,$p['forget_period']);
-    if(!isset($counts[$period])){
-     $counts[$period]=0;
-     if($period<$from){
-      foreach(attendance_report($uid,$period,(new DateTimeImmutable($from))->modify('-1 day')->format('Y-m-d'))as $prev)
-       if(!$prev['absence'])$counts[$period]+=$p['forget_unit']==='day'?($prev['missing']?1:0):$prev['missing'];
-     }
+    $counts[$period]=0;
+    if($period<$from){
+     foreach(attendance_report($uid,$period,(new DateTimeImmutable($from))->modify('-1 day')->format('Y-m-d'))as $prev)
+      if(!$prev['absence'])$counts[$period]+=$p['forget_unit']==='day'?($prev['missing']?1:0):$prev['missing'];
     }
+    foreach($out as $prev)if(($prev['date']??'')>=$period&&empty($prev['absence']))$counts[$period]+=$p['forget_unit']==='day'?(!empty($prev['missing'])?1:0):(int)($prev['missing']??0);
     $units=$p['forget_unit']==='day'?1:$day['missing'];
     for($i=0;$i<$units;$i++){
      $sequence=++$counts[$period];$minutes=(int)$p['missing_minutes'];$days=0.0;
@@ -155,7 +155,7 @@ function attendance_report(int $uid,string $from,string $to): array {
     }
    }
   }
-  $day['missing_raw194']=$day['missing'];$day['absence_raw194']=$day['absence'];
+  $day['shift_end194']=$end->getTimestamp();$day['missing_raw194']=$day['missing'];$day['absence_raw194']=$day['absence'];
   $day=punch_apply39($uid,$day,$p,$start->getTimestamp(),$end->getTimestamp(),$punchCounts39,$from,$out,$decisions39[$date]??[]);
   $out[]=$day;
  }

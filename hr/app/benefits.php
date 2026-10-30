@@ -39,7 +39,7 @@ function addition_rows198(int $uid,string $month):array {
 function payroll_addition198(array $actor,array $b):array {
  if(personal_mode34($actor))fail('هذه العملية للإدارة.',403);
  $key=(string)($b['key']??'');if(!in_array($key,['payroll_entry_click126','payroll_entry_afaq126'],true))fail('شاشة غير صالحة.');
- permission_require($actor,$key);$uid=(int)($b['user_id']??0);$staff=employee_required($uid);$month=(string)($b['month']??'');$from=addition_month198($month);$end=pay35_month($month);
+ permission_require($actor,$key,'create');$uid=(int)($b['user_id']??0);$staff=employee_required($uid);$month=(string)($b['month']??'');$from=addition_month198($month);$end=pay35_month($month);
  if(!in_array($uid,permission_scope29($actor,$key),true))fail('الموظف خارج نطاقك.',403);
  $company=$key==='payroll_entry_click126'?'CMP-0001':'CMP-0003';if(!company_allowed30($actor,$key,$company)||!pay41_build_matches($staff,$month,$company))fail('الموظف خارج شركة الشهر المحدد.',403);
  $direct=$actor['role']==='admin'||(permission_has($actor,'addition','create')&&in_array($uid,permission_scope29($actor,'addition','create'),true));
@@ -53,7 +53,7 @@ function payroll_addition198(array $actor,array $b):array {
   // The unified monthly field cannot silently stack on another source for this month.
   fail('توجد إضافة لهذا الموظف في الشهر؛ راجع السجل القائم قبل تسجيل مبلغ آخر.',409);
  }
- if(!empty($b['id'])&&!$existing)fail('الإضافة غير متاحة للتعديل.',409);if($direct||($existing['status']??'')==='approved')financial_invalidate($uid,$from);$status=$direct?'approved':'pending';
+ if(!empty($b['id'])&&!$existing)fail('الإضافة غير متاحة للتعديل.',409);if(($existing['status']??'')==='approved')fail('تعديل الإضافة المعتمدة يتم من سجل الإضافات.',409);pay35_lock($uid,$month,'payroll_entry','addition_amount201');financial_invalidate($uid,$from,'payroll_entry');$status='pending';
  $body=['payroll_month'=>$month,'reason'=>$reason,'source198'=>'payroll_entry','request198'=>$token];
  if($existing){$id=(int)$existing['id'];query('UPDATE ep_records SET body_json=?,amount=?,status=?,updated_at=? WHERE id=?',[jencode($body),$amount,$status,utc_now(),$id]);audit('payroll_addition_update198','record:'.$id,['before'=>$existing,'after'=>$body,'amount'=>$amount]);}else $id=v26_insert('adjustment',$uid,$from,$end,$body,$status,$amount);audit('payroll_addition198','record:'.$id,['amount'=>$amount,'month'=>$month,'status'=>$status]);
  if(!$direct)foreach(request_notice_recipients32($uid,'adjustment') as $approver)notice((int)$approver,'إضافة شهرية بانتظار المراجعة',$reason,false,['screen'=>'adjustment','record_id'=>$id]);

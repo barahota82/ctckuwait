@@ -1,6 +1,7 @@
 'use strict';
 let payMonth35='';
 function payMonthValue35(){return payMonth35||dateNow().slice(0,7);}
+function payMonthSet35(value){if(/^\d{4}-(0[1-9]|1[0-2])$/.test(String(value||'')))payMonth35=value;}
 function payMonthToolbar35(){return '<label>'+esc(uiText('الشهر والسنة'))+'<input id="payMonth35" type="month" value="'+esc(payMonthValue35())+'"></label>';}
 function payBindMonth35(render){$('#payMonth35').onchange=async e=>{payMonth35=e.target.value;try{await render();applyInterfaceLanguage();}catch(e){toast(e.message);}};}
 function payStaff35(r){return recordIdentity32(r.user_id,r.name,0);}

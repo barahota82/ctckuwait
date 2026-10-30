@@ -43,6 +43,7 @@ function hubFor32(key){
  const named={eos:'تسوية نهاية الخدمة',leave_cash:'تسوية الإجازات النقدية',exit_permissions183:'أذونات الخروج',payroll_entry_click126:'شركة كليك',payroll_entry_afaq126:'شركة آفاق',contract_sales99:'مسؤولو المبيعات',contract_staff99:'موظفو الشركة',contract_agents99:'المناديب',receipt_company99:'تحصيل الشركة',receipt_click99:'تحصيل أونلاين كليك',receipt_afaq99:'تحصيل أونلاين آفاق',receipt_agents99:'تحصيل المناديب',debt_statement95:'كشف حساب السلف',attendance:'بصمة الدوام',request:'الطلبات الإدارية',request_attendance50:'وقائع الحضور',addition:'الإضافات الشهرية',allowances:'البدلات والجمعات',personal_history:'تاريخ بياناتي السابقة'};
  if(named[key])return named[key];
  if(personalNavigation50()){const labels={users:'بياناتي وملفي',employment:'إجراءات خدمتي',resumption:'مباشرة عملي',document:'مستنداتي وعقودي',custody:'عهدي',discipline:'القرارات الموجهة لي',evaluation:'تقييماتي',notifications:'إشعاراتي',payroll:'كشوف راتبي',commissions:'عمولاتي',proof:'إثبات تواجدي',report:'سجل دوامي',request:'طلباتي الإدارية',loan:'السلف ومديونيتي',leave:'إجازاتي',sick:'مرضياتي'};if(labels[key])return labels[key];}
+ const statementTabs201={payroll:'رواتب كليك',commissions:'مبيعات كليك',collection37:'تحصيل كليك',payroll_review35:'رواتب آفاق'};if(statementTabs201[key])return statementTabs201[key];
  return navigation30.flatMap(g=>g[1]).find(i=>i[0]===key)?.[1]||key;
 }
 function visibleTab32(k){return screenAllowed(k);}
